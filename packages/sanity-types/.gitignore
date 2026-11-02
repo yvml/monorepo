@@ -1,0 +1,10 @@
+.DS_Store
+
+.turbo
+
+dist
+node_modules
+
+src/**
+!src/
+!src/.gitkeep

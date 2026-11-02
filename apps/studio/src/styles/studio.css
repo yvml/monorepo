@@ -1,0 +1,5 @@
+/* hide field header labels */
+
+[data-ui="fieldHeaderContentBox"] label[data-ui="Text"] {
+  /* display: none; */
+}

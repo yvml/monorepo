@@ -1,0 +1,23 @@
+{
+  "name": "@hmidmismi/sanity-types",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared Sanity types",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "clean": "rm -rf dist .turbo node_modules",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@sanity/client": "^7.20.0"
+  },
+  "devDependencies": {
+    "@hmidmismi/tsconfig": "workspace:*",
+    "@sanity/client": "^7.27.0"
+  },
+  "author": "jasloe",
+  "license": "UNLICENSED"
+}

@@ -1,0 +1,12 @@
+.DS_Store
+node_modules
+dist
+coverage
+.turbo
+.next
+.sanity
+*.tsbuildinfo
+.env*
+!.env.example
+# Panda output
+styled-system

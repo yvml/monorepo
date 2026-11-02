@@ -1,0 +1,32 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  "env": {
+    "es2022": true,
+    "node": true
+  },
+  "rules": {
+    "no-unused-vars": "error",
+    "no-console": "warn",
+    "eqeqeq": [
+      "error",
+      "always",
+      {
+        "null": "ignore"
+      }
+    ],
+    "no-return-await": "error",
+    "require-await": "error"
+  },
+  "plugins": ["typescript"],
+  "ignorePatterns": [
+    "**/dist",
+    "**/node_modules",
+    "**/coverage",
+    "**/styled-system",
+    "**/.output",
+    "**/.tanstack",
+    "**/.wrangler",
+    "**/.sanity",
+    "**/.turbo"
+  ]
+}

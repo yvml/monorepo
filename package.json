@@ -1,0 +1,28 @@
+{
+  "name": "yvml",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.1.1",
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:web": "turbo run dev --filter=@yvml/web",
+    "dev:studio": "turbo run dev --filter=@yvml/studio",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "typegen": "pnpm --filter @yvml/studio typegen",
+    "auth:create-user": "pnpm --filter @hmidmismi/auth create-user",
+    "clean": "turbo run clean && rm -rf .turbo node_modules",
+    "format": "biome format --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.11",
+    "concurrently": "^9.2.1",
+    "oxlint": "^0.16.0",
+    "turbo": "^2.8.17",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  }
+}

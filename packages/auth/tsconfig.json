@@ -1,0 +1,8 @@
+{
+  "extends": "@hmidmismi/tsconfig/tsconfig.node.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "include": ["src/**/*.ts", "tests/**/*.ts"]
+}
