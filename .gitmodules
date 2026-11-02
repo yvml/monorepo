@@ -1,0 +1,16 @@
+[submodule "packages/ui"]
+	path = packages/ui
+	url = git@github.com:hmidmismi/ui.git
+	branch = main
+[submodule "packages/sanity-core"]
+	path = packages/sanity-core
+	url = git@github.com:hmidmismi/sanity-core.git
+	branch = main
+[submodule "packages/tsconfig"]
+	path = packages/tsconfig
+	url = git@github.com:hmidmismi/tsconfig.git
+	branch = main
+[submodule "packages/auth"]
+	path = packages/auth
+	url = git@github.com:hmidmismi/auth.git
+	branch = main

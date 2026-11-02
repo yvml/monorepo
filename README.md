@@ -14,11 +14,12 @@ pnpm + Turborepo monorepo.
 | `packages/sanity-types` | `@hmidmismi/sanity-types` | Types generated from the studio schema |
 | `packages/tsconfig` | `@hmidmismi/tsconfig` | Shared TypeScript configs |
 
-The `@hmidmismi/*` packages are shared across projects; `@yvml/*` apps consume them.
+The `@hmidmismi/*` packages are shared across projects; `@yvml/*` apps consume them. `ui`, `auth`, `sanity-core` and `tsconfig` are git submodules of the `hmidmismi` repos, pinned to `main` (`pnpm sync` updates them); `sanity-types` is generated per project, so it stays a plain folder.
 
 ## Setup
 
 ```sh
+git clone --recurse-submodules git@github.com:hmidmismi/yvml && cd yvml
 pnpm install            # postinstall builds ui's Panda output
 cp apps/web/.env.example apps/web/.env
 cp apps/studio/.env.example apps/studio/.env

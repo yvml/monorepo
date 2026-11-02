@@ -15,7 +15,8 @@
     "typegen": "pnpm --filter @yvml/studio typegen",
     "auth:create-user": "pnpm --filter @hmidmismi/auth create-user",
     "clean": "turbo run clean && rm -rf .turbo node_modules",
-    "format": "biome format --write ."
+    "format": "biome format --write .",
+    "sync": "git pull && git submodule update --init"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.11",
