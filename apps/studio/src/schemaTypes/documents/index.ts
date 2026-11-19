@@ -3,3 +3,5 @@ export * from './event';
 export * from './page';
 export * from './person';
 export * from './schedule';
+export * from './taxonomy';
+export * from './workshop';

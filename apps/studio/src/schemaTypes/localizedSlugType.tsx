@@ -1,10 +1,10 @@
 import { localizedText } from '@hmidmismi/sanity-core';
 import { AddIcon, RemoveCircleIcon } from '@sanity/icons';
-import { Box, Button, Flex, Label, Stack, Text, TextInput } from '@sanity/ui';
+import { Box, Button, Flex, Label, Stack, TextInput } from '@sanity/ui';
 import { useCallback } from 'react';
 import type { ArrayOfObjectsInputProps } from 'sanity';
 import { defineArrayMember, defineField, defineType, set, useFormValue } from 'sanity';
-import { LOCALES } from '../lib/locales';
+import { DEFAULT_LOCALE, LOCALES } from '../lib/locales';
 
 /** The languages that get their own slug. */
 const SLUG_LANGS = LOCALES.map(({ code, label }) => ({ id: code, title: label }));
@@ -27,14 +27,25 @@ function LocalizedSlugInput(props: ArrayOfObjectsInputProps) {
   const title = useFormValue(['title']) as never;
 
   const entry = (language: string) => value.find((item) => item.language === language);
+  /** The default language's row shows even before it exists, so an empty slug always has somewhere to type. */
+  const shown = (language: string) =>
+    Boolean(entry(language)) || (value.length === 0 && language === DEFAULT_LOCALE);
   const write = useCallback((next: Entry[]) => onChange(set(next)), [onChange]);
 
-  const add = (language: string) =>
-    write([...value, { _key: language, language, value: { current: '' } } as Entry]);
+  const missing = SLUG_LANGS.filter(({ id }) => !shown(id));
+  const addMissing = () =>
+    write([
+      ...value,
+      ...SLUG_LANGS.filter(({ id }) => !entry(id)).map(
+        ({ id }) => ({ _key: id, language: id, value: { current: '' } }) as Entry
+      ),
+    ]);
   const remove = (language: string) => write(value.filter((item) => item.language !== language));
   const change = (language: string, current: string) =>
     write(
-      value.map((item) => (item.language === language ? { ...item, value: { current } } : item))
+      entry(language)
+        ? value.map((item) => (item.language === language ? { ...item, value: { current } } : item))
+        : [...value, { _key: language, language, value: { current } } as Entry]
     );
   const generate = (language: string) => {
     const slug = slugify(localizedText(title, language));
@@ -43,7 +54,7 @@ function LocalizedSlugInput(props: ArrayOfObjectsInputProps) {
 
   return (
     <Stack space={3}>
-      {SLUG_LANGS.filter(({ id }) => entry(id)).map(({ id }) => (
+      {SLUG_LANGS.filter(({ id }) => shown(id)).map(({ id }) => (
         <Stack key={id} space={2}>
           <Label size={1}>{id.toUpperCase()}</Label>
           <Flex align="center" gap={2}>
@@ -59,26 +70,22 @@ function LocalizedSlugInput(props: ArrayOfObjectsInputProps) {
               icon={RemoveCircleIcon}
               mode="bleed"
               tone="critical"
-              disabled={readOnly}
+              disabled={readOnly || !entry(id)}
               onClick={() => remove(id)}
             />
           </Flex>
         </Stack>
       ))}
-      <Flex gap={2}>
-        {SLUG_LANGS.filter(({ id }) => !entry(id)).map(({ id }) => (
+      {missing.length > 0 ? (
+        <Flex>
           <Button
-            key={id}
             icon={AddIcon}
-            text={id.toUpperCase()}
+            text="Add missing languages"
             mode="ghost"
             disabled={readOnly}
-            onClick={() => add(id)}
+            onClick={addMissing}
           />
-        ))}
-      </Flex>
-      {value.length === 0 ? (
-        <Text size={1}>Add a slug for each language the page exists in.</Text>
+        </Flex>
       ) : null}
     </Stack>
   );
@@ -93,6 +100,8 @@ export const localizedSlugType = defineType({
   name: 'localizedSlug',
   type: 'array',
   components: { input: LocalizedSlugInput },
+  /** New documents start with the default language's slug open. */
+  initialValue: [{ _key: DEFAULT_LOCALE, language: DEFAULT_LOCALE, value: { current: '' } }],
   of: [
     defineArrayMember({
       type: 'object',

@@ -1,0 +1,487 @@
+[
+  {
+    "index": 0,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/ac5b8a53-6740-4599-bb67-3d9ab1cbc543/IMG_4389.jpg",
+    "heading": [
+      "Writing for Art Applications:",
+      "November 14, 2026 9 am - 4 pm",
+      "November 21, 2026 1-on-1 45 min session"
+    ],
+    "instructorName": "Frank Montesonti",
+    "instructorUrl": "https://frankmontesonti.com",
+    "description": [
+      "Are your application materials dusty, uninspired, or in need of updates? Bring them in! In this workshop, we will review principles of strong art writing and then share and critique each other's statements. The workshop will be led by poet/writing studies professor Frank Montesonti. Frank has helped many artists compose or revise their artist statements and applications for competitive residencies around the country. Artist statements will be the focus, but you may also bring in statements of purpose for individual artist grants, cover letters for art-related jobs, or teaching statements. On the second day, students will come in for scheduled 45 minute one-on-one editing sessions with Frank."
+    ],
+    "price": 150,
+    "soldOut": true,
+    "scholarship": false,
+    "keelaUrl": null
+  },
+  {
+    "index": 1,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/28527ee7-98b1-4e37-b2fc-634486e95c63/image4.jpeg",
+    "heading": [
+      "Quilt in a Weekend: November 21-22, 2026",
+      "9 am - 4 pm"
+    ],
+    "instructorName": "Panda Landa",
+    "instructorUrl": "https://pandalandastudio.com",
+    "description": [
+      "A two day class to learn the basics of improvisational patchwork and how to put together your first quilt! In this two day quilting class we will learn about the radical histories of quilt making, learn to use the sewing machine to create beautiful improvised patchwork, and put our layers together to make a crib size quilt."
+    ],
+    "price": 225,
+    "soldOut": true,
+    "scholarship": false,
+    "keelaUrl": null
+  },
+  {
+    "index": 2,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/1710424299650-8S7WXQIZ8PXPGT8ZQDF1/welding.jpeg",
+    "heading": [
+      "Introduction to Welding: December 5-6, 2026",
+      "9 am - 4 pm"
+    ],
+    "instructorName": "Ethan Primason",
+    "instructorUrl": "https://ethanprimason.com",
+    "description": [
+      "In this two-day workshop, learn the fundamentals of MIG welding steel. Welding processes include a complete explanation of how to use a MIG welder, welding specific types of joints, cutting with a metal chop saw, grinding with angle body grinders, and a thorough explanation of safety procedures. On the second day, students are encouraged to make a small object such as a candle or incense holder in order to practice all of the techniques covered on day one."
+    ],
+    "price": 295,
+    "soldOut": true,
+    "scholarship": true,
+    "keelaUrl": null
+  },
+  {
+    "index": 3,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/1730168198665-KXXB2W2F2L8GUIXP9NSF/6F211E24-B728-4B02-BB27-EDE5CB8470CF.jpg",
+    "heading": [
+      "Introduction to Kiln-Formed Glass Casting: December 11-13, 2026",
+      "Day 1: 9 am - 4 pm, Day 2: 8 am - 12 pm, Day 3: 2 pm - 5 pm"
+    ],
+    "instructorName": "Heidi Schwegler",
+    "instructorUrl": "https://www.heidischwegler.com",
+    "description": [
+      "Join us in-person as we take you through each step of the lost wax casting process. Silicone and alginate mold making is also included. Learn the basics of lost wax kiln-casting by transforming found objects into Bullseye glass. Students will learn the essentials for mold-building, wax finishing, material calculation, color mixing, and the theory behind firing schedules."
+    ],
+    "price": 425,
+    "soldOut": true,
+    "scholarship": false,
+    "keelaUrl": null
+  },
+  {
+    "index": 4,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/09f278c3-3729-41b8-97bc-290fadae00b6/Moldmaking.jpg",
+    "heading": [
+      "Foundry Metal Casting in Bronze and Aluminum: January 15-19, 2027",
+      "9 am- 4 pm"
+    ],
+    "instructorName": "Chris Collins",
+    "instructorUrl": "https://www.chriscollinssculpture.com",
+    "description": [
+      "In this five day introductory workshop on foundry casting students will make a wax model that will be cast in bronze or aluminum. Techniques covered include wax work, ceramic shell slurry molds, metal casting and finishing. After the wax model is made, students will make ceramic shell molds, the wax will be burned out and bronze or aluminum ingots will be melted and poured directly into the mold. We will also go over the steps to cut off and grind any sprues or air vents, and how to finish/polish and patina the final castings."
+    ],
+    "price": 725,
+    "soldOut": true,
+    "scholarship": true,
+    "keelaUrl": null
+  },
+  {
+    "index": 5,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/69ff0587-428b-4301-94df-582ee4591d0a/IMG_1409.jpg",
+    "heading": [
+      "Grant Writing 101: Virtual Workshop, January 16, 2027",
+      "9 am - 12 pm"
+    ],
+    "instructorName": "Quentin Ring",
+    "instructorUrl": null,
+    "description": [
+      "Designed for individual artists and small arts organizations, this virtual workshop offers a practical introduction to finding, understanding, and writing grants.",
+      "Instructor Quentin Ring will cover the fundamentals of grant writing, including how to find appropriate opportunities, understand what funders are looking for, translate your work into clear grant language, build a strong project narrative, approach budgets and support materials, and avoid common mistakes.",
+      "The workshop is primarily instructional, with opportunities for Q+A throughout the session.",
+      "This registration is for the January 16 virtual workshop only and does not include the January 23 Grant Lab or individual feedback."
+    ],
+    "price": 50,
+    "soldOut": false,
+    "scholarship": false,
+    "keelaUrl": "https://revenue-usa.keela.co/january-16-2027-grant-writing-101-seminar-workshop-registration"
+  },
+  {
+    "index": 6,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/f3110ad3-df6e-4d28-be58-fb27688f6744/chris.jpg",
+    "heading": [
+      "Foundry Metal Casting in Bronze and Aluminum: January 21-25, 2027",
+      "9 am- 4 pm"
+    ],
+    "instructorName": "Chris Collins",
+    "instructorUrl": "https://www.chriscollinssculpture.com",
+    "description": [
+      "In this five day introductory workshop on foundry casting students will make a wax model that will be cast in bronze or aluminum. Techniques covered include wax work, ceramic shell slurry molds, metal casting and finishing. After the wax model is made, students will make ceramic shell molds, the wax will be burned out and bronze or aluminum ingots will be melted and poured directly into the mold. We will also go over the steps to cut off and grind any sprues or air vents, and how to finish/polish and patina the final castings."
+    ],
+    "price": 725,
+    "soldOut": true,
+    "scholarship": false,
+    "keelaUrl": null
+  },
+  {
+    "index": 7,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/2699219d-807d-428e-8419-26c8bf1857f2/GRANT+LAB.jpg",
+    "heading": [
+      "Grant Writing 101 + Grant Lab: January 16 + January 23, 2027",
+      "In Person + Virtual"
+    ],
+    "instructorName": "Quentin Ring",
+    "instructorUrl": null,
+    "description": [
+      "This two-day workshop combines an introduction to grant writing with individualized feedback on a specific grant application.",
+      "January 16, 9 am - 2:30 pm | In Person at Sunflower Residence",
+      "Participants will attend Quentin Ring’s Grant Writing 101 workshop, covering how to find appropriate opportunities, understand what funders are looking for, translate your work into clear grant language, build a strong project narrative, approach budgets and support materials, and avoid common mistakes.",
+      "Following the workshop, the six Grant Lab participants will meet with Quentin to discuss the specific grant application(s) they will use as an exercise and prepare for their individual feedback sessions.",
+      "January 23, 45 min session | Virtual Grant Lab",
+      "Each participant will meet one-on-one with Quentin to receive feedback and guidance on the grant application they have prepared.",
+      "This registration includes both the January 16 in-person workshop and an individual virtual Grant Lab session on January 23."
+    ],
+    "price": 100,
+    "soldOut": true,
+    "scholarship": false,
+    "keelaUrl": null
+  },
+  {
+    "index": 8,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/80ee56bf-9df5-44f9-8f62-83104b7ad743/IMG_1063.jpeg",
+    "heading": [
+      "Introduction to Leather-working: January 30-31, 2027",
+      "9 am - 4 pm"
+    ],
+    "instructorName": "Danielle Giudici Wallis",
+    "instructorUrl": "https://www.giudicihandcrafted.com",
+    "description": [
+      "Learn about the basic tools, materials and processes to get started with leatherwork. You will gain a deeper understanding of the material-- the different tannages, cuts and how to choose the right leather for your purpose. We will cover cutting, skiving, edge finishing and hand stitching in the process of creating a custom sketchbook or journal cover. Bring your favorite small sketchbook or notebook (5” x 8 ¼” or smaller) to work with."
+    ],
+    "price": 195,
+    "soldOut": false,
+    "scholarship": false,
+    "keelaUrl": "https://revenue-usa.keela.co/january-30-31-2027-intro-to-leather-working-workshop-registration"
+  },
+  {
+    "index": 9,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/68429c69-32ed-4d84-8421-2665d017f0b9/IMG_6464.jpg",
+    "heading": [
+      "Drypoint, Plaster Casting, & Color Printmaking: February 6-7, 2027",
+      "9 am - 4 pm"
+    ],
+    "instructorName": "Kyle Simon",
+    "instructorUrl": "https://www.kylesimonart.com/work-1",
+    "description": [
+      "This two-day workshop introduces participants to drypoint printmaking, beginning with simple direct mark-making and moving through plaster casting, color, monoprinting, and traditional press printing. Participants will create drypoint images on clear PETG printmaking plates, experimenting with drypoint needles, roulette wheels, and found or unconventional tools to explore different kinds of lines, textures, and marks. Participants will then learn the fundamentals of intaglio inking and wiping using oil-based etching ink and tarlatan. Rather than immediately printing the finished plate through a press, we will use the inked drypoint plate to create a Hydrocal plaster cast, providing an introduction to the relationship between printing, casting, and the preservation of a matrix.",
+      "On the second day, participants will return to their drypoint plates and begin working with color through simple monoprinting techniques, cutting and inking shapes, applying color to separate plates, and using watercolor to paint areas of color. We will explore two-plate printing and look at how color, transparency, plate order, and registration affect the finished image. The remainder of the workshop will be devoted to printing and experimentation on the etching press, with participants encouraged to try different combinations rather than concentrating on producing a formal edition. Participants will leave with their original drypoint and color plates, a Hydrocal plaster-cast print, and several color prints."
+    ],
+    "price": 195,
+    "soldOut": false,
+    "scholarship": false,
+    "keelaUrl": "https://revenue-usa.keela.co/february-6-7-2027-printmaking-workshop-registration"
+  },
+  {
+    "index": 10,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/9682d0a5-c18b-4b6d-bfb2-e83ede5878b0/Glass+Casting+9_22-24+IMG_5271.JPG",
+    "heading": [
+      "Introduction to Kiln-Formed Glass Casting: February 19-21, 2027",
+      "Day 1: 9 am - 4 pm, Day 2: 8 am - 12 pm, Day 3: 2 pm - 5 pm"
+    ],
+    "instructorName": "Heidi Schwegler",
+    "instructorUrl": "https://www.heidischwegler.com",
+    "description": [
+      "Join us in-person as we take you through each step of the lost wax casting process. Silicone and alginate mold making is also included. Learn the basics of lost wax kiln-casting by transforming found objects into Bullseye glass. Students will learn the essentials for mold-building, wax finishing, material calculation, color mixing, and the theory behind firing schedules."
+    ],
+    "price": 450,
+    "soldOut": true,
+    "scholarship": true,
+    "keelaUrl": null
+  },
+  {
+    "index": 11,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/2dc51fee-4903-4e94-856f-29b8b00e19f1/tempImage5WvaJE.jpg",
+    "heading": [
+      "Curatorial Practices: February 27-28, 2027",
+      "9 am - 4 pm"
+    ],
+    "instructorName": "Caroline Partamian",
+    "instructorUrl": "https://www.carolinepartamian.com",
+    "description": [
+      "In this two-day session, Caroline will give participants an in-depth understanding of the exhibition curation process. We will focus on incorporating the voices and intentions of artists, with an emphasis on gathering information through conversations, studio visits, research, and long-term working relationships. Through a combination of lectures and hands-on practice, participants will develop practical skills while conducting studio visits, researching artists and their work, writing exhibition statements, and formatting price sheets. On the final day, participants will put these skills into practice by preparing materials for a mock exhibition. A small opening will follow, where students will get to practice presenting a piece of work to attendees."
+    ],
+    "price": 150,
+    "soldOut": false,
+    "scholarship": false,
+    "keelaUrl": "https://revenue-usa.keela.co/february-27-282027-curatorial-practices-workshop-registration"
+  },
+  {
+    "index": 12,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/a276b2dc-defe-40b0-87bf-49d3b31cc126/Welding+10_18-19IMG_5360.JPG",
+    "heading": [
+      "Welded Steel Side Table: March 5-7, 2027",
+      "9 am - 4 pm"
+    ],
+    "instructorName": "Ethan Primason",
+    "instructorUrl": "https://ethanprimason.com",
+    "description": [
+      "In this three-day workshop, participants will design and build their own steel side table using a MIG welder. Instruction includes an explanation of how to use a MIG welder, welding specific types of joints, cutting with a metal chop saw, grinding with angle body grinders, and a thorough explanation of safety procedures. Using sheet metal, students will cut shapes for the table top and create custom legs with a tube bender. By the end of the workshop, students will have a customized table to take home along with welding fabrication and finishing skills."
+    ],
+    "price": 495,
+    "soldOut": false,
+    "scholarship": false,
+    "keelaUrl": "https://revenue-usa.keela.co/march-5-7-2027-welded-steel-side-table-workshop-registration"
+  },
+  {
+    "index": 13,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/79ab9202-6fb3-4a77-abba-e666bac74052/topsgraphic2.jpg",
+    "heading": [
+      "Garment Construction: Tops: March 13-14, 2027",
+      "9 am - 4 pm"
+    ],
+    "instructorName": "Kristen Jean Wheatley",
+    "instructorUrl": "https://kristenjeanwheatley.com",
+    "description": [
+      "In this 2-day course, students will learn the fundamentals of garment construction as they fabricate a simple top. We’ll explore basic pattern alteration and sewing techniques to create clothing that fits the body. Participants will practice hand and machine sewing to learn seaming, ironing, and finishing skills that become incorporated into well-made garments. Students will work from a pre-made pattern.",
+      "This course is appropriate for beginners. Students should bring at least 2 yards of non-stretch fabric. Bringing a sewing machine is highly recommended, but not required."
+    ],
+    "price": 225,
+    "soldOut": false,
+    "scholarship": false,
+    "keelaUrl": "https://revenue-usa.keela.co/march-13-14-2027-garment-construction-tops-workshop-registration"
+  },
+  {
+    "index": 14,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/680f9ba1-ae1c-4ac3-8ebd-6c95341cbba8/IMG_73222.jpg",
+    "heading": [
+      "Flat to Form: Sewing for the Body: March 18-21, 2027",
+      "9am - 4 pm"
+    ],
+    "instructorName": "Kristen Jean Wheatley",
+    "instructorUrl": "https://kristenjeanwheatley.com",
+    "description": [
+      "In this 3-day course, students will learn the fundamentals of garment construction for both everyday wear and artistic practice. We’ll explore basic pattern drafting and construction techniques to create clothing that fits the body with intention. Participants will practice hand and machine sewing to learn seaming, darting, and finishing skills that become incorporated into well-made garments. The class will also consider and discuss clothing as a creative medium by examining its roles in costume and artistic performance. Students will develop a simple garment with attention to both fit and purpose.",
+      "This course is appropriate for beginners. Students should bring at least 3 yards of non-stretch fabric. Bringing a sewing machine is recommended, but not required."
+    ],
+    "price": 395,
+    "soldOut": true,
+    "scholarship": false,
+    "keelaUrl": null
+  },
+  {
+    "index": 15,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/1ddd8bef-0bea-4264-927e-421da192501c/tempImagel9GQy3.jpg",
+    "heading": [
+      "Mojave Wild Clay: March 19-21, 2027",
+      "9 am - 4 pm"
+    ],
+    "instructorName": "Aida Lizalde",
+    "instructorUrl": "https://aidalizalde.com",
+    "description": [
+      "This three-day hands-on workshop explores the process of gathering and transforming wild clay from the landscape into ceramic objects. The clay we used will be sourced from the Coyote Dry Lake bed which is Joshua Tree BLM land.",
+      "On the first day students will learn how to identify and harvest clay, then process the material using a water-floating/settling method to separate clay from larger particles and organic material. Students will learn a few methods of testing clay for workability and plasticity and get information about additives to make clay better for ceramic use. On the second day, participants will use the processed clay to make small vessels and sculptural objects. We’ll use the desert sun to help us dry our clay.",
+      "The third day will be devoted to firing, cooling, and conversation. We’ll fire the work on a make-shift propane kiln, share snacks, and use the time around the firing to talk about clay, geology, extraction, material experimentation, and the relationship between ceramics and the environments and industries from which ceramic materials come. Participants will leave with at least a couple of small fired objects made from locally harvested clay."
+    ],
+    "price": 350,
+    "soldOut": true,
+    "scholarship": false,
+    "keelaUrl": null
+  },
+  {
+    "index": 16,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/1710424299650-8S7WXQIZ8PXPGT8ZQDF1/welding.jpeg",
+    "heading": [
+      "Introduction to Welding: April 3-4, 2027",
+      "9 am - 4 pm"
+    ],
+    "instructorName": "Ethan Primason",
+    "instructorUrl": "https://ethanprimason.com",
+    "description": [
+      "In this two-day workshop, learn the fundamentals of MIG welding steel. Welding processes include a complete explanation of how to use a MIG welder, welding specific types of joints, cutting with a metal chop saw, grinding with angle body grinders, and a thorough explanation of safety procedures. On the second day, students are encouraged to make a small object such as a candle or incense holder in order to practice all of the techniques covered on day one."
+    ],
+    "price": 295,
+    "soldOut": false,
+    "scholarship": false,
+    "keelaUrl": "https://revenue-usa.keela.co/april-3-4-2027-intro-to-welding-workshop-registration"
+  },
+  {
+    "index": 17,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/88132265-6264-4321-9c99-fe82e92d8161/IMG_2316.JPG",
+    "heading": [
+      "Building Armatures: Introduction to MIG Welding",
+      "April 9, 2027  9 am - 4pm"
+    ],
+    "instructorName": "Ethan Primason",
+    "instructorUrl": "https://ethanprimason.com",
+    "description": [
+      "Learn the fundamentals of MIG welding while building a three-dimensional steel armature from 1/8-inch steel rod. In this one-day hands-on workshop, artist and fabricator Ethan Primason will introduce students to the essential tools and techniques needed to cut, bend, shape, join, and finish steel.",
+      "Students will learn how a MIG welder works, basic welding and shop safety, material preparation, cutting and grinding, tack welding, creating strong joints, and finishing welded connections. Through hands-on experimentation, students will learn to translate lines and shapes into lightweight three-dimensional structures. The resulting armatures can become the foundation for sculpture, lampshades, or forms that are later wrapped, skinned, or combined with other materials. The emphasis will be on developing practical welding skills while exploring the creative possibilities of building with steel rod. No previous welding experience is required."
+    ],
+    "price": 140,
+    "soldOut": true,
+    "scholarship": true,
+    "keelaUrl": null
+  },
+  {
+    "index": 18,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/c34fbf94-417f-43bc-99e0-fb84ca7d5869/periodicity.jpg",
+    "heading": [
+      "From Armature to Skin: April 10-12, 2027",
+      "9 am - 4 pm"
+    ],
+    "instructorName": "Maria Phillips",
+    "instructorUrl": "https://www.mariaphillipsstudio.com",
+    "description": [
+      "How can a skeletal structure become skin, surface, and sculptural form? In this workshop, students will transform simple metal armatures into translucent, layered forms using natural hog casing and other materials. Students will construct armatures using steel binding wire, exploring soldering and cold-connection techniques to build structures that will eventually be skinned with gut.",
+      "Maria will guide students through stretching, layering, and manipulating hog casing over their forms. Students will experiment with thin and heavy applications, create sheets of casing, and explore how tension and translucency can define volume and reveal or conceal underlying structure. Maria will introduce natural dyes, including beets, blueberries, cloves, and turmeric, as well as techniques for embedding materials between layers. Students will also explore how salt-cured casing reacts with metals, including rust and green patinas, and ways to control or seal those reactions.",
+      "Students are encouraged to bring water-absorbent materials such as paper to experiment with as alternative skins, along with lightweight ephemera such as leaves, seed pods, photographs, and bits of cloth for embedding. Throughout the workshop, we’ll explore the shifting boundaries between structure and surface, inside and outside, concealment and revelation."
+    ],
+    "price": 395,
+    "soldOut": false,
+    "scholarship": false,
+    "keelaUrl": "https://revenue-usa.keela.co/april-10-12-2027-from-armature-to-skin-workshop-registration"
+  },
+  {
+    "index": 19,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/249457d9-5f67-42fb-ac62-8b54f2c92ba2/glass.jpg",
+    "heading": [
+      "Introduction to Kiln-Formed Glass Casting: April 23-25, 2027",
+      "Day 1: 9 am - 4 pm, Day 2: 8 am - 12 pm, Day 3: 2 pm - 5 pm"
+    ],
+    "instructorName": "Heidi Schwegler",
+    "instructorUrl": "https://www.heidischwegler.com",
+    "description": [
+      "Join us in-person as we take you through each step of the lost wax casting process. Silicone and alginate mold making is also included. Learn the basics of lost wax kiln-casting by transforming found objects into Bullseye glass. Students will learn the essentials for mold-building, wax finishing, material calculation, color mixing, and the theory behind firing schedules."
+    ],
+    "price": 450,
+    "soldOut": true,
+    "scholarship": false,
+    "keelaUrl": null
+  },
+  {
+    "index": 20,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/d8c63ea6-29c0-4ab7-ad1e-bbc084733f8a/AiNS+Workshop+2.jpg",
+    "heading": [
+      "Adobe Construction: Building YVML’s Outdoor Classroom",
+      "April 28-May 2, 2027   9 am - 4 pm"
+    ],
+    "instructorName": "Joanna Keane Lopez",
+    "instructorUrl": "https://www.joannakeanelopez.com",
+    "description": [
+      "Learn the fundamentals of adobe construction while helping build YVML’s new Outdoor Classroom. In this five-day, hands-on workshop, students will learn soil and material preparation, adobe brickmaking, laying and leveling bricks, mixing and applying mortar, wall construction, and mud plastering. Along the way, students will gain an understanding of the tools, materials, and techniques used in traditional adobe construction.",
+      "The bricks for the Outdoor Classroom will be made in advance, allowing the majority of the workshop to focus on construction. Students will still learn how adobe bricks are made using YVML’s permanent brickyard, from preparing and mixing soil to forming and drying bricks, providing the foundation to return as a brickyard volunteer or begin making adobe themselves.",
+      "Students will then put these skills to work constructing YVML’s new Outdoor Classroom, an accessible outdoor workspace for learning, demonstrations, making, respite, and community gathering. Rather than building practice walls, students will participate in a real construction project, with the goal of taking the structure from its beginning stages through completion."
+    ],
+    "price": 450,
+    "soldOut": false,
+    "scholarship": false,
+    "keelaUrl": "https://revenue-usa.keela.co/april-28-may-2-2027-adobe-construction-workshop-registration"
+  },
+  {
+    "index": 21,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/aa49bfc6-322e-44ef-8f2d-bc27124dc09a/03_rotting.jpg",
+    "heading": [
+      "Introduction to Stone Carving: May 7-9, 2026",
+      "9am - 4pm"
+    ],
+    "instructorName": "Cara Chan",
+    "instructorUrl": "https://www.instagram.com/caraaachan",
+    "description": [
+      "Explore the art of stone carving in this three-day workshop, using alabaster—a soft, luminous stone known for its beautiful colors and patterns. Ideal for all skill levels, this hands-on class covers the use of traditional tools like hammers, chisels, rasps, and files to carve, sand, and polish your own sculpture.",
+      "Starting from a sketch, maquette, or abstract imagination, students will learn essential techniques and leave with a finished piece and the skills to continue carving at home. Tools are provided, but students must bring their own stones.",
+      "No prior experience is necessary—just curiosity, creativity, and a willingness to get dusty."
+    ],
+    "price": 395,
+    "soldOut": false,
+    "scholarship": true,
+    "keelaUrl": "https://revenue-usa.keela.co/may-5-7-2027-stone-carving-workshop-registration"
+  },
+  {
+    "index": 22,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/016dec98-c6bc-4dbd-b873-808ca34eb0b8/IMG_7122.png",
+    "heading": [
+      "Firescaping: Designing Landscapes for Wildfire Resilience: May 8, 2027",
+      "9am - 1pm"
+    ],
+    "instructorName": "Marinna Wagner",
+    "instructorUrl": "https://www.instagram.com/marinnawagner",
+    "description": [
+      "The Mojave Desert contains diverse plant communities shaped by elevation, soils, water, exposure, and climate. Learning how these species grow together in the wild can provide a useful framework for creating resilient and regionally appropriate gardens.",
+      "In this class, landscape designer and certified arborist Marinna Wagner will introduce several characteristic desert plant communities and explore how their patterns can be translated into designed landscapes. Participants will learn how to assess basic site conditions, develop plant palettes using native species, consider natural plant spacing and associations, and incorporate principles from restoration ecology into garden design.",
+      "The class will also discuss practical approaches to plant establishment, supplemental water, seeding, and working with existing native vegetation. Participants will leave with a framework for developing plant palettes that respond to both the ecology and character of the Mojave Desert."
+    ],
+    "price": 80,
+    "soldOut": false,
+    "scholarship": false,
+    "keelaUrl": "https://revenue-usa.keela.co/may-8-2027-firescaping-workshop-registration"
+  },
+  {
+    "index": 23,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/2de3c351-0051-4b85-bf28-90451a242710/Cleft+with+braid.jpg",
+    "heading": [
+      "Sculptural Twining with Waxed Linen and Reed, May 13-16, 2027",
+      "9am - 4pm"
+    ],
+    "instructorName": "Ann Coddington",
+    "instructorUrl": "https://abcoddington.com",
+    "description": [
+      "In this fun four day class, Ann will introduce the ancient technique of twining. We will work with both waxed linen and reed exploring different methods of beginning a piece and how to shape forms sculpturally."
+    ],
+    "price": 550,
+    "soldOut": false,
+    "scholarship": false,
+    "keelaUrl": "https://revenue-usa.keela.co/may-13-16-2027-basketry-workshop-registration"
+  },
+  {
+    "index": 24,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/6133c67e-c1f8-48d1-8f0e-88a8b5d5af9d/Screenshot+2026-10-09+at+1.13.30%E2%80%AFPM.png",
+    "heading": [
+      "Desert Plant Palettes: Designing Gardens from Mojave Plant Communities: May 15, 2027",
+      "9am - 1pm"
+    ],
+    "instructorName": "Marinna Wagner",
+    "instructorUrl": "https://www.instagram.com/marinnawagner",
+    "description": [
+      "The Mojave Desert contains diverse plant communities shaped by elevation, soils, water, exposure, and climate. Learning how these species grow together in the wild can provide a useful framework for creating resilient and regionally appropriate gardens.",
+      "In this class, landscape designer and certified arborist Marinna Wagner will introduce several characteristic desert plant communities and explore how their patterns can be translated into designed landscapes. Participants will learn how to assess basic site conditions, develop plant palettes using native species, consider natural plant spacing and associations, and incorporate principles from restoration ecology into garden design.",
+      "The class will also discuss practical approaches to plant establishment, supplemental water, seeding, and working with existing native vegetation. Participants will leave with a framework for developing plant palettes that respond to both the ecology and character of the Mojave Desert."
+    ],
+    "price": 80,
+    "soldOut": false,
+    "scholarship": false,
+    "keelaUrl": "https://revenue-usa.keela.co/may-15-2027-desert-plant-palettes-workshop-registration"
+  },
+  {
+    "index": 25,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/8bcbce75-4e19-412e-86f8-df1a0aca88c1/sand+casting+6.jpg",
+    "heading": [
+      "Sand Casting in Aluminum: May 21-23, 2027",
+      "9 am - 4 pm"
+    ],
+    "instructorName": "Paul Erschen",
+    "instructorUrl": "https://www.paul-erschen.com",
+    "description": [
+      "Sand Casting is an ancient process that is now most often used in industrial and artistic applications. In this three day introductory workshop, students will learn the process of sand casting to create objects with surprisingly intricate details. Students will bring objects to replicate, alter, or carve in two-part foundry sand molds. When the sand is compacted and the object is removed, the negative space will be filled with molten aluminum in the foundry. We will also go over the steps to cut off and grind any sprues or air vents after casting."
+    ],
+    "price": 375,
+    "soldOut": false,
+    "scholarship": true,
+    "keelaUrl": "https://revenue-usa.keela.co/may-21-23-2027-sand-casting-workshop-registration"
+  },
+  {
+    "index": 26,
+    "image": "https://images.squarespace-cdn.com/content/v1/5d695fe1f8d59d0001fd6c8a/9dc20754-0234-48b3-8823-374309055afa/sand+casting+5.jpg",
+    "heading": [
+      "Sand Casting in Aluminum: May 25-27, 2027",
+      "9 am - 4 pm"
+    ],
+    "instructorName": "Paul Erschen",
+    "instructorUrl": "https://www.paul-erschen.com",
+    "description": [
+      "Sand Casting is an ancient process that is now most often used in industrial and artistic applications. In this three day introductory workshop, students will learn the process of sand casting to create objects with surprisingly intricate details. Students will bring objects to replicate, alter, or carve in two-part foundry sand molds. When the sand is compacted and the object is removed, the negative space will be filled with molten aluminum in the foundry. We will also go over the steps to cut off and grind any sprues or air vents after casting."
+    ],
+    "price": 375,
+    "soldOut": false,
+    "scholarship": false,
+    "keelaUrl": "https://revenue-usa.keela.co/may-25-27-2027-sand-casting-workshop-registration"
+  }
+]

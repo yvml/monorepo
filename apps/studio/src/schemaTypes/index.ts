@@ -7,7 +7,7 @@ import {
   textModule,
 } from '@hmidmismi/sanity-core';
 import { imageModule } from '../lib';
-import { article, event, page, person, schedule } from './documents';
+import { article, event, material, page, person, schedule, workshop, workshopType } from './documents';
 import { localizedSlugType } from './localizedSlugType';
 
 /** Document types an internal link in rich text may point at. */
@@ -20,6 +20,7 @@ export const schemaTypes = [
   flexibleSchedule,
   imageModule,
   localizedSlugType,
+  material,
   page,
   person,
   createPortableTextBody({ internalLinkTypes, extraTypes: ['table', 'code'] }),
@@ -27,4 +28,6 @@ export const schemaTypes = [
   schedule,
   seo,
   textModule,
+  workshop,
+  workshopType,
 ];

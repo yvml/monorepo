@@ -1,16 +1,22 @@
 import {
-  bodyField,
   eventDateField,
   localizedText,
   requiredTitleField,
   seoField,
 } from '@hmidmismi/sanity-core';
-import { defineArrayMember, defineField, defineType } from 'sanity';
+import { defineField, defineType } from 'sanity';
+import { createImage } from '../../lib/factories/imageFactory';
+import { keelaUrlField } from '../keelaUrlField';
 
 const STATUSES = [
   { title: 'Scheduled', value: 'scheduled' },
   { title: 'To be confirmed', value: 'tbc' },
   { title: 'Cancelled', value: 'cancelled' },
+];
+
+const TYPES = [
+  { title: 'Event', value: 'event' },
+  { title: 'Exhibition', value: 'exhibition' },
 ];
 
 export const event = defineType({
@@ -20,11 +26,13 @@ export const event = defineType({
   fields: [
     requiredTitleField({ title: 'Event title' }),
     defineField({
-      name: 'slug',
-      type: 'slug',
-      options: { source: (doc) => localizedText((doc as { title?: never }).title), maxLength: 96 },
-      validation: (Rule) => Rule.required(),
+      name: 'type',
+      title: 'Type',
+      type: 'string',
+      options: { list: TYPES, layout: 'radio' },
+      initialValue: 'event',
     }),
+    defineField({ name: 'slug', type: 'localizedSlug' }),
     eventDateField(),
     defineField({
       name: 'status',
@@ -37,22 +45,10 @@ export const event = defineType({
       name: 'location',
       title: 'Location',
       type: 'string',
-      description: 'Where it takes place, such as Brooklyn Aikikai or Wroclaw Aikikai, Poland.',
     }),
-    defineField({
-      name: 'instructors',
-      title: 'Instructors',
-      type: 'array',
-      of: [defineArrayMember({ type: 'string' })],
-    }),
-    defineField({
-      name: 'price',
-      title: 'Price',
-      type: 'internationalizedArrayText',
-      description: 'For example: Saturday only $85, Sunday only $85, both days $160.',
-    }),
+    createImage({ name: 'image', title: 'Image' }),
     defineField({ name: 'registrationUrl', title: 'Registration link', type: 'url' }),
-    bodyField(),
+    keelaUrlField(),
     defineField({
       name: 'content',
       title: 'Content',

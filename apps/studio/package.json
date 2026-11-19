@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@hmidmismi/sanity-core": "workspace:*",
+    "@sanity/assist": "6.3.0",
     "@sanity/client": "^7.20.0",
     "@sanity/code-input": "^7.3.10",
     "@sanity/icons": "^3.7.4",

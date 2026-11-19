@@ -1,4 +1,4 @@
-import { bodyField, requiredTitleField, seoField } from '@hmidmismi/sanity-core';
+import { requiredTitleField, seoField } from '@hmidmismi/sanity-core';
 import { defineField, defineType } from 'sanity';
 import { titlePreview } from '../preview';
 
@@ -16,7 +16,6 @@ export const page = defineType({
       type: 'array',
       of: [{ type: 'imageModule' }, { type: 'textModule' }],
     }),
-    bodyField(),
     seoField(),
   ],
   preview: titlePreview(),

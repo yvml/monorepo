@@ -8,11 +8,14 @@ import { requireLogin } from './preview';
  * arrive in draft mode (Next validates that cookie, and the draft-mode route only sets it after Sanity's one-time
  * secret checks out), so they never meet the sign-in page. Everyone else needs a session.
  *
- * @param inner - the page's own loader, given whether the request is in draft mode.
+ * @param inner - the page's own loader, given whether the request is in draft mode. It may return `notFound`.
  * @returns a loader that redirects to `/sign-in` when a visitor has no session.
  */
 export function withPreviewGate<P extends Record<string, unknown> = Record<string, never>>(
-  inner?: (context: GetServerSidePropsContext, draft: boolean) => Promise<{ props: P }> | { props: P }
+  inner?: (
+    context: GetServerSidePropsContext,
+    draft: boolean
+  ) => Promise<{ props: P } | { notFound: true }> | { props: P } | { notFound: true }
 ): GetServerSideProps<P & { draftMode: boolean }> {
   return async (context) => {
     const draft = Boolean(context.draftMode);
@@ -34,6 +37,7 @@ export function withPreviewGate<P extends Record<string, unknown> = Record<strin
       }
     }
     const result = inner ? await inner(context, draft) : { props: {} as P };
+    if ('notFound' in result) return result;
     return { props: { ...result.props, draftMode: draft } };
   };
 }
