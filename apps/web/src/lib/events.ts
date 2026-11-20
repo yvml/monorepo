@@ -34,6 +34,7 @@ export type EventEntry = {
 /** The fields a listing row needs. */
 export type EventSummary = {
   _id: string;
+  _type?: string;
   slug: string;
   title: Localized<string>;
   status?: 'scheduled' | 'tbc' | 'cancelled' | 'open' | 'soldOut';
@@ -102,7 +103,7 @@ const queryParams = (section: Section) => ({
 /** The English slug; each entry keeps one slug per language. */
 const SLUG = `slug[language == "en" || _key == "en"][0].value.current`;
 
-const SUMMARY = `_id, "slug": ${SLUG}, title, status, location, dateTime`;
+const SUMMARY = `_id, _type,"slug": ${SLUG}, title, status, location, dateTime`;
 /** GROQ for an image field's asset, dimensions and alt text, as {@link ImageData}. */
 export const imageQuery = (field: string) =>
   `${field}{ "url": asset->url, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height, alt }`;
