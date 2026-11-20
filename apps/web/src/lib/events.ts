@@ -1,3 +1,4 @@
+import { activeLocale } from './locale';
 import { clientFor } from './sanity';
 import type { Section } from './site';
 
@@ -11,7 +12,7 @@ export type Localized<T> = { _key: string; language?: string; value?: T }[] | st
  * @param language - the preferred language code.
  * @returns the value, or an empty string.
  */
-export function localize(field: Localized<string>, language = 'en') {
+export function localize(field: Localized<string>, language = activeLocale()) {
   if (typeof field === 'string') return field;
   if (!field) return '';
   return (
@@ -65,11 +66,10 @@ export type LocalizedBlocks = unknown[] | { _key: string; language?: string; val
 /** A module from a document's `content` array, shaped by the query. */
 export type ContentModule =
   | { _key: string; _type: 'textModule'; text?: LocalizedBlocks }
+  | { _key: string; _type: 'kickerModule'; text?: Localized<string> }
   | {
       _key: string;
       _type: 'peopleModule';
-      kicker?: string;
-      description?: LocalizedBlocks | null;
       people?: {
         _key: string;
         role?: string;
@@ -95,7 +95,7 @@ export type ContentModule =
  * @param language - the preferred language code.
  * @returns the blocks, or an empty array.
  */
-export function localizedBlocks(field: LocalizedBlocks | null | undefined, language = 'en') {
+export function localizedBlocks(field: LocalizedBlocks | null | undefined, language = activeLocale()) {
   const first = field?.[0] as { _key?: string; language?: string; value?: unknown } | undefined;
   if (!first) return [];
   if (!Array.isArray(first.value)) return field as unknown[];
@@ -125,8 +125,8 @@ export const FULL_NAME = `array::join(array::compact([prefix, title, suffix]), "
 export const CONTENT = `content[]{
   _key, _type,
   _type == "textModule" => { text },
+  _type == "kickerModule" => { text },
   _type == "peopleModule" => {
-    kicker, description,
     "people": people[]{
       _key, role,
       "person": person->{_id, "title": ${FULL_NAME}, "slug": slug.current, "linked": defined(Biography) || defined(portrait.asset)}

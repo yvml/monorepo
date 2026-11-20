@@ -14,7 +14,7 @@ export const page = defineType({
       name: 'content',
       title: 'Content',
       type: 'array',
-      of: [{ type: 'imageModule' }, { type: 'textModule' }, { type: 'peopleModule' }],
+      of: [{ type: 'textModule' }, { type: 'kickerModule' }, { type: 'imageModule' }, { type: 'peopleModule' }],
     }),
     seoField(),
   ],

@@ -6,7 +6,7 @@ import {
   seo,
   textModule,
 } from '@hmidmismi/sanity-core';
-import { imageModule, peopleModule } from '../lib';
+import { imageModule, kickerModule, peopleModule } from '../lib';
 import { article, event, material, page, person, schedule, workshop, workshopType } from './documents';
 import { localizedSlugType } from './localizedSlugType';
 
@@ -19,6 +19,7 @@ export const schemaTypes = [
   flexibleDate,
   flexibleSchedule,
   imageModule,
+  kickerModule,
   localizedSlugType,
   material,
   page,

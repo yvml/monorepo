@@ -3,7 +3,7 @@ import { themeCss } from '@/lib/theme';
 
 export default function Document() {
   return (
-    <Html lang="en">
+    <Html>
       <Head>
         <style id="theme" dangerouslySetInnerHTML={{ __html: themeCss }} />
       </Head>
