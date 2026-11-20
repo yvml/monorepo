@@ -189,7 +189,7 @@ function inline(source: string) {
 }
 
 function block([kind, value]: Item) {
-  const style = kind === 'quote' ? 'blockquote' : kind === 'li' ? 'normal' : kind;
+  const style = kind === 'quote' ? 'blockquote' : kind === 'p' || kind === 'li' ? 'normal' : kind;
   return {
     _key: key(),
     _type: 'block',

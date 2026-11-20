@@ -40,6 +40,16 @@ export const person = defineType({
     }),
     seoField(),
   ],
+  orderings: [
+    {
+      title: 'Last name, first name',
+      name: 'lastName',
+      by: [
+        { field: 'familyName', direction: 'asc' },
+        { field: 'nameGiven', direction: 'asc' },
+      ],
+    },
+  ],
   preview: {
     select: {
       title: 'title',

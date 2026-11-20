@@ -6,7 +6,7 @@ import {
   seo,
   textModule,
 } from '@hmidmismi/sanity-core';
-import { imageModule } from '../lib';
+import { imageModule, peopleModule } from '../lib';
 import { article, event, material, page, person, schedule, workshop, workshopType } from './documents';
 import { localizedSlugType } from './localizedSlugType';
 
@@ -22,6 +22,7 @@ export const schemaTypes = [
   localizedSlugType,
   material,
   page,
+  peopleModule,
   person,
   createPortableTextBody({ internalLinkTypes, extraTypes: ['table', 'code'] }),
   portableTextCaption,
