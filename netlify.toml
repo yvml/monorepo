@@ -1,0 +1,32 @@
+[build]
+  command = "turbo run build --filter @yvml/web"
+  publish = "apps/web/.next"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+# Production (main) is staging.yvml.org. Everything else is non-production.
+[context.production.environment]
+  NEXT_PUBLIC_ENVIRONMENT = "production"
+
+[context.deploy-preview.environment]
+  NEXT_PUBLIC_ENVIRONMENT = "preview"
+
+[context.branch-deploy.environment]
+  NEXT_PUBLIC_ENVIRONMENT = "preview"
+
+# The long-lived `preview` branch is preview.yvml.org: the same site, showing Sanity drafts. Set
+# SANITY_API_READ_TOKEN (Viewer role) for this branch in the Netlify UI; it stays server-side. Never set
+# PREVIEW_SITE in the production context.
+[context.preview.environment]
+  NEXT_PUBLIC_ENVIRONMENT = "preview"
+  PREVIEW_SITE = "true"
+
+[dev]
+  command = "pnpm --filter @yvml/web dev"
+  framework = "#custom"
+  targetPort = 3000
+  port = 8888
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
