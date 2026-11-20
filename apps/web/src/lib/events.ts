@@ -2,7 +2,7 @@ import { clientFor } from './sanity';
 import type { Section } from './site';
 
 /** A language-keyed array as the studio stores localized fields. */
-export type Localized<T> = { _key: string; value?: T }[] | string | null | undefined;
+export type Localized<T> = { _key: string; language?: string; value?: T }[] | string | null | undefined;
 
 /**
  * Reads one language of a localized field, falling back to English.
@@ -15,8 +15,8 @@ export function localize(field: Localized<string>, language = 'en') {
   if (typeof field === 'string') return field;
   if (!field) return '';
   return (
-    field.find((entry) => entry._key === language)?.value ||
-    field.find((entry) => entry._key === 'en')?.value ||
+    field.find((entry) => (entry.language ?? entry._key) === language)?.value ||
+    field.find((entry) => (entry.language ?? entry._key) === 'en')?.value ||
     ''
   );
 }
@@ -53,14 +53,13 @@ export type EventDetail = EventSummary & {
   format?: 'inPerson' | 'virtual' | 'hybrid' | null;
   scholarshipAvailable?: boolean | null;
   image?: ImageData;
-  body?: LocalizedBlocks | null;
   registrationUrl?: string;
   keelaUrl?: string;
   content?: ContentModule[];
 };
 
 /** Portable Text, either bare or held per language the way the studio stores localized fields. */
-export type LocalizedBlocks = unknown[] | { _key: string; value?: unknown[] }[];
+export type LocalizedBlocks = unknown[] | { _key: string; language?: string; value?: unknown[] }[];
 
 /** A module from a document's `content` array, shaped by the query. */
 export type ContentModule =
@@ -85,11 +84,12 @@ export type ContentModule =
  * @returns the blocks, or an empty array.
  */
 export function localizedBlocks(field: LocalizedBlocks | null | undefined, language = 'en') {
-  const first = field?.[0] as { _key?: string; value?: unknown } | undefined;
+  const first = field?.[0] as { _key?: string; language?: string; value?: unknown } | undefined;
   if (!first) return [];
   if (!Array.isArray(first.value)) return field as unknown[];
-  const entries = field as { _key: string; value?: unknown[] }[];
-  return (entries.find((entry) => entry._key === language) ?? entries.find((entry) => entry._key === 'en') ?? first)
+  const entries = field as { _key: string; language?: string; value?: unknown[] }[];
+  const lang = (entry: { _key: string; language?: string }) => entry.language ?? entry._key;
+  return (entries.find((entry) => lang(entry) === language) ?? entries.find((entry) => lang(entry) === 'en') ?? first)
     .value ?? [];
 }
 
@@ -121,7 +121,7 @@ export const CONTENT = `content[]{
 const DETAIL = `${SUMMARY}, ${CONTENT}, "image": ${imageQuery('image')},
   "instructors": instructors[]->{_id, title, "slug": slug.current},
   "workshopTypes": workshopTypes[]->title, "materials": materials[]->title,
-  price, format, scholarshipAvailable, body, registrationUrl, keelaUrl`;
+  price, format, scholarshipAvailable, registrationUrl, keelaUrl`;
 
 /**
  * The entries of one type. Entries saved before the `type` field existed count as events.

@@ -36,7 +36,7 @@ const slugify = (input: string) =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
 const key = () => Math.random().toString(36).slice(2, 12);
-const localized = (type: string, value: unknown) => [{ _key: 'en', _type: type, value }];
+const localized = (type: string, value: unknown) => [{ _key: 'en', _type: type, language: 'en', value }];
 const text = (value: string) => localized('internationalizedArrayStringValue', value);
 const slugs = (value: string) => [{ _key: 'en', language: 'en', value: { _type: 'slug', current: value } }];
 const body = (paragraphs: string[]) =>
@@ -346,7 +346,7 @@ async function main() {
       status: r.soldOut ? 'soldOut' : 'open',
       scholarshipAvailable: r.scholarship,
       ...(image ? { image } : {}),
-      body: body(r.description),
+      content: [{ _key: key(), _type: 'textModule', text: body(r.description) }],
       ...(r.keelaUrl ? { keelaUrl: r.keelaUrl } : {}),
     });
   }

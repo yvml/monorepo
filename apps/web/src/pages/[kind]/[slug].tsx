@@ -11,7 +11,7 @@ import {
 } from '@hmidmismi/ui';
 import Head from 'next/head';
 import NextLink from 'next/link';
-import { Blocks, ContentModules, Hero } from '@/components/ContentModules';
+import { ContentModules, Hero } from '@/components/ContentModules';
 import { KeelaEmbed } from '@/components/KeelaEmbed';
 import { PageTemplate } from '@/components/PageTemplate';
 import { nextLink, SiteLayout } from '@/components/SiteLayout';
@@ -55,7 +55,7 @@ export default function Entry({ section, entry, page }: Props) {
   const types = entry.workshopTypes?.map((term) => localize(term)).join(', ');
   const materials = entry.materials?.map((term) => localize(term)).join(', ');
   const open = entry.status !== 'cancelled' && entry.status !== 'soldOut';
-  const hasBody = Boolean(entry.body?.length) || Boolean(entry.content?.length);
+  const hasBody = Boolean(entry.content?.length);
 
   return (
     <SiteLayout>
@@ -102,7 +102,6 @@ export default function Entry({ section, entry, page }: Props) {
             </TermRow>
           )}
         </TermList>
-        <Blocks value={entry.body} />
         <ContentModules modules={entry.content} />
         {keela && open && <KeelaEmbed url={keela} title={`Register for ${title}`} />}
         {!hasBody && !entry.instructors?.length && <Text>Details to follow.</Text>}
