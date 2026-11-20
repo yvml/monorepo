@@ -1,13 +1,23 @@
 import { personFields, seoField } from '@hmidmismi/sanity-core';
-import { defineArrayMember, defineField, defineType } from 'sanity';
+import { defineArrayMember, defineField, defineType, type FieldDefinition } from 'sanity';
 import { createImage } from '../../lib/factories/imageFactory';
+
+const prefix = defineField({ name: 'prefix', title: 'Prefix', type: 'string' });
+const suffix = defineField({ name: 'suffix', title: 'Suffix', type: 'string' });
+
+/** The shared name fields with a prefix (Dr.) before the given name and a suffix (IV, PhD) after the family name. */
+const nameFields = (personFields() as FieldDefinition[]).flatMap((field): FieldDefinition[] => {
+  if (field.name === 'nameGiven') return [prefix, field];
+  if (field.name === 'familyName') return [field, suffix];
+  return [field];
+});
 
 export const person = defineType({
   name: 'person',
   title: 'Person',
   type: 'document',
   fields: [
-    ...personFields(),
+    ...nameFields,
     defineField({ name: 'location', title: 'Location', type: 'string' }),
     createImage({ name: 'portrait', title: 'Portrait' }),
     defineField({
@@ -53,12 +63,15 @@ export const person = defineType({
   preview: {
     select: {
       title: 'title',
+      prefix: 'prefix',
       nameGiven: 'nameGiven',
       middleGiven: 'middleGiven',
       familyName: 'familyName',
+      suffix: 'suffix',
     },
-    prepare: ({ title, nameGiven, middleGiven, familyName }) => ({
-      title: [nameGiven, middleGiven, familyName].filter(Boolean).join(' ') || title || 'Unnamed',
+    prepare: ({ title, prefix, nameGiven, middleGiven, familyName, suffix }) => ({
+      title:
+        [prefix, nameGiven, middleGiven, familyName, suffix].filter(Boolean).join(' ') || title || 'Unnamed',
     }),
   },
 });
