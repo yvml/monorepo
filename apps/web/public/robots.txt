@@ -1,0 +1,4 @@
+# Every deployment is non-public for now: staging, preview and branch deploys. Remove this file's
+# blanket disallow (and the edge function and header in netlify.toml) when the site goes live.
+User-agent: *
+Disallow: /

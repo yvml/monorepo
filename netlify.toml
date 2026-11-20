@@ -23,6 +23,13 @@
   NEXT_PUBLIC_ENVIRONMENT = "preview"
   PREVIEW_SITE = "true"
 
+# Not public yet: noindex everywhere (production = staging.yvml.org, plus preview and branch deploys), and the edge
+# function in netlify/edge-functions/block-bots.ts turns away crawlers. Remove both when the site goes live.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+
 [dev]
   command = "pnpm --filter @yvml/web dev"
   framework = "#custom"
