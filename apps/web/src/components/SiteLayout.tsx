@@ -1,6 +1,7 @@
 import { SiteFooter, SiteHeader, ThemeToggle, type LinkRender } from '@hmidmismi/ui';
 import NextLink from 'next/link';
 import type { ReactNode } from 'react';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { NAV_GROUPS, type NavGroup, SECTIONS, SITE_NAME } from '@/lib/site';
 
 /**
@@ -47,7 +48,12 @@ export function SiteLayout({ children }: { children: ReactNode }) {
         utility={[]}
         wordmark={{ text: SITE_NAME, link: nextLink('/') }}
         tabs={tabs}
-        actions={<ThemeToggle />}
+        actions={
+          <>
+            <LanguageSwitcher />
+            <ThemeToggle />
+          </>
+        }
       />
       {children}
       <SiteFooter

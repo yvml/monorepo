@@ -345,11 +345,17 @@ async function content(items: Item[]) {
     if (item[0] === 'people') {
       flush();
       const spec = item[1] as People;
+      modules.push({ _key: key(), _type: 'kickerModule', text: text(spec.kicker) });
+      if (spec.description) {
+        modules.push({
+          _key: key(),
+          _type: 'textModule',
+          text: v5('internationalizedArrayPortableTextBodyValue', paragraphs([spec.description])),
+        });
+      }
       modules.push({
         _key: key(),
         _type: 'peopleModule',
-        kicker: spec.kicker,
-        ...(spec.description ? { description: v5('internationalizedArrayPortableTextBodyValue', paragraphs([spec.description])) } : {}),
         people: spec.entries.map(([id, role]) => ({
           _key: key(),
           _type: 'personEntry',

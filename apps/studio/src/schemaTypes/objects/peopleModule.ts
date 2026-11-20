@@ -1,19 +1,13 @@
 import { UsersIcon } from '@sanity/icons';
 import { defineArrayMember, defineField, defineType } from 'sanity';
 
-/** A list of people with a kicker and a description above it: staff, the board, the advisory council. */
+/** A list of people. A kicker and a description above it are their own modules. */
 export const peopleModule = defineType({
   name: 'peopleModule',
   title: 'People Module',
   type: 'object',
   icon: UsersIcon,
   fields: [
-    defineField({ name: 'kicker', title: 'Kicker', type: 'string' }),
-    defineField({
-      name: 'description',
-      title: 'Description',
-      type: 'internationalizedArrayPortableTextBody',
-    }),
     defineField({
       name: 'people',
       title: 'People',
@@ -39,9 +33,9 @@ export const peopleModule = defineType({
     }),
   ],
   preview: {
-    select: { title: 'kicker', people: 'people' },
-    prepare: ({ title, people }) => ({
-      title: title || 'People Module',
+    select: { people: 'people' },
+    prepare: ({ people }) => ({
+      title: 'People Module',
       subtitle: `${people?.length ?? 0} people`,
     }),
   },

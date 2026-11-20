@@ -49,15 +49,20 @@ export function ContentModules({ modules }: { modules?: ContentModule[] }) {
             </Measure>
           ) : null;
         }
+        if (module._type === 'kickerModule') {
+          const kicker = localize(module.text);
+          return kicker ? (
+            <p
+              key={module._key}
+              style={{ margin: 0, fontSize: '0.8em', letterSpacing: '0.08em', textTransform: 'uppercase' }}
+            >
+              {kicker}
+            </p>
+          ) : null;
+        }
         if (module._type === 'peopleModule') {
           return (
             <section key={module._key}>
-              {module.kicker && (
-                <p style={{ margin: 0, fontSize: '0.8em', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                  {module.kicker}
-                </p>
-              )}
-              <Blocks value={module.description} />
               <ul>
                 {module.people?.map(({ _key, role, person }) =>
                   person ? (
