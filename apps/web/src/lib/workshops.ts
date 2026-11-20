@@ -25,7 +25,7 @@ const SLUG = `slug[language == "en" || _key == "en"][0].value.current`;
 export function listWorkshops(draft: boolean) {
   return clientFor(draft).fetch<WorkshopSummary[]>(
     `*[_type == "workshop" && defined(${SLUG})]{
-      _id, "slug": ${SLUG}, title, dateTime, price, status, format,
+      _id, _type, "slug": ${SLUG}, title, dateTime, price, status, format,
       "imageUrl": image.asset->url,
       "instructors": instructors[]->{_id, title, "slug": slug.current, familyName, nameGiven},
       "workshopTypes": workshopTypes[]->{_id, title},

@@ -28,6 +28,7 @@ type Props = {
   undated: EventSummary[];
   workshops?: WorkshopSummary[];
   today?: string;
+  draftMode?: boolean;
 };
 
 export const getServerSideProps = withPreviewGate<Props>(async (context, draft) => {
@@ -70,7 +71,7 @@ function Rows({ entries, section }: { entries: EventSummary[]; section: Section 
   );
 }
 
-export default function Listing({ section, page, upcoming, past, undated, workshops, today: now }: Props) {
+export default function Listing({ section, page, upcoming, past, undated, workshops, today: now, draftMode }: Props) {
   if (page) return <PageTemplate page={page} />;
   if (!section) return null;
   if (workshops && now) {
@@ -82,7 +83,7 @@ export default function Listing({ section, page, upcoming, past, undated, worksh
         </Head>
         <PageColumn>
           <ListHeader title={section.title} />
-          <WorkshopBrowser workshops={workshops} today={now} />
+          <WorkshopBrowser workshops={workshops} today={now} draft={Boolean(draftMode)} />
         </PageColumn>
       </SiteLayout>
     );

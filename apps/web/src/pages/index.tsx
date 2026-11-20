@@ -1,4 +1,4 @@
-import { PageColumn, Text, Title } from '@hmidmismi/ui';
+import { PageColumn, Title } from '@hmidmismi/ui';
 import Head from 'next/head';
 import { SiteLayout } from '@/components/SiteLayout';
 import { withPreviewGate } from '@/lib/gate';
@@ -14,7 +14,6 @@ export default function Home() {
       </Head>
       <PageColumn>
         <Title level="h1">YVML</Title>
-        <Text>Edit src/pages/index.tsx to start.</Text>
       </PageColumn>
     </SiteLayout>
   );

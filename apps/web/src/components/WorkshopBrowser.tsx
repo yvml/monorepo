@@ -1,6 +1,8 @@
+import { stegaClean } from '@sanity/client/stega';
 import NextLink from 'next/link';
 import { type ReactNode, useMemo, useState } from 'react';
 import { formatDates, localize } from '@/lib/events';
+import { sanityAttr } from '@/lib/visual';
 import {
   applyFilters,
   type Availability,
@@ -73,7 +75,7 @@ function Select({
 }
 
 const names = (workshop: WorkshopSummary) =>
-  workshop.instructors?.map((person) => person.title).filter(Boolean).join(', ') ?? '';
+  workshop.instructors?.map((person) => stegaClean(person.title)).filter(Boolean).join(', ') ?? '';
 const price = (workshop: WorkshopSummary) => (workshop.price == null ? '' : `$${workshop.price}`);
 const status = (workshop: WorkshopSummary) => (workshop.status === 'soldOut' ? 'Sold out' : '');
 
@@ -84,7 +86,17 @@ const status = (workshop: WorkshopSummary) => (workshop.status === 'soldOut' ? '
  * @param props - the workshops and today's date.
  * @returns the listing.
  */
-export function WorkshopBrowser({ workshops, today }: { workshops: WorkshopSummary[]; today: string }) {
+export function WorkshopBrowser({
+  workshops,
+  today,
+  draft = false,
+}: {
+  workshops: WorkshopSummary[];
+  today: string;
+  draft?: boolean;
+}) {
+  /** Click-to-edit for one field of a workshop in Presentation. */
+  const at = (workshop: WorkshopSummary, path?: string) => sanityAttr(draft, workshop._id, 'workshop', path);
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
   const [view, setView] = useState<'grid' | 'list'>('grid');
   const set = <K extends keyof Filters>(key: K, value: Filters[K]) => setFilters((old) => ({ ...old, [key]: value }));
@@ -151,9 +163,13 @@ export function WorkshopBrowser({ workshops, today }: { workshops: WorkshopSumma
                 <Placeholder label={localize(workshop.title)} />
                 <strong style={{ display: 'block', marginTop: 8 }}>{localize(workshop.title)}</strong>
               </NextLink>
-              <div>{formatDates(workshop)}</div>
-              <div>{names(workshop)}</div>
-              <div>{[price(workshop), status(workshop)].filter(Boolean).join(' · ')}</div>
+              <div data-sanity={at(workshop, 'dateTime')}>{formatDates(workshop)}</div>
+              <div data-sanity={at(workshop, 'instructors')}>{names(workshop)}</div>
+              <div>
+                <span data-sanity={at(workshop, 'price')}>{price(workshop)}</span>
+                {price(workshop) && status(workshop) ? ' · ' : ''}
+                <span data-sanity={at(workshop, 'status')}>{status(workshop)}</span>
+              </div>
             </li>
           ))}
         </ul>
@@ -174,10 +190,10 @@ export function WorkshopBrowser({ workshops, today }: { workshops: WorkshopSumma
                 <td>
                   <NextLink href={`/workshops/${workshop.slug}`}>{localize(workshop.title)}</NextLink>
                 </td>
-                <td>{formatDates(workshop)}</td>
-                <td>{names(workshop)}</td>
-                <td>{price(workshop)}</td>
-                <td>{status(workshop)}</td>
+                <td data-sanity={at(workshop, 'dateTime')}>{formatDates(workshop)}</td>
+                <td data-sanity={at(workshop, 'instructors')}>{names(workshop)}</td>
+                <td data-sanity={at(workshop, 'price')}>{price(workshop)}</td>
+                <td data-sanity={at(workshop, 'status')}>{status(workshop)}</td>
               </tr>
             ))}
           </tbody>
