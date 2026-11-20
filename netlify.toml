@@ -1,5 +1,5 @@
 [build]
-  command = "turbo run build --filter @yvml/web"
+  command = "pnpm --filter @yvml/web build"
   publish = "apps/web/.next"
 
 [build.environment]
