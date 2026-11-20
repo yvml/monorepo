@@ -169,7 +169,7 @@ const PAGES: PageSpec[] = [
 ];
 
 const key = () => Math.random().toString(36).slice(2, 12);
-const text = (value: string) => [{ _key: 'en', _type: 'internationalizedArrayStringValue', value }];
+const text = (value: string) => [{ _key: 'en', _type: 'internationalizedArrayStringValue', language: 'en', value }];
 
 /** Turns `a [link](url) b` into spans plus the link annotations they use. */
 function inline(source: string) {
@@ -218,7 +218,7 @@ async function content(items: Item[], upload: boolean) {
     modules.push({
       _key: key(),
       _type: 'textModule',
-      text: [{ _key: 'en', _type: 'internationalizedArrayPortableTextBodyValue', value: run.map(block) }],
+      text: [{ _key: 'en', _type: 'internationalizedArrayPortableTextBodyValue', language: 'en', value: run.map(block) }],
     });
     run = [];
   };
