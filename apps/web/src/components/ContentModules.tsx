@@ -2,6 +2,7 @@ import { Figure, Measure, Picture } from '@hmidmismi/ui';
 import { PortableText, type PortableTextBlock } from '@portabletext/react';
 import { stegaClean } from '@sanity/client/stega';
 import NextLink from 'next/link';
+import { Kicker } from '@/components/Kicker';
 import { type ContentModule, type ImageData, localize, localizedBlocks, type LocalizedBlocks } from '@/lib/events';
 
 /** Localized Portable Text on its own, such as a workshop description or a biography. */
@@ -51,14 +52,7 @@ export function ContentModules({ modules }: { modules?: ContentModule[] }) {
         }
         if (module._type === 'kickerModule') {
           const kicker = localize(module.text);
-          return kicker ? (
-            <p
-              key={module._key}
-              style={{ margin: 0, fontSize: '0.8em', letterSpacing: '0.08em', textTransform: 'uppercase' }}
-            >
-              {kicker}
-            </p>
-          ) : null;
+          return kicker ? <Kicker key={module._key}>{kicker}</Kicker> : null;
         }
         if (module._type === 'peopleModule') {
           return (
