@@ -15,4 +15,43 @@ export const EVENTS = SECTIONS[0];
 export const EXHIBITIONS = SECTIONS[1];
 export const WORKSHOPS = SECTIONS[2];
 
+export type NavGroup = { title: string; path: string; children: { title: string; path: string }[] };
+
+/** The two sections made of pages: each has a landing page at `path` and child pages beneath it. */
+export const NAV_GROUPS: NavGroup[] = [
+  {
+    title: 'About YVML',
+    path: 'about',
+    children: [
+      { title: 'History', path: 'about/history' },
+      { title: 'News & Articles', path: 'about/news' },
+      { title: 'Press', path: 'about/press' },
+      { title: 'Staff', path: 'about/staff' },
+      { title: 'Governance', path: 'about/governance' },
+      { title: 'Contact Us', path: 'about/contact' },
+    ],
+  },
+  {
+    title: 'Support Us',
+    path: 'support',
+    children: [
+      { title: 'Donate', path: 'support/donate' },
+      { title: 'Planned Giving', path: 'support/planned-giving' },
+      { title: 'Corporate Sponsorship', path: 'support/corporate-sponsorship' },
+      { title: 'Foundation Support', path: 'support/foundation-support' },
+      { title: 'Government Partners', path: 'support/government-partners' },
+      { title: 'Information for Donors', path: 'support/information-for-donors' },
+    ],
+  },
+];
+
+/**
+ * The group a path belongs to.
+ *
+ * @param path - a path without the leading slash, such as `about/staff`.
+ * @returns the group, or undefined when the path is outside both groups.
+ */
+export const groupForPath = (path: string) =>
+  NAV_GROUPS.find((group) => path === group.path || path.startsWith(`${group.path}/`));
+
 export const SITE_NAME = 'YVML';

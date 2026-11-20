@@ -1,5 +1,7 @@
 import { Figure, Measure, Picture } from '@hmidmismi/ui';
 import { PortableText, type PortableTextBlock } from '@portabletext/react';
+import { stegaClean } from '@sanity/client/stega';
+import NextLink from 'next/link';
 import { type ContentModule, type ImageData, localize, localizedBlocks, type LocalizedBlocks } from '@/lib/events';
 
 /** Localized Portable Text on its own, such as a workshop description or a biography. */
@@ -46,6 +48,32 @@ export function ContentModules({ modules }: { modules?: ContentModule[] }) {
               <PortableText value={blocks} />
             </Measure>
           ) : null;
+        }
+        if (module._type === 'peopleModule') {
+          return (
+            <section key={module._key}>
+              {module.kicker && (
+                <p style={{ margin: 0, fontSize: '0.8em', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                  {module.kicker}
+                </p>
+              )}
+              <Blocks value={module.description} />
+              <ul>
+                {module.people?.map(({ _key, role, person }) =>
+                  person ? (
+                    <li key={_key}>
+                      {person.linked && person.slug ? (
+                        <NextLink href={`/people/${person.slug}`}>{stegaClean(person.title)}</NextLink>
+                      ) : (
+                        stegaClean(person.title)
+                      )}
+                      {role ? `, ${role}` : ''}
+                    </li>
+                  ) : null
+                )}
+              </ul>
+            </section>
+          );
         }
         if (!module.url || !module.width || !module.height) return null;
         const picture = (

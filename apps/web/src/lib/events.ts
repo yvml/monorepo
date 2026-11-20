@@ -67,6 +67,17 @@ export type ContentModule =
   | { _key: string; _type: 'textModule'; text?: LocalizedBlocks }
   | {
       _key: string;
+      _type: 'peopleModule';
+      kicker?: string;
+      description?: LocalizedBlocks | null;
+      people?: {
+        _key: string;
+        role?: string;
+        person?: { _id: string; title?: string; slug?: string; linked?: boolean } | null;
+      }[];
+    }
+  | {
+      _key: string;
       _type: 'imageModule';
       url?: string;
       width?: number;
@@ -111,6 +122,13 @@ export const imageQuery = (field: string) =>
 export const CONTENT = `content[]{
   _key, _type,
   _type == "textModule" => { text },
+  _type == "peopleModule" => {
+    kicker, description,
+    "people": people[]{
+      _key, role,
+      "person": person->{_id, title, "slug": slug.current, "linked": defined(Biography) || defined(portrait.asset)}
+    }
+  },
   _type == "imageModule" => {
     "url": image.asset->url,
     "width": image.asset->metadata.dimensions.width,

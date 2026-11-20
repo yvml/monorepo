@@ -13,7 +13,7 @@ export const article = defineType({
       name: 'content',
       title: 'Content',
       type: 'array',
-      of: [{ type: 'imageModule' }, { type: 'textModule' }],
+      of: [{ type: 'imageModule' }, { type: 'textModule' }, { type: 'peopleModule' }],
     }),
     bodyField(),
     seoField(),

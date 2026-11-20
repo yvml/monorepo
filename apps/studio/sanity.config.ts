@@ -5,12 +5,31 @@ import { visionTool } from '@sanity/vision';
 import { studioTheme } from '@sanity/ui';
 import { defineConfig } from 'sanity';
 import { defineDocuments, defineLocations, presentationTool } from 'sanity/presentation';
-import { structureTool } from 'sanity/structure';
+import { type StructureBuilder, structureTool } from 'sanity/structure';
 import { internationalizedArray } from 'sanity-plugin-internationalized-array';
 import { media } from 'sanity-plugin-media';
 import { muxInput } from 'sanity-plugin-mux-input';
 import { LOCALES } from './src/lib/locales';
 import { schemaTypes } from './src/schemaTypes';
+
+type Ordering = { field: string; direction: 'asc' | 'desc' }[];
+
+/** Alphabetical by the English title. */
+const BY_TITLE: Ordering = [{ field: 'title[0].value', direction: 'asc' }];
+/** Soonest first. */
+const BY_DATE: Ordering = [{ field: 'dateTime.entries[0].date', direction: 'asc' }];
+/** Alphabetical by last name, then given name. */
+const BY_LAST_NAME: Ordering = [
+  { field: 'familyName', direction: 'asc' },
+  { field: 'nameGiven', direction: 'asc' },
+];
+
+/** A Structure list item for one document type, opened in the given order. */
+const sortedList = (S: StructureBuilder, type: string, title: string, ordering: Ordering) =>
+  S.listItem()
+    .title(title)
+    .schemaType(type)
+    .child(S.documentTypeList(type).title(title).defaultOrdering(ordering));
 
 /** Where the Presentation tool loads the website from. */
 const PREVIEW_URL = process.env.SANITY_STUDIO_PREVIEW_URL ?? 'http://localhost:3000';
@@ -58,6 +77,10 @@ export default defineConfig({
           {
             route: '/:slug',
             filter: `_type == "page" && count(slug[value.current == $slug]) > 0`,
+          },
+          {
+            route: '/:section/:slug',
+            filter: `_type == "page" && count(slug[value.current == $section + "/" + $slug]) > 0`,
           },
           {
             route: '/events/:slug',
@@ -148,16 +171,16 @@ export default defineConfig({
                 S.list()
                   .title('Content')
                   .items([
-                    S.documentTypeListItem('article').title('Articles'),
-                    S.documentTypeListItem('event').title('Events'),
-                    S.documentTypeListItem('page').title('Pages'),
-                    S.documentTypeListItem('person').title('People'),
-                    S.documentTypeListItem('workshop').title('Workshops'),
+                    sortedList(S, 'article', 'Articles', BY_TITLE),
+                    sortedList(S, 'event', 'Events', BY_DATE),
+                    sortedList(S, 'page', 'Pages', BY_TITLE),
+                    sortedList(S, 'person', 'People', BY_LAST_NAME),
+                    sortedList(S, 'workshop', 'Workshops', BY_DATE),
                   ])
               ),
             S.divider(),
-            S.documentTypeListItem('workshopType').title('Workshop types'),
-            S.documentTypeListItem('material').title('Materials'),
+            sortedList(S, 'workshopType', 'Workshop types', BY_TITLE),
+            sortedList(S, 'material', 'Materials', BY_TITLE),
             S.divider(),
             S.documentTypeListItem('media.tag').title('Media Tags'),
           ]),
