@@ -1,65 +1,32 @@
-import {
-  BreadcrumbTrail,
-  CenteredLines,
-  Link,
-  PageColumn,
-  PageHeader,
-  TermList,
-  TermRow,
-  Text,
-  Title,
-} from '@hmidmismi/ui';
+import { BreadcrumbTrail, CenteredLines, Link, PageColumn, PageHeader, TermList, TermRow, Text, Title } from '@hmidmismi/ui';
 import { stegaClean } from '@sanity/client/stega';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { ContentModules, Hero } from '@/components/ContentModules';
 import { KeelaEmbed } from '@/components/KeelaEmbed';
-import { PageTemplate } from '@/components/PageTemplate';
 import { nextLink, SiteLayout } from '@/components/SiteLayout';
-import { type EventDetail, formatDates, getEntry, localize } from '@/lib/events';
-import { withPreviewGate } from '@/lib/gate';
+import { type EventDetail, formatDates, localize } from '@/lib/events';
 import { keelaFormUrl } from '@/lib/keela';
-import { getPage, type PageDoc } from '@/lib/pages';
-import { type Section, sectionForPath, SITE_NAME } from '@/lib/site';
+import { SITE_NAME, WORKSHOPS } from '@/lib/site';
 import { sanityAttr } from '@/lib/visual';
 
-type Props = { section?: Section; entry?: EventDetail; page?: PageDoc; draftMode?: boolean };
-
-const STATUS: Record<string, string> = {
-  tbc: 'To be confirmed',
-  cancelled: 'Cancelled',
-  soldOut: 'Sold out',
-};
 const FORMAT = { inPerson: 'In person', virtual: 'Virtual', hybrid: 'In person + virtual' } as const;
 
-export const getServerSideProps = withPreviewGate<Props>(async (context, draft) => {
-  const kind = context.params?.kind;
-  const slug = context.params?.slug;
-  if (typeof kind !== 'string' || typeof slug !== 'string') return { notFound: true };
-  const section = sectionForPath(kind);
-  if (!section) {
-    // Not a listing: a nested static page such as /about/history.
-    const page = await getPage(`${kind}/${slug}`, draft);
-    return page ? { props: { page } } : { notFound: true };
-  }
-  const entry = await getEntry(section, slug, draft);
-  if (!entry) return { notFound: true };
-  return { props: { section, entry } };
-});
-
-export default function Entry({ section, entry, page, draftMode }: Props) {
-  if (page) return <PageTemplate page={page} />;
-  if (!section || !entry) return null;
-
+/**
+ * A workshop page: title, sold-out status, dates, image, instructors (linked to their pages), format, price,
+ * scholarship, types, materials, content, and the Keela registration form. In draft mode each field is click-to-edit.
+ *
+ * @param props - the workshop and whether the request is in draft mode.
+ * @returns the page.
+ */
+export function WorkshopDetail({ entry, draftMode }: { entry: EventDetail; draftMode?: boolean }) {
   const title = localize(entry.title);
-  /** Makes an element click-to-edit for one field of this document in Presentation. */
-  const attr = (path?: string) => sanityAttr(Boolean(draftMode), entry._id, section.docType, path);
-  const status = entry.status ? STATUS[entry.status] : undefined;
+  /** Makes an element click-to-edit for one field of this workshop in Presentation. */
+  const attr = (path?: string) => sanityAttr(Boolean(draftMode), entry._id, 'workshop', path);
+  const soldOut = entry.status === 'soldOut';
   const keela = keelaFormUrl(entry.keelaUrl);
   const types = entry.workshopTypes?.map((term) => stegaClean(localize(term))).join(', ');
   const materials = entry.materials?.map((term) => stegaClean(localize(term))).join(', ');
-  const open = entry.status !== 'cancelled' && entry.status !== 'soldOut';
-  const hasBody = Boolean(entry.content?.length);
 
   return (
     <SiteLayout>
@@ -71,16 +38,15 @@ export default function Entry({ section, entry, page, draftMode }: Props) {
         <BreadcrumbTrail
           home={nextLink('/')}
           steps={[
-            { key: section.type, label: section.title, link: nextLink(`/${section.path}`) },
+            { key: WORKSHOPS.type, label: WORKSHOPS.title, link: nextLink(`/${WORKSHOPS.path}`) },
             { key: entry._id, label: title, current: true },
           ]}
         />
         <PageHeader>
           <Title level="h1">{title}</Title>
           <CenteredLines>
-            {status && <p data-sanity={attr('status')}>{status}</p>}
+            {soldOut && <p data-sanity={attr('status')}>Sold out</p>}
             <p data-sanity={attr('dateTime')}>{formatDates(entry)}</p>
-            {entry.location && <p data-sanity={attr('location')}>{entry.location}</p>}
           </CenteredLines>
         </PageHeader>
         <div data-sanity={attr('image')}>
@@ -128,15 +94,15 @@ export default function Entry({ section, entry, page, draftMode }: Props) {
               <span data-sanity={attr('materials')}>{materials}</span>
             </TermRow>
           )}
-          {!keela && entry.registrationUrl && open && (
+          {!keela && entry.registrationUrl && !soldOut && (
             <TermRow term="Registration">
               <Link href={entry.registrationUrl}>Register</Link>
             </TermRow>
           )}
         </TermList>
         <ContentModules modules={entry.content} />
-        {keela && open && <KeelaEmbed url={keela} title={`Register for ${title}`} />}
-        {!hasBody && !entry.instructors?.length && <Text>Details to follow.</Text>}
+        {keela && !soldOut && <KeelaEmbed url={keela} title={`Register for ${stegaClean(title)}`} />}
+        {!entry.content?.length && !entry.instructors?.length && <Text>Details to follow.</Text>}
       </PageColumn>
     </SiteLayout>
   );
