@@ -7,6 +7,6 @@ export const getServerSideProps = withPreviewGate<EventListProps>(async (_contex
   props: { section: EVENTS, ...splitByDate(await listEntries(EVENTS, draft), today()) },
 }));
 
-export default function Events(props: EventListProps) {
+export default function Page(props: EventListProps) {
   return <EventList {...props} />;
 }

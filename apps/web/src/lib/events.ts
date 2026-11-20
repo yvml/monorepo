@@ -22,7 +22,7 @@ export function localize(field: Localized<string>, language = 'en') {
 }
 
 /** One occurrence of an event: ISO dates and 24-hour times in the dojo's local time. */
-export type EventEntry = {
+export type DateEntry = {
   date?: string;
   endDate?: string;
   startTime?: string;
@@ -32,21 +32,21 @@ export type EventEntry = {
 };
 
 /** The fields a listing row needs. */
-export type EventSummary = {
+export type EntrySummary = {
   _id: string;
   _type?: string;
   slug: string;
   title: Localized<string>;
   status?: 'scheduled' | 'tbc' | 'cancelled' | 'open' | 'soldOut';
   location?: string;
-  dateTime?: { circa?: boolean; isRange?: boolean; entries?: EventEntry[] };
+  dateTime?: { circa?: boolean; isRange?: boolean; entries?: DateEntry[] };
 };
 
 /** An image as the queries return it. */
 export type ImageData = { url: string; width: number; height: number; alt?: Localized<string> } | null;
 
 /** An event or workshop page: the summary plus everything the detail view shows. */
-export type EventDetail = EventSummary & {
+export type Entry = EntrySummary & {
   instructors?: { _id: string; title?: string; slug?: string }[];
   workshopTypes?: Localized<string>[];
   materials?: Localized<string>[];
@@ -132,7 +132,7 @@ const DETAIL = `${SUMMARY}, ${CONTENT}, "image": ${imageQuery('image')},
  * @returns the entries, in no particular order; see {@link splitByDate}.
  */
 export function listEntries(section: Section, draft: boolean) {
-  return clientFor(draft).fetch<EventSummary[]>(
+  return clientFor(draft).fetch<EntrySummary[]>(
     `*[_type == $docType && defined(${SLUG}) && ($type == "" || coalesce(type, "event") == $type)]{${SUMMARY}}`,
     queryParams(section)
   );
@@ -147,17 +147,17 @@ export function listEntries(section: Section, draft: boolean) {
  * @returns the entry, or null.
  */
 export function getEntry(section: Section, slug: string, draft: boolean) {
-  return clientFor(draft).fetch<EventDetail | null>(
+  return clientFor(draft).fetch<Entry | null>(
     `*[_type == $docType && ${SLUG} == $slug && ($type == "" || coalesce(type, "event") == $type)][0]{${DETAIL}}`,
     { slug, ...queryParams(section) }
   );
 }
 
 /** The first date of an entry, or an empty string. */
-export const firstDate = (entry: EventSummary) => entry.dateTime?.entries?.[0]?.date ?? '';
+export const firstDate = (entry: EntrySummary) => entry.dateTime?.entries?.[0]?.date ?? '';
 
 /** The last day an entry covers, or an empty string. */
-export function lastDate(entry: EventSummary) {
+export function lastDate(entry: EntrySummary) {
   const entries = entry.dateTime?.entries;
   const last = entry.dateTime?.isRange ? entries?.[0] : entries?.at(-1);
   return last?.endDate ?? last?.date ?? '';
@@ -170,9 +170,9 @@ export function lastDate(entry: EventSummary) {
  * @param today - today as `YYYY-MM-DD`.
  * @returns the upcoming entries soonest first and the past ones latest first.
  */
-export function splitByDate(entries: EventSummary[], today: string) {
+export function splitByDate(entries: EntrySummary[], today: string) {
   const dated = entries.filter((entry) => firstDate(entry));
-  const byStart = (a: EventSummary, b: EventSummary) => firstDate(a).localeCompare(firstDate(b));
+  const byStart = (a: EntrySummary, b: EntrySummary) => firstDate(a).localeCompare(firstDate(b));
   return {
     upcoming: dated.filter((entry) => lastDate(entry) >= today).sort(byStart),
     past: dated.filter((entry) => lastDate(entry) < today).sort((a, b) => byStart(b, a)),
@@ -203,7 +203,7 @@ export function dateBlock(iso: string) {
  * @param entry - the entry.
  * @returns the text, or an empty string when there is no date.
  */
-export function formatDates(entry: EventSummary) {
+export function formatDates(entry: EntrySummary) {
   const start = firstDate(entry);
   if (!start) return '';
   const end = lastDate(entry);

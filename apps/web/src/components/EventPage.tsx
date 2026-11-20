@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { ContentModules, Hero } from '@/components/ContentModules';
 import { KeelaEmbed } from '@/components/KeelaEmbed';
 import { nextLink, SiteLayout } from '@/components/SiteLayout';
-import { type EventDetail, formatDates, localize } from '@/lib/events';
+import { type Entry, formatDates, localize } from '@/lib/events';
 import { keelaFormUrl } from '@/lib/keela';
 import { type Section, SITE_NAME } from '@/lib/site';
 import { sanityAttr } from '@/lib/visual';
@@ -17,7 +17,7 @@ const STATUS: Record<string, string> = { tbc: 'To be confirmed', cancelled: 'Can
  * @param props - the section it belongs to, the entry, and whether the request is in draft mode.
  * @returns the page.
  */
-export function EventEntry({ section, entry, draftMode }: { section: Section; entry: EventDetail; draftMode?: boolean }) {
+export function EventPage({ section, entry, draftMode }: { section: Section; entry: Entry; draftMode?: boolean }) {
   const title = localize(entry.title);
   const attr = (path?: string) => sanityAttr(Boolean(draftMode), entry._id, 'event', path);
   const status = entry.status ? STATUS[entry.status] : undefined;

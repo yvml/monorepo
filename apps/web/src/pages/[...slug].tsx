@@ -13,6 +13,6 @@ export const getServerSideProps = withPreviewGate<Props>(async (context, draft) 
   return page ? { props: { page } } : { notFound: true };
 });
 
-export default function StaticPage({ page }: Props) {
+export default function Page({ page }: Props) {
   return <PageTemplate page={page} />;
 }

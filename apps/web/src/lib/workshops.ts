@@ -1,10 +1,10 @@
-import { type EventSummary, firstDate, lastDate, localize } from './events';
+import { type EntrySummary, firstDate, lastDate, localize } from './events';
 import { clientFor } from './sanity';
 
 type Term = { _id: string; title: Parameters<typeof localize>[0] };
 
 /** A workshop as the listing shows it. */
-export type WorkshopSummary = EventSummary & {
+export type WorkshopSummary = EntrySummary & {
   price?: number;
   status?: 'open' | 'soldOut';
   format?: 'inPerson' | 'virtual' | 'hybrid';

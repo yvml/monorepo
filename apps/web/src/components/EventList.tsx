@@ -2,17 +2,17 @@ import { DatedList, DatedRow, ListHeader, PageColumn, Text } from '@hmidmismi/ui
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { SiteLayout } from '@/components/SiteLayout';
-import { dateBlock, type EventSummary, firstDate, formatDates, localize } from '@/lib/events';
+import { dateBlock, type EntrySummary, firstDate, formatDates, localize } from '@/lib/events';
 import { type Section, SITE_NAME } from '@/lib/site';
 
 export type EventListProps = {
   section: Section;
-  upcoming: EventSummary[];
-  past: EventSummary[];
-  undated: EventSummary[];
+  upcoming: EntrySummary[];
+  past: EntrySummary[];
+  undated: EntrySummary[];
 };
 
-function Rows({ entries, section }: { entries: EventSummary[]; section: Section }) {
+function Rows({ entries, section }: { entries: EntrySummary[]; section: Section }) {
   return (
     <DatedList>
       {entries.map((entry) => {

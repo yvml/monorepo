@@ -1,7 +1,7 @@
 import { ListHeader, PageColumn } from '@hmidmismi/ui';
 import Head from 'next/head';
 import { SiteLayout } from '@/components/SiteLayout';
-import { WorkshopBrowser } from '@/components/WorkshopBrowser';
+import { WorkshopList } from '@/components/WorkshopList';
 import { today } from '@/lib/events';
 import { withPreviewGate } from '@/lib/gate';
 import { SITE_NAME, WORKSHOPS } from '@/lib/site';
@@ -13,7 +13,7 @@ export const getServerSideProps = withPreviewGate<Props>(async (_context, draft)
   props: { workshops: await listWorkshops(draft), today: today() },
 }));
 
-export default function Workshops({ workshops, today: now, draftMode }: Props) {
+export default function Page({ workshops, today: now, draftMode }: Props) {
   return (
     <SiteLayout>
       <Head>
@@ -22,7 +22,7 @@ export default function Workshops({ workshops, today: now, draftMode }: Props) {
       </Head>
       <PageColumn>
         <ListHeader title={WORKSHOPS.title} />
-        <WorkshopBrowser workshops={workshops} today={now} draft={Boolean(draftMode)} />
+        <WorkshopList workshops={workshops} today={now} draft={Boolean(draftMode)} />
       </PageColumn>
     </SiteLayout>
   );

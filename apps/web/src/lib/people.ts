@@ -1,15 +1,15 @@
-import { type EventSummary, imageQuery, type ImageData, type LocalizedBlocks } from './events';
+import { type EntrySummary, imageQuery, type ImageData, type LocalizedBlocks } from './events';
 import { clientFor } from './sanity';
 
 /** A person page: name, location, biography, portrait, links, and the workshops they teach. */
-export type PersonDetail = {
+export type Person = {
   _id: string;
   title?: string;
   location?: string | null;
   portrait?: ImageData;
   biography?: LocalizedBlocks | null;
   links?: { _key: string; label: string; url: string }[];
-  workshops?: (EventSummary & { slug: string; price?: number })[];
+  workshops?: (EntrySummary & { slug: string; price?: number })[];
 };
 
 const SLUG = `slug[language == "en" || _key == "en"][0].value.current`;
@@ -22,7 +22,7 @@ const SLUG = `slug[language == "en" || _key == "en"][0].value.current`;
  * @returns the person, or null.
  */
 export function getPerson(slug: string, draft: boolean) {
-  return clientFor(draft).fetch<PersonDetail | null>(
+  return clientFor(draft).fetch<Person | null>(
     `*[_type == "person" && slug.current == $slug][0]{
       _id, title, location, "portrait": ${imageQuery('portrait')}, "biography": Biography, links,
       "workshops": *[_type == "workshop" && references(^._id) && defined(${SLUG})]
