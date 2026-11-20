@@ -5,7 +5,7 @@ import NextLink from 'next/link';
 import { ContentModules, Hero } from '@/components/ContentModules';
 import { KeelaEmbed } from '@/components/KeelaEmbed';
 import { nextLink, SiteLayout } from '@/components/SiteLayout';
-import { type EventDetail, formatDates, localize } from '@/lib/events';
+import { type Entry, formatDates, localize } from '@/lib/events';
 import { keelaFormUrl } from '@/lib/keela';
 import { SITE_NAME, WORKSHOPS } from '@/lib/site';
 import { sanityAttr } from '@/lib/visual';
@@ -19,7 +19,7 @@ const FORMAT = { inPerson: 'In person', virtual: 'Virtual', hybrid: 'In person +
  * @param props - the workshop and whether the request is in draft mode.
  * @returns the page.
  */
-export function WorkshopDetail({ entry, draftMode }: { entry: EventDetail; draftMode?: boolean }) {
+export function WorkshopPage({ entry, draftMode }: { entry: Entry; draftMode?: boolean }) {
   const title = localize(entry.title);
   /** Makes an element click-to-edit for one field of this workshop in Presentation. */
   const attr = (path?: string) => sanityAttr(Boolean(draftMode), entry._id, 'workshop', path);

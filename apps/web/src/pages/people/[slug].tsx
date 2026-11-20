@@ -5,10 +5,10 @@ import { Blocks, Hero } from '@/components/ContentModules';
 import { SiteLayout } from '@/components/SiteLayout';
 import { formatDates, localize } from '@/lib/events';
 import { withPreviewGate } from '@/lib/gate';
-import { getPerson, type PersonDetail } from '@/lib/people';
+import { getPerson, type Person } from '@/lib/people';
 import { SITE_NAME } from '@/lib/site';
 
-type Props = { person: PersonDetail };
+type Props = { person: Person };
 
 export const getServerSideProps = withPreviewGate<Props>(async (context, draft) => {
   const slug = context.params?.slug;
@@ -17,7 +17,7 @@ export const getServerSideProps = withPreviewGate<Props>(async (context, draft) 
   return person ? { props: { person } } : { notFound: true };
 });
 
-export default function Person({ person }: Props) {
+export default function Page({ person }: Props) {
   const name = person.title ?? 'Unnamed';
   const workshops = person.workshops ?? [];
 

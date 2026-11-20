@@ -86,7 +86,7 @@ const status = (workshop: WorkshopSummary) => (workshop.status === 'soldOut' ? '
  * @param props - the workshops and today's date.
  * @returns the listing.
  */
-export function WorkshopBrowser({
+export function WorkshopList({
   workshops,
   today,
   draft = false,

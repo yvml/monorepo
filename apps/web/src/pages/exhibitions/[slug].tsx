@@ -1,9 +1,9 @@
-import { EventEntry } from '@/components/EventEntry';
-import { type EventDetail, getEntry } from '@/lib/events';
+import { EventPage } from '@/components/EventPage';
+import { type Entry, getEntry } from '@/lib/events';
 import { withPreviewGate } from '@/lib/gate';
 import { EXHIBITIONS } from '@/lib/site';
 
-type Props = { entry: EventDetail; draftMode?: boolean };
+type Props = { entry: Entry; draftMode?: boolean };
 
 export const getServerSideProps = withPreviewGate<Props>(async (context, draft) => {
   const slug = context.params?.slug;
@@ -12,6 +12,6 @@ export const getServerSideProps = withPreviewGate<Props>(async (context, draft) 
   return entry ? { props: { entry } } : { notFound: true };
 });
 
-export default function ExhibitionPage({ entry, draftMode }: Props) {
-  return <EventEntry section={EXHIBITIONS} entry={entry} draftMode={draftMode} />;
+export default function Page({ entry, draftMode }: Props) {
+  return <EventPage section={EXHIBITIONS} entry={entry} draftMode={draftMode} />;
 }
