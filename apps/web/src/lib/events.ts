@@ -119,6 +119,9 @@ const SUMMARY = `_id, _type,"slug": ${SLUG}, title, status, location, dateTime`;
 export const imageQuery = (field: string) =>
   `${field}{ "url": asset->url, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height, alt }`;
 
+/** GROQ for a person's name with prefix and suffix: `Dr. Nicole Panter Dailey`, `Henry Smith IV`. */
+export const FULL_NAME = `array::join(array::compact([prefix, title, suffix]), " ")`;
+
 export const CONTENT = `content[]{
   _key, _type,
   _type == "textModule" => { text },
@@ -126,7 +129,7 @@ export const CONTENT = `content[]{
     kicker, description,
     "people": people[]{
       _key, role,
-      "person": person->{_id, title, "slug": slug.current, "linked": defined(Biography) || defined(portrait.asset)}
+      "person": person->{_id, "title": ${FULL_NAME}, "slug": slug.current, "linked": defined(Biography) || defined(portrait.asset)}
     }
   },
   _type == "imageModule" => {

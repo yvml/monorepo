@@ -1,4 +1,4 @@
-import { type EntrySummary, imageQuery, type ImageData, type LocalizedBlocks } from './events';
+import { type EntrySummary, FULL_NAME, imageQuery, type ImageData, type LocalizedBlocks } from './events';
 import { clientFor } from './sanity';
 
 /** A person page: name, location, biography, portrait, links, and the workshops they teach. */
@@ -24,7 +24,7 @@ const SLUG = `slug[language == "en" || _key == "en"][0].value.current`;
 export function getPerson(slug: string, draft: boolean) {
   return clientFor(draft).fetch<Person | null>(
     `*[_type == "person" && slug.current == $slug][0]{
-      _id, title, location, "portrait": ${imageQuery('portrait')}, "biography": Biography, links,
+      _id, "title": ${FULL_NAME}, location, "portrait": ${imageQuery('portrait')}, "biography": Biography, links,
       "workshops": *[_type == "workshop" && references(^._id) && defined(${SLUG})]
         | order(dateTime.entries[0].date asc){_id, "slug": ${SLUG}, title, status, price, dateTime}
     }`,
