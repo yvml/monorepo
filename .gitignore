@@ -10,3 +10,6 @@ coverage
 !.env.example
 # Panda output
 styled-system
+
+# Local Netlify folder
+.netlify
