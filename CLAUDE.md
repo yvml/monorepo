@@ -33,7 +33,8 @@ text.ts           every app string in every language (t('key')), plus the design
 localize.ts       Sanity localized fields       dates.ts          date helpers
 navigation.ts     sections and nav groups (titles are text keys)    menu.tsx   menu items to links (target, rel, aria)
 keela.ts          Keela address checks and form addresses           brand.ts, social.ts, placeholder.ts
-gate.ts, preview.ts, auth.ts, locale.ts, theme.ts, visual.ts
+static-props.ts   getStaticProps wrapper (withDraft), revalidate time, onDemandPaths    event-loaders.ts   events and exhibitions share their loaders
+gate.ts, preview.ts, auth.ts, locale.ts, theme.ts, visual.ts   (the preview login is `src/middleware.ts`)
 ```
 
 ## Conventions
@@ -45,3 +46,5 @@ gate.ts, preview.ts, auth.ts, locale.ts, theme.ts, visual.ts
 - A listing is a `ListSpec` (filters, sorts, views) in its own file; `FilterBar` and `useFilterState` render and persist any spec, and the choices live in the address: facets in the path (`/workshops/material/adobe/open`, one canonical order, several values joined with `+`), the rest in the query (`?min-price=200&sort=price-low&view=list`). Values are slugs, never Sanity ids. The listing is served by one optional catch-all page (`[[...path]].tsx`) that also serves the entries' own pages, so a path facet word is reserved. A new listing is a new spec, not new filter code. Filter kinds: search, select, multi, toggle, range.
 - Do not use monospace type anywhere.
 - No instructional or hint copy in the UI or the schema unless asked for.
+- Every page is incremental static (`getStaticProps` through `withDraft`, revalidated every `REVALIDATE` seconds; dynamic routes use `onDemandPaths`). A cached page has no query string, so choices in the query are read in the browser. Who may see the preview site is decided in `src/middleware.ts`, never in a page loader.
+- English has no URL prefix and Spanish is `/es/...`; `/en/...` redirects to the plain address (`netlify.toml`). Dates and text follow the page's language (`en`, `es`), never a fixed `en-US`.

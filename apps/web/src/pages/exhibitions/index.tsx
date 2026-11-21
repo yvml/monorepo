@@ -3,7 +3,7 @@ import { EventList } from '@/components/EventList';
 import { eventListLoader, type EventListProps } from '@/lib/event-loaders';
 import { EXHIBITIONS } from '@/lib/navigation';
 
-export const getServerSideProps = eventListLoader(EXHIBITIONS);
+export const getStaticProps = eventListLoader(EXHIBITIONS);
 
 export default function Page(props: EventListProps) {
   return <EventList {...props} />;

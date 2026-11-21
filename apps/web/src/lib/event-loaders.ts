@@ -1,8 +1,8 @@
 // apps/web/src/lib/event-loaders.ts
 import { splitByDate, today } from './dates';
-import { withPreviewGate } from './gate';
 import type { Section } from './navigation';
 import { type EventDetail, type EventSummary, getEvent, listEvents } from './sanity';
+import { withDraft } from './static-props';
 
 /** An events or exhibitions listing: the section and its entries, split by date. */
 export type EventListProps = { section: Section; upcoming: EventSummary[]; past: EventSummary[]; undated: EventSummary[] };
@@ -19,7 +19,7 @@ export type EventProps = { entry: EventDetail; draftMode?: boolean };
  * @returns the loader to export as the page's data function.
  */
 export const eventListLoader = (section: Section) =>
-  withPreviewGate<EventListProps>(async (_context, draft) => ({
+  withDraft<EventListProps>(async (_context, draft) => ({
     props: { section, ...splitByDate(await listEvents(section, draft), today()) },
   }));
 
@@ -30,7 +30,7 @@ export const eventListLoader = (section: Section) =>
  * @returns the loader to export as the page's data function.
  */
 export const eventLoader = (section: Section) =>
-  withPreviewGate<EventProps>(async (context, draft) => {
+  withDraft<EventProps>(async (context, draft) => {
     const slug = context.params?.slug;
     if (typeof slug !== 'string') return { notFound: true };
     const entry = await getEvent(section, slug, draft);

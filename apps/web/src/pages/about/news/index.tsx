@@ -1,10 +1,11 @@
+// apps/web/src/pages/about/news/index.tsx
 import { ArticleList } from '@/components/ArticleList';
 import { type ArticleSummary, listArticles } from '@/lib/sanity';
-import { withPreviewGate } from '@/lib/gate';
+import { withDraft } from '@/lib/static-props';
 
 type Props = { articles: ArticleSummary[] };
 
-export const getServerSideProps = withPreviewGate<Props>(async (_context, draft) => ({
+export const getStaticProps = withDraft<Props>(async (_context, draft) => ({
   props: { articles: await listArticles(draft) },
 }));
 

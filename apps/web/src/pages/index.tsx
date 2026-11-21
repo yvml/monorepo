@@ -1,9 +1,9 @@
 // apps/web/src/pages/index.tsx
 import { PageColumn, Title } from '@hmidmismi/ui';
 import { SiteLayout } from '@/components/SiteLayout';
-import { withPreviewGate } from '@/lib/gate';
+import { withDraft } from '@/lib/static-props';
 
-export const getServerSideProps = withPreviewGate();
+export const getStaticProps = withDraft();
 
 export default function Home() {
   return (

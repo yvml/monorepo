@@ -7,11 +7,13 @@ import { formatDates } from '@/lib/dates';
 import { localize } from '@/lib/localize';
 import { getPerson, type PersonDetail } from '@/lib/sanity';
 import { t } from '@/lib/text';
-import { withPreviewGate } from '@/lib/gate';
+import { onDemandPaths, withDraft } from '@/lib/static-props';
 
 type Props = { person: PersonDetail };
 
-export const getServerSideProps = withPreviewGate<Props>(async (context, draft) => {
+export const getStaticPaths = onDemandPaths;
+
+export const getStaticProps = withDraft<Props>(async (context, draft) => {
   const slug = context.params?.slug;
   if (typeof slug !== 'string') return { notFound: true };
   const person = await getPerson(slug, draft);

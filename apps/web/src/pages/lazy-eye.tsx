@@ -1,9 +1,9 @@
 // apps/web/src/pages/lazy-eye.tsx
 import Head from 'next/head';
 import NextLink from 'next/link';
-import { withPreviewGate } from '@/lib/gate';
+import { withDraft } from '@/lib/static-props';
 
-export const getServerSideProps = withPreviewGate();
+export const getStaticProps = withDraft();
 
 /**
  * Lazy Eye Gallery: a stub. It deliberately skips SiteLayout and the shared UI so the gallery can have its own look.
