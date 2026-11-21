@@ -5,7 +5,7 @@ import { DEFAULT_LOCALE, LOCALES } from '@/lib/locale';
 import { t } from '@/lib/text';
 
 /**
- * Switches the page between languages with a select list, showing the current one (English by default). Pages keep their
+ * Switches the page between languages with a select list that shows the language code, `EN` by default. Pages keep their
  * English slugs in every language, so the path is the same and only the language prefix changes.
  *
  * @returns the select.
@@ -17,7 +17,7 @@ export function LanguageSwitcher() {
     <EditableSelect
       label={t('language')}
       value={current}
-      options={LOCALES.map(({ code, label }) => ({ id: code, name: label }))}
+      options={LOCALES.map(({ code }) => ({ id: code, name: code.toUpperCase() }))}
       onChange={(code) => {
         if (code && code !== current) void router.push(router.asPath, undefined, { locale: code });
       }}
