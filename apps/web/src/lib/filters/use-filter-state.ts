@@ -1,3 +1,4 @@
+// apps/web/src/lib/filters/use-filter-state.ts
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 import { defaultState, parseUrl, toHref } from './state';
@@ -18,9 +19,13 @@ import type { FilterState, ListSpec } from './types';
  */
 export function useFilterState<T, C>(spec: ListSpec<T, C>, basePath: string) {
   const router = useRouter();
-  const { path, ...query } = router.query;
-  const segments = useMemo(() => (Array.isArray(path) ? path : path ? [path] : []), [path]);
-  const state = useMemo(() => parseUrl(spec, segments, query) ?? defaultState(spec), [spec, segments, query]);
+  const { query } = router;
+  // Split inside the memo: destructuring `router.query` outside it makes a new object every render, and the state (and
+  // everything memoized on it) would be recomputed each time.
+  const state = useMemo(() => {
+    const { path, ...rest } = query;
+    return parseUrl(spec, Array.isArray(path) ? path : path ? [path] : [], rest) ?? defaultState(spec);
+  }, [spec, query]);
 
   const write = useCallback(
     (next: FilterState, replace: boolean) => {

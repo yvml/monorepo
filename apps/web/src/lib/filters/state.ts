@@ -9,11 +9,18 @@ export type UrlParts = { segments: string[]; query: Record<string, string> };
 
 const first = (value: string | string[] | undefined) => (Array.isArray(value) ? value[0] : value);
 
-const num = (text: string | undefined) => {
+/** A number from address or input text, or null when there is none to read. */
+export const num = (text: string | undefined) => {
   if (!text) return null;
   const value = Number(text);
   return Number.isFinite(value) ? value : null;
 };
+
+/** The state with one filter's value replaced. */
+export const withValue = (state: FilterState, key: string, value: FilterValue): FilterState => ({
+  ...state,
+  values: { ...state.values, [key]: value },
+});
 
 /** The value a filter has when the address says nothing about it. */
 export function defaultValue<T, C>(filter: Filter<T, C>): FilterValue {
