@@ -2,11 +2,15 @@ import { PageColumn, PageHeader, Text, Title } from '@hmidmismi/ui';
 import { stegaClean } from '@sanity/client/stega';
 import Head from 'next/head';
 import { ContentModules } from '@/components/ContentModules';
+import { KeelaSignup } from '@/components/KeelaSignup';
 import { SiteLayout } from '@/components/SiteLayout';
 import { SubNav } from '@/components/SubNav';
-import { localize } from '@/lib/events';
-import type { PageDoc } from '@/lib/pages';
-import { SITE_NAME } from '@/lib/site';
+import { SITE_NAME } from '@/lib/brand';
+import { NEWSLETTER_URL } from '@/lib/keela';
+import { localize } from '@/lib/localize';
+import { CONTACT_PATH } from '@/lib/navigation';
+import { type PageDoc } from '@/lib/sanity';
+import { t } from '@/lib/text';
 import { sanityAttr } from '@/lib/visual';
 
 /**
@@ -33,7 +37,8 @@ export function PageTemplate({ page, path, draftMode }: { page: PageDoc; path: s
         <div data-sanity={sanityAttr(Boolean(draftMode), page._id, 'page', 'content')}>
           <ContentModules modules={page.content} />
         </div>
-        {!page.content?.length && <Text>Details to follow.</Text>}
+        {!page.content?.length && <Text>{t('detailsToFollow')}</Text>}
+        {path === CONTACT_PATH && <KeelaSignup url={NEWSLETTER_URL} title={t('newsletterSignup')} />}
       </PageColumn>
     </SiteLayout>
   );

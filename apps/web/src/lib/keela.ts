@@ -15,3 +15,6 @@ export function keelaFormUrl(value: unknown) {
     return null;
   }
 }
+
+/** The Keela signup form for the newsletter, embedded on the Contact Us page. */
+export const NEWSLETTER_URL = 'https://signup-usa.keela.co/embed/TTbspcy6zYvZyPRLf';
