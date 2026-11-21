@@ -1,10 +1,11 @@
 import { EventList, type EventListProps } from '@/components/EventList';
-import { listEntries, splitByDate, today } from '@/lib/events';
+import { splitByDate, today } from '@/lib/dates';
+import { EVENTS } from '@/lib/navigation';
+import { listEvents } from '@/lib/sanity';
 import { withPreviewGate } from '@/lib/gate';
-import { EVENTS } from '@/lib/site';
 
 export const getServerSideProps = withPreviewGate<EventListProps>(async (_context, draft) => ({
-  props: { section: EVENTS, ...splitByDate(await listEntries(EVENTS, draft), today()) },
+  props: { section: EVENTS, ...splitByDate(await listEvents(EVENTS, draft), today()) },
 }));
 
 export default function Page(props: EventListProps) {

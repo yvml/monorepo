@@ -19,7 +19,7 @@ export default function LazyEye() {
       <style>{`
         body { background: #0b0b0b; }
         .lazy-eye { min-height: 100vh; display: grid; place-content: center; gap: 1.5rem; padding: 2rem;
-          color: #f2efe6; font-family: 'Courier New', monospace; text-align: center; }
+          color: #f2efe6; font-family: 'Helvetica Neue', Arial, sans-serif; text-align: center; }
         .lazy-eye h1 { font-size: clamp(2.5rem, 12vw, 8rem); line-height: 0.9; margin: 0; letter-spacing: -0.04em;
           font-weight: 400; text-transform: uppercase; }
         .lazy-eye p { margin: 0; text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.8rem; }

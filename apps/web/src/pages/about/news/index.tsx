@@ -1,5 +1,5 @@
 import { ArticleList } from '@/components/ArticleList';
-import { type ArticleSummary, listArticles } from '@/lib/articles';
+import { type ArticleSummary, listArticles } from '@/lib/sanity';
 import { withPreviewGate } from '@/lib/gate';
 
 type Props = { articles: ArticleSummary[] };

@@ -1,6 +1,6 @@
 import { PageTemplate } from '@/components/PageTemplate';
 import { withPreviewGate } from '@/lib/gate';
-import { getPage, type PageDoc } from '@/lib/pages';
+import { getPage, type PageDoc } from '@/lib/sanity';
 
 type Props = { page: PageDoc; path: string; draftMode?: boolean };
 

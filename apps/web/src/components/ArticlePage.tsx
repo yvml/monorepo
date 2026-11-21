@@ -4,9 +4,10 @@ import Head from 'next/head';
 import { ContentModules } from '@/components/ContentModules';
 import { SiteLayout } from '@/components/SiteLayout';
 import { SubNav } from '@/components/SubNav';
-import type { Article } from '@/lib/articles';
-import { localize } from '@/lib/events';
-import { SITE_NAME } from '@/lib/site';
+import { SITE_NAME } from '@/lib/brand';
+import { localize } from '@/lib/localize';
+import { type ArticleDetail } from '@/lib/sanity';
+import { t } from '@/lib/text';
 import { sanityAttr } from '@/lib/visual';
 
 /**
@@ -15,7 +16,7 @@ import { sanityAttr } from '@/lib/visual';
  * @param props - the article and whether the request is in draft mode.
  * @returns the page.
  */
-export function ArticlePage({ article, draftMode }: { article: Article; draftMode?: boolean }) {
+export function ArticlePage({ article, draftMode }: { article: ArticleDetail; draftMode?: boolean }) {
   const title = localize(article.title);
   return (
     <SiteLayout>
@@ -32,7 +33,7 @@ export function ArticlePage({ article, draftMode }: { article: Article; draftMod
         <div data-sanity={sanityAttr(Boolean(draftMode), article._id, 'article', 'content')}>
           <ContentModules modules={article.content} />
         </div>
-        {!article.content?.length && <Text>Details to follow.</Text>}
+        {!article.content?.length && <Text>{t('detailsToFollow')}</Text>}
       </PageColumn>
     </SiteLayout>
   );

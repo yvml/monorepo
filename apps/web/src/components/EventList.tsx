@@ -2,17 +2,21 @@ import { DatedList, DatedRow, ListHeader, PageColumn, Text } from '@hmidmismi/ui
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { SiteLayout } from '@/components/SiteLayout';
-import { dateBlock, type EntrySummary, firstDate, formatDates, localize } from '@/lib/events';
-import { type Section, SITE_NAME } from '@/lib/site';
+import { SITE_NAME } from '@/lib/brand';
+import { dateBlock, firstDate, formatDates } from '@/lib/dates';
+import { localize } from '@/lib/localize';
+import { type Section } from '@/lib/navigation';
+import { type EventSummary } from '@/lib/sanity';
+import { t } from '@/lib/text';
 
 export type EventListProps = {
   section: Section;
-  upcoming: EntrySummary[];
-  past: EntrySummary[];
-  undated: EntrySummary[];
+  upcoming: EventSummary[];
+  past: EventSummary[];
+  undated: EventSummary[];
 };
 
-function Rows({ entries, section }: { entries: EntrySummary[]; section: Section }) {
+function Rows({ entries, section }: { entries: EventSummary[]; section: Section }) {
   return (
     <DatedList>
       {entries.map((entry) => {
@@ -25,7 +29,7 @@ function Rows({ entries, section }: { entries: EntrySummary[]; section: Section 
             dateTime={firstDate(entry)}
             title={<NextLink href={`/${section.path}/${entry.slug}`}>{localize(entry.title)}</NextLink>}
             subtitle={
-              entry.status === 'cancelled' ? 'Cancelled' : entry.status === 'tbc' ? 'To be confirmed' : formatDates(entry)
+              entry.status === 'cancelled' ? t('cancelled') : entry.status === 'tbc' ? t('toBeConfirmed') : formatDates(entry)
             }
             aside={entry.location}
           />
@@ -46,17 +50,17 @@ export function EventList({ section, upcoming, past, undated }: EventListProps) 
   return (
     <SiteLayout>
       <Head>
-        <title>{`${section.title} · ${SITE_NAME}`}</title>
+        <title>{`${t(section.title)} · ${SITE_NAME}`}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <PageColumn>
-        <ListHeader title={section.title} count={upcoming.length ? `${upcoming.length} upcoming` : undefined} />
-        {empty && <Text>{section.empty}</Text>}
+        <ListHeader title={t(section.title)} count={upcoming.length ? t('upcomingCount', { count: upcoming.length }) : undefined} />
+        {empty && <Text>{t(section.empty)}</Text>}
         {upcoming.length > 0 && <Rows entries={upcoming} section={section} />}
         {undated.length > 0 && <Rows entries={undated} section={section} />}
         {past.length > 0 && (
           <>
-            <ListHeader title="Past" />
+            <ListHeader title={t('past')} />
             <Rows entries={past} section={section} />
           </>
         )}
