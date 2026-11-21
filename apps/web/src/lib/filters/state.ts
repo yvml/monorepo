@@ -1,3 +1,4 @@
+// apps/web/src/lib/filters/state.ts
 import type { Filter, FilterState, FilterValue, ListSpec, Range } from './types';
 
 /** An address query as Next gives it. */
@@ -41,7 +42,7 @@ const rangeKeys = (key: string) => ({ min: `min-${key}`, max: `max-${key}` });
 
 /** The filters whose choice lives in the path, in the spec's order, which is the one order an address is written in. */
 const pathFilters = <T, C>(spec: ListSpec<T, C>) =>
-  spec.filters.filter((filter) => (filter.kind === 'multi' && filter.segment) || (filter.kind === 'select' && filter.segment));
+  spec.filters.filter((filter) => (filter.kind === 'multi' || filter.kind === 'select') && filter.segment);
 
 /**
  * Reads the state out of an address: the path segments after the listing's own path, and the query.
@@ -84,7 +85,7 @@ export function parseUrl<T, C>(spec: ListSpec<T, C>, segments: string[], query: 
   }
 
   for (const filter of spec.filters) {
-    if (pathFilters(spec).includes(filter)) continue;
+    if (filters.includes(filter)) continue; // already read from the path above
     switch (filter.kind) {
       case 'search': {
         const raw = first(query[filter.key]);
@@ -219,7 +220,7 @@ export function pathWords<T, C>(spec: ListSpec<T, C>) {
   const words = new Set<string>();
   for (const filter of pathFilters(spec)) {
     if (filter.kind === 'select' && filter.segment === true) for (const option of filter.options) words.add(option.value);
-    else if (typeof filter.kind === 'string' && 'segment' in filter && typeof filter.segment === 'string') words.add(filter.segment);
+    else if ('segment' in filter && typeof filter.segment === 'string') words.add(filter.segment);
   }
   return words;
 }

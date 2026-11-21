@@ -1,3 +1,4 @@
+// apps/web/src/components/WorkshopList.tsx
 import {
   CardItem,
   Cell,
@@ -40,8 +41,21 @@ export function WorkshopList({ workshops, today, draft = false }: { workshops: W
   const { state, change, reset } = useFilterState(workshopListing, '/workshops');
   const shown = useMemo(() => applyFilters(workshopListing, workshops, state, context), [workshops, state, context]);
   const active = useMemo(() => activeFilters(workshopListing, workshops, state), [workshops, state]);
-  /** Click-to-edit for one field of a workshop in Presentation. */
-  const at = (workshop: WorkshopSummary, path?: string) => sanityAttr(draft, workshop._id, 'workshop', path);
+  /** One field of a workshop, marked for click-to-edit in Presentation. */
+  const field = (workshop: WorkshopSummary, path: string, text: string) => (
+    <span data-sanity={sanityAttr(draft, workshop._id, 'workshop', path)}>{text}</span>
+  );
+  // Computed once per workshop and shared by the table and the grid; `t` is read here so the labels follow the page's language.
+  const rows = shown.map((workshop) => ({
+    workshop,
+    title: localize(workshop.title),
+    href: `/workshops/${workshop.slug}`,
+    dates: field(workshop, 'dateTime', formatDates(workshop)),
+    instructors: field(workshop, 'instructors', names(workshop)),
+    price: field(workshop, 'price', price(workshop)),
+    status: field(workshop, 'status', status(workshop)),
+    priceAndStatus: price(workshop) && status(workshop),
+  }));
 
   return (
     <Stack gap="4">
@@ -75,45 +89,33 @@ export function WorkshopList({ workshops, today, draft = false }: { workshops: W
             </>
           }
         >
-          {shown.map((workshop) => (
-            <tr key={workshop._id}>
+          {rows.map((row) => (
+            <tr key={row.workshop._id}>
               <PageTd>
-                <NextLink href={`/workshops/${workshop.slug}`}>{localize(workshop.title)}</NextLink>
+                <NextLink href={row.href}>{row.title}</NextLink>
               </PageTd>
-              <PageTd>
-                <span data-sanity={at(workshop, 'dateTime')}>{formatDates(workshop)}</span>
-              </PageTd>
-              <PageTd>
-                <span data-sanity={at(workshop, 'instructors')}>{names(workshop)}</span>
-              </PageTd>
-              <PageTd num>
-                <span data-sanity={at(workshop, 'price')}>{price(workshop)}</span>
-              </PageTd>
-              <PageTd>
-                <span data-sanity={at(workshop, 'status')}>{status(workshop)}</span>
-              </PageTd>
+              <PageTd>{row.dates}</PageTd>
+              <PageTd>{row.instructors}</PageTd>
+              <PageTd num>{row.price}</PageTd>
+              <PageTd>{row.status}</PageTd>
             </tr>
           ))}
         </PageTable>
       ) : (
         <Grid>
-          {shown.map((workshop) => (
-            <Cell key={workshop._id} span="3">
+          {rows.map((row) => (
+            <Cell key={row.workshop._id} span="3">
               <CardItem>
-                <NextLink href={`/workshops/${workshop.slug}`}>
-                  <Hero image={workshop.image} label={localize(workshop.title)} decorative />
-                  {localize(workshop.title)}
+                <NextLink href={row.href}>
+                  <Hero image={row.workshop.image} label={row.title} decorative />
+                  {row.title}
                 </NextLink>
+                <Text variant="small">{row.dates}</Text>
+                <Text variant="small">{row.instructors}</Text>
                 <Text variant="small">
-                  <span data-sanity={at(workshop, 'dateTime')}>{formatDates(workshop)}</span>
-                </Text>
-                <Text variant="small">
-                  <span data-sanity={at(workshop, 'instructors')}>{names(workshop)}</span>
-                </Text>
-                <Text variant="small">
-                  <span data-sanity={at(workshop, 'price')}>{price(workshop)}</span>
-                  {price(workshop) && status(workshop) ? ' · ' : ''}
-                  <span data-sanity={at(workshop, 'status')}>{status(workshop)}</span>
+                  {row.price}
+                  {row.priceAndStatus ? ' · ' : ''}
+                  {row.status}
                 </Text>
               </CardItem>
             </Cell>

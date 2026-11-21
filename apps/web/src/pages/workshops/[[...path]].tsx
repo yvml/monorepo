@@ -1,3 +1,4 @@
+// apps/web/src/pages/workshops/[[...path]].tsx
 import { ListHeader, PageColumn } from '@hmidmismi/ui';
 import Head from 'next/head';
 import { SiteLayout } from '@/components/SiteLayout';
@@ -40,6 +41,7 @@ export const getServerSideProps = withPreviewGate<Props>(async (context, draft) 
   const workshops = await listWorkshops(draft);
   if (!state || unknownChoices(workshopListing, workshops, state).length) return { notFound: true };
 
+  // Compared as parts, not as strings, so the order of the query parameters does not matter; the segment order does.
   const canonical = buildUrl(workshopListing, state);
   const same =
     canonical.segments.join('/') === segments.join('/') &&
