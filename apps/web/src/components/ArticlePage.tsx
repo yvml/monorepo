@@ -1,10 +1,8 @@
+// apps/web/src/components/ArticlePage.tsx
 import { PageColumn, PageHeader, Text, Title } from '@hmidmismi/ui';
-import { stegaClean } from '@sanity/client/stega';
-import Head from 'next/head';
 import { ContentModules } from '@/components/ContentModules';
 import { SiteLayout } from '@/components/SiteLayout';
 import { SubNav } from '@/components/SubNav';
-import { SITE_NAME } from '@/lib/brand';
 import { localize } from '@/lib/localize';
 import { type ArticleDetail } from '@/lib/sanity';
 import { t } from '@/lib/text';
@@ -19,11 +17,7 @@ import { sanityAttr } from '@/lib/visual';
 export function ArticlePage({ article, draftMode }: { article: ArticleDetail; draftMode?: boolean }) {
   const title = localize(article.title);
   return (
-    <SiteLayout>
-      <Head>
-        <title>{`${stegaClean(title)} · ${SITE_NAME}`}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+    <SiteLayout title={title}>
       <PageColumn as="article">
         <SubNav path="about/news" />
         <PageHeader>

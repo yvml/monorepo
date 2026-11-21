@@ -1,11 +1,9 @@
+// apps/web/src/components/PageTemplate.tsx
 import { PageColumn, PageHeader, Text, Title } from '@hmidmismi/ui';
-import { stegaClean } from '@sanity/client/stega';
-import Head from 'next/head';
 import { ContentModules } from '@/components/ContentModules';
 import { KeelaSignup } from '@/components/KeelaSignup';
 import { SiteLayout } from '@/components/SiteLayout';
 import { SubNav } from '@/components/SubNav';
-import { SITE_NAME } from '@/lib/brand';
 import { NEWSLETTER_URL } from '@/lib/keela';
 import { localize } from '@/lib/localize';
 import { CONTACT_PATH } from '@/lib/navigation';
@@ -24,11 +22,7 @@ import { sanityAttr } from '@/lib/visual';
 export function PageTemplate({ page, path, draftMode }: { page: PageDoc; path: string; draftMode?: boolean }) {
   const title = localize(page.title);
   return (
-    <SiteLayout>
-      <Head>
-        <title>{`${stegaClean(title)} · ${SITE_NAME}`}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+    <SiteLayout title={title}>
       <PageColumn as="article">
         <SubNav path={path} />
         <PageHeader>

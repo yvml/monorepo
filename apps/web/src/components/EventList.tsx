@@ -1,9 +1,7 @@
 // apps/web/src/components/EventList.tsx
 import { DatedList, DatedRow, ListHeader, PageColumn, Text } from '@hmidmismi/ui';
-import Head from 'next/head';
 import NextLink from 'next/link';
 import { SiteLayout } from '@/components/SiteLayout';
-import { SITE_NAME } from '@/lib/brand';
 import { dateBlock, firstDate, formatDates } from '@/lib/dates';
 import type { EventListProps } from '@/lib/event-loaders';
 import { localize } from '@/lib/localize';
@@ -43,11 +41,7 @@ function Rows({ entries, section }: { entries: EventSummary[]; section: Section 
 export function EventList({ section, upcoming, past, undated }: EventListProps) {
   const empty = !upcoming.length && !past.length && !undated.length;
   return (
-    <SiteLayout>
-      <Head>
-        <title>{`${t(section.title)} · ${SITE_NAME}`}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+    <SiteLayout title={t(section.title)}>
       <PageColumn>
         <ListHeader title={t(section.title)} count={upcoming.length ? t('upcomingCount', { count: upcoming.length }) : undefined} />
         {empty && <Text>{t(section.empty)}</Text>}

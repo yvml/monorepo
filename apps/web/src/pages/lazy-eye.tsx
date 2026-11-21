@@ -1,3 +1,4 @@
+// apps/web/src/pages/lazy-eye.tsx
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { withPreviewGate } from '@/lib/gate';
@@ -14,7 +15,6 @@ export default function LazyEye() {
     <>
       <Head>
         <title>Lazy Eye Gallery</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <style>{`
         body { background: #0b0b0b; }

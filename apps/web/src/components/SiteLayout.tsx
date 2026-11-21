@@ -1,4 +1,7 @@
+// apps/web/src/components/SiteLayout.tsx
 import { SiteFooter, SiteHeader, ThemeToggle, type LinkRender } from '@hmidmismi/ui';
+import { stegaClean } from '@sanity/client/stega';
+import Head from 'next/head';
 import NextLink from 'next/link';
 import type { ReactNode } from 'react';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
@@ -42,13 +45,16 @@ const social = menuLinks(SOCIAL);
 /**
  * The page frame: the sticky header with the section tabs, the page, and the footer.
  *
- * @param props - the page content.
+ * @param props - the page content and the page's title, shown in the tab before the site name (the home page has none). A title from Sanity may carry the markers click-to-edit adds, so it is cleaned here.
  * @returns the frame.
  */
-export function SiteLayout({ children }: { children: ReactNode }) {
+export function SiteLayout({ title, children }: { title?: string; children: ReactNode }) {
   const tabs = navigationTabs();
   return (
     <>
+      <Head>
+        <title>{title ? `${stegaClean(title)} · ${SITE_NAME}` : SITE_NAME}</title>
+      </Head>
       <SiteHeader
         utility={social}
         wordmark={{ text: SITE_NAME, link: nextLink('/') }}

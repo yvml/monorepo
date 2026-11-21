@@ -1,10 +1,8 @@
 // apps/web/src/pages/workshops/[[...path]].tsx
 import { ListHeader, PageColumn } from '@hmidmismi/ui';
-import Head from 'next/head';
 import { SiteLayout } from '@/components/SiteLayout';
 import { WorkshopList } from '@/components/WorkshopList';
 import { WorkshopPage } from '@/components/WorkshopPage';
-import { SITE_NAME } from '@/lib/brand';
 import { today } from '@/lib/dates';
 import { buildUrl, parseUrl, pathWords, type Query, toHref, unknownChoices } from '@/lib/filters';
 import { withPreviewGate } from '@/lib/gate';
@@ -57,11 +55,7 @@ export const getServerSideProps = withPreviewGate<Props>(async (context, draft) 
 export default function Page(props: Props) {
   if (props.view === 'detail') return <WorkshopPage entry={props.entry} draftMode={props.draftMode} />;
   return (
-    <SiteLayout>
-      <Head>
-        <title>{`${t(WORKSHOPS.title)} · ${SITE_NAME}`}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+    <SiteLayout title={t(WORKSHOPS.title)}>
       <PageColumn>
         <ListHeader title={t(WORKSHOPS.title)} />
         <WorkshopList workshops={props.workshops} today={props.today} draft={Boolean(props.draftMode)} />

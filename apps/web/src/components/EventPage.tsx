@@ -1,10 +1,10 @@
-import { BreadcrumbTrail, CenteredLines, Link, PageColumn, PageHeader, TermList, TermRow, Text, Title } from '@hmidmismi/ui';
+// apps/web/src/components/EventPage.tsx
+import { Link, PageColumn, TermList, TermRow, Text } from '@hmidmismi/ui';
 import { stegaClean } from '@sanity/client/stega';
-import Head from 'next/head';
-import { ContentModules, Hero } from '@/components/ContentModules';
+import { ContentModules } from '@/components/ContentModules';
+import { EntryHeader } from '@/components/EntryHeader';
 import { KeelaEmbed } from '@/components/KeelaEmbed';
-import { nextLink, SiteLayout } from '@/components/SiteLayout';
-import { SITE_NAME } from '@/lib/brand';
+import { SiteLayout } from '@/components/SiteLayout';
 import { formatDates } from '@/lib/dates';
 import { localize } from '@/lib/localize';
 import { type Section } from '@/lib/navigation';
@@ -29,30 +29,13 @@ export function EventPage({ section, entry, draftMode }: { section: Section; ent
   const open = entry.status !== 'cancelled';
 
   return (
-    <SiteLayout>
-      <Head>
-        <title>{`${stegaClean(title)} · ${SITE_NAME}`}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+    <SiteLayout title={title}>
       <PageColumn as="article">
-        <BreadcrumbTrail
-          home={nextLink('/')}
-          steps={[
-            { key: section.type, label: t(section.title), link: nextLink(`/${section.path}`) },
-            { key: entry._id, label: title, current: true },
-          ]}
-        />
-        <PageHeader>
-          <Title level="h1">{title}</Title>
-          <CenteredLines>
-            {status && <p data-sanity={attr('status')}>{status}</p>}
-            <p data-sanity={attr('dateTime')}>{formatDates(entry)}</p>
-            {entry.location && <p data-sanity={attr('location')}>{entry.location}</p>}
-          </CenteredLines>
-        </PageHeader>
-        <div data-sanity={attr('image')}>
-          <Hero image={entry.image} label={title} />
-        </div>
+        <EntryHeader section={section} id={entry._id} title={title} image={entry.image} attr={attr}>
+          {status && <p data-sanity={attr('status')}>{status}</p>}
+          <p data-sanity={attr('dateTime')}>{formatDates(entry)}</p>
+          {entry.location && <p data-sanity={attr('location')}>{entry.location}</p>}
+        </EntryHeader>
         {!keela && entry.registrationUrl && open && (
           <TermList ruled>
             <TermRow term={t('termRegistration')}>

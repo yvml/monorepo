@@ -1,9 +1,8 @@
+// apps/web/src/components/ArticleList.tsx
 import { ItemList, ListHeader, PageColumn, Text } from '@hmidmismi/ui';
-import Head from 'next/head';
 import NextLink from 'next/link';
 import { SiteLayout } from '@/components/SiteLayout';
 import { SubNav } from '@/components/SubNav';
-import { SITE_NAME } from '@/lib/brand';
 import { localize } from '@/lib/localize';
 import { type ArticleSummary } from '@/lib/sanity';
 import { t } from '@/lib/text';
@@ -16,11 +15,7 @@ import { t } from '@/lib/text';
  */
 export function ArticleList({ articles }: { articles: ArticleSummary[] }) {
   return (
-    <SiteLayout>
-      <Head>
-        <title>{`${t('navNews')} · ${SITE_NAME}`}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+    <SiteLayout title={t('navNews')}>
       <PageColumn>
         <SubNav path="about/news" />
         <ListHeader title={t('navNews')} />

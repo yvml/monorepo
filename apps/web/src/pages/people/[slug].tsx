@@ -1,9 +1,8 @@
+// apps/web/src/pages/people/[slug].tsx
 import { CenteredLines, ItemList, Link, PageColumn, PageHeader, TermList, TermRow, Text, Title } from '@hmidmismi/ui';
-import Head from 'next/head';
 import NextLink from 'next/link';
 import { Blocks, Hero } from '@/components/ContentModules';
 import { SiteLayout } from '@/components/SiteLayout';
-import { SITE_NAME } from '@/lib/brand';
 import { formatDates } from '@/lib/dates';
 import { localize } from '@/lib/localize';
 import { getPerson, type PersonDetail } from '@/lib/sanity';
@@ -24,11 +23,7 @@ export default function Page({ person }: Props) {
   const workshops = person.workshops ?? [];
 
   return (
-    <SiteLayout>
-      <Head>
-        <title>{`${name} · ${SITE_NAME}`}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+    <SiteLayout title={name}>
       <PageColumn as="article">
         <PageHeader>
           <Title level="h1">{name}</Title>
