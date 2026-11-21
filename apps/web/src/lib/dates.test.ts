@@ -12,7 +12,7 @@ afterEach(() => setActiveLocale('en'));
 describe('formatDates', () => {
   it('writes one day and a range in English', () => {
     expect(formatDates(entry('2026-10-14'))).toBe('Oct 14, 2026');
-    expect(formatDates(entry('2026-10-14', '2026-10-16'))).toMatch(/^Oct 14\s–\s16, 2026$/);
+    expect(formatDates(entry('2026-10-14', '2026-10-16'))).toBe('Oct 14 – 16, 2026');
   });
 
   it('follows the page language', () => {

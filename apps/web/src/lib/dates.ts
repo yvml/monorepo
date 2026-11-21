@@ -69,7 +69,9 @@ export function formatDates(entry: Dated) {
   const end = lastDate(entry);
   const circa = entry.dateTime?.circa ? `${t('circa')} ` : '';
   if (!end || end === start) return circa + formatDate(start);
-  return circa + format(FULL).formatRange(parse(start), parse(end));
+  // Node and browsers ship different ICU versions: Node puts thin spaces (U+2009) around the dash where Chrome puts plain
+  // ones. A page is rendered by one and hydrated by the other, so the spaces are made plain to keep the text identical.
+  return circa + format(FULL).formatRange(parse(start), parse(end)).replace(/[\u2009\u202f]/g, ' ');
 }
 
 /** Today as `YYYY-MM-DD`. UTC is close enough to decide upcoming from past. */
