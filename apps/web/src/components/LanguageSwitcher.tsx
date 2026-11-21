@@ -1,29 +1,33 @@
-import { Chip, Wrap } from '@hmidmismi/ui';
+// apps/web/src/components/LanguageSwitcher.tsx
+import { ToggleGroup } from '@hmidmismi/ui';
 import { useRouter } from 'next/router';
-import { LOCALES } from '@/lib/locale';
+import { DEFAULT_LOCALE, LOCALES } from '@/lib/locale';
 import { t } from '@/lib/text';
 
 /**
- * Switches the page to another language. Pages keep their English slugs in every language, so the path is the same and
- * only the language prefix changes. The current language is the pressed chip.
+ * Switches the page between languages: one toggle with the current language selected, English by default. Pages keep
+ * their English slugs in every language, so the path is the same and only the language prefix changes. The toggle always
+ * has one side selected, so pressing the selected side does nothing.
  *
- * @returns the switcher.
+ * @returns the toggle.
  */
 export function LanguageSwitcher() {
   const router = useRouter();
+  const current = router.locale ?? DEFAULT_LOCALE;
   return (
-    <Wrap gap="1" role="group" aria-label={t('language')}>
+    <ToggleGroup.Root
+      aria-label={t('language')}
+      value={[current]}
+      deselectable={false}
+      onValueChange={({ value: [code] }) => {
+        if (code && code !== current) void router.push(router.asPath, undefined, { locale: code });
+      }}
+    >
       {LOCALES.map(({ code, label }) => (
-        <Chip
-          key={code}
-          pressed={code === router.locale}
-          onClick={() => {
-            if (code !== router.locale) void router.push(router.asPath, undefined, { locale: code });
-          }}
-        >
-          {label}
-        </Chip>
+        <ToggleGroup.Item key={code} value={code} aria-label={label}>
+          {code.toUpperCase()}
+        </ToggleGroup.Item>
       ))}
-    </Wrap>
+    </ToggleGroup.Root>
   );
 }
