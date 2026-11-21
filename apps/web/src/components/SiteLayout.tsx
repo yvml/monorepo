@@ -2,7 +2,11 @@ import { SiteFooter, SiteHeader, ThemeToggle, type LinkRender } from '@hmidmismi
 import NextLink from 'next/link';
 import type { ReactNode } from 'react';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
-import { NAV_GROUPS, type NavGroup, SECTIONS, SITE_NAME } from '@/lib/site';
+import { menuLinks } from '@/lib/menu';
+import { SITE_NAME } from '@/lib/brand';
+import { NAV_GROUPS, type NavGroup, SECTIONS } from '@/lib/navigation';
+import { SOCIAL } from '@/lib/social';
+import { t } from '@/lib/text';
 
 /**
  * Builds the link renderer the UI package expects from a Next route.
@@ -18,22 +22,22 @@ export const nextLink =
     </NextLink>
   );
 
-const groupTab = (group: NavGroup) => ({
-  key: group.path,
-  label: group.title,
-  link: nextLink(`/${group.path}`),
-});
+const groupItem = (group: NavGroup) => ({ key: group.path, label: t(group.title), href: `/${group.path}` });
 
-/** About YVML first, then the listings, then Support Us. */
-const tabs = [
-  ...NAV_GROUPS.filter((group) => group.path === 'about').map(groupTab),
-  ...SECTIONS.map((section) => ({
-    key: section.type,
-    label: section.title,
-    link: nextLink(`/${section.path}`),
-  })),
-  ...NAV_GROUPS.filter((group) => group.path === 'support').map(groupTab),
-];
+/**
+ * About YVML first, then the listings, then Support Us. Built per render: the labels follow the page's language.
+ *
+ * @returns the navigation links.
+ */
+const navigationTabs = () =>
+  menuLinks([
+    ...NAV_GROUPS.filter((group) => group.path === 'about').map(groupItem),
+    ...SECTIONS.map((section) => ({ key: section.type, label: t(section.title), href: `/${section.path}` })),
+    ...NAV_GROUPS.filter((group) => group.path === 'support').map(groupItem),
+  ]);
+
+/** The social media links, in the header's utility row and at the end of the footer's links. */
+const social = menuLinks(SOCIAL);
 
 /**
  * The page frame: the sticky header with the section tabs, the page, and the footer.
@@ -42,10 +46,11 @@ const tabs = [
  * @returns the frame.
  */
 export function SiteLayout({ children }: { children: ReactNode }) {
+  const tabs = navigationTabs();
   return (
     <>
       <SiteHeader
-        utility={[]}
+        utility={social}
         wordmark={{ text: SITE_NAME, link: nextLink('/') }}
         tabs={tabs}
         actions={
@@ -57,10 +62,10 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       />
       {children}
       <SiteFooter
-        links={tabs}
+        links={[...tabs, ...social]}
         copyright={`© ${new Date().getFullYear()} ${SITE_NAME}`}
-        status={{ label: 'Upcoming events', link: nextLink('/events') }}
-        note="Dates and registration are on each entry's page."
+        status={{ label: t('upcomingEvents'), link: nextLink('/events') }}
+        note={t('footerNote')}
       />
     </>
   );
