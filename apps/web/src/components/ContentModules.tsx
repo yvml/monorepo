@@ -1,9 +1,11 @@
-import { Figure, Measure, Picture } from '@hmidmismi/ui';
+import { Figure, Measure, NameList, Picture } from '@hmidmismi/ui';
 import { PortableText, type PortableTextBlock } from '@portabletext/react';
 import { stegaClean } from '@sanity/client/stega';
 import NextLink from 'next/link';
 import { Kicker } from '@/components/Kicker';
-import { type ContentModule, type ImageData, localize, localizedBlocks, type LocalizedBlocks } from '@/lib/events';
+import { localize, localizedBlocks } from '@/lib/localize';
+import { PLACEHOLDER } from '@/lib/placeholder';
+import { type ContentModule, type ImageData, type LocalizedBlocks } from '@/lib/sanity';
 
 /** Localized Portable Text on its own, such as a workshop description or a biography. */
 export function Blocks({ value }: { value?: LocalizedBlocks | null }) {
@@ -15,19 +17,22 @@ export function Blocks({ value }: { value?: LocalizedBlocks | null }) {
   ) : null;
 }
 
-/** An image at its own size, or a grey box when the document has none yet. */
-export function Hero({ image, label }: { image?: ImageData; label: string }) {
-  if (image?.url && image.width && image.height) {
-    return <Picture shape="photo" src={image.url} alt={localize(image.alt) || label} width={image.width} height={image.height} />;
-  }
+/**
+ * An image at its own size, or the placeholder when the document has none yet.
+ *
+ * @param props - the image, a label for when it has no alt text of its own, and whether it only decorates (a card whose title already names it).
+ * @returns the picture.
+ */
+export function Hero({ image, label, decorative = false }: { image?: ImageData; label: string; decorative?: boolean }) {
+  const real = image?.url && image.width && image.height ? image : null;
   return (
-    <div
-      role="img"
-      aria-label={label}
-      style={{ aspectRatio: '4 / 3', background: '#ddd', color: '#777', display: 'grid', placeItems: 'center' }}
-    >
-      400 × 300
-    </div>
+    <Picture
+      shape="photo"
+      src={real?.url ?? PLACEHOLDER.url}
+      alt={decorative ? '' : (real && localize(real.alt)) || label}
+      width={real?.width ?? PLACEHOLDER.width}
+      height={real?.height ?? PLACEHOLDER.height}
+    />
   );
 }
 
@@ -38,7 +43,7 @@ export function Hero({ image, label }: { image?: ImageData; label: string }) {
  * @param props - the modules.
  * @returns the rendered modules.
  */
-export function ContentModules({ modules }: { modules?: ContentModule[] }) {
+export function ContentModules({ modules }: { modules?: ContentModule[] | null }) {
   return (
     <>
       {modules?.map((module) => {
@@ -56,8 +61,7 @@ export function ContentModules({ modules }: { modules?: ContentModule[] }) {
         }
         if (module._type === 'peopleModule') {
           return (
-            <section key={module._key}>
-              <ul>
+            <NameList key={module._key}>
                 {module.people?.map(({ _key, role, person }) =>
                   person ? (
                     <li key={_key}>
@@ -70,8 +74,7 @@ export function ContentModules({ modules }: { modules?: ContentModule[] }) {
                     </li>
                   ) : null
                 )}
-              </ul>
-            </section>
+            </NameList>
           );
         }
         if (!module.url || !module.width || !module.height) return null;
