@@ -1,20 +1,15 @@
+// apps/web/src/components/EventList.tsx
 import { DatedList, DatedRow, ListHeader, PageColumn, Text } from '@hmidmismi/ui';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { SiteLayout } from '@/components/SiteLayout';
 import { SITE_NAME } from '@/lib/brand';
 import { dateBlock, firstDate, formatDates } from '@/lib/dates';
+import type { EventListProps } from '@/lib/event-loaders';
 import { localize } from '@/lib/localize';
 import { type Section } from '@/lib/navigation';
 import { type EventSummary } from '@/lib/sanity';
 import { t } from '@/lib/text';
-
-export type EventListProps = {
-  section: Section;
-  upcoming: EventSummary[];
-  past: EventSummary[];
-  undated: EventSummary[];
-};
 
 function Rows({ entries, section }: { entries: EventSummary[]; section: Section }) {
   return (
