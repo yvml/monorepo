@@ -1,3 +1,4 @@
+// apps/web/src/lib/text.ts
 import type { UiText } from '@hmidmismi/ui';
 import { activeLocale } from './locale';
 
@@ -41,6 +42,7 @@ const en = {
   toBeConfirmed: 'To be confirmed',
   soldOut: 'Sold out',
   detailsToFollow: 'Details to follow.',
+  circa: 'ca.',
   unnamed: 'Unnamed',
   portraitOf: 'Portrait of {name}',
 
@@ -131,6 +133,7 @@ const es: Record<TextKey, string> = {
   toBeConfirmed: 'Por confirmar',
   soldOut: 'Agotado',
   detailsToFollow: 'Más detalles próximamente.',
+  circa: 'ca.',
   unnamed: 'Sin nombre',
   portraitOf: 'Retrato de {name}',
 

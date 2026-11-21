@@ -1,4 +1,7 @@
+// apps/web/src/lib/dates.ts
+import { activeLocale } from './locale';
 import type { Dated } from './sanity';
+import { t } from './text';
 
 /** The first date of an entry, or an empty string. */
 export const firstDate = (entry: Dated) => entry.dateTime?.entries?.[0]?.date ?? '';
@@ -27,8 +30,20 @@ export function splitByDate<T extends Dated>(entries: T[], today: string) {
   };
 }
 
-const UTC = { timeZone: 'UTC' } as const;
+/** Dates are calendar days with no time, so they are read and shown in UTC to keep the day from shifting with the visitor's zone. */
 const parse = (iso: string) => new Date(`${iso}T00:00:00Z`);
+/** A formatter for the page's language (`en` or `es`), so month names and the order of day, month and year follow it. */
+const format = (options: Intl.DateTimeFormatOptions) =>
+  new Intl.DateTimeFormat(activeLocale(), { timeZone: 'UTC', ...options });
+const FULL = { month: 'short', day: 'numeric', year: 'numeric' } as const;
+
+/**
+ * One date as text, such as `Oct 14, 2026`.
+ *
+ * @param iso - `YYYY-MM-DD`.
+ * @returns the date in the page's language.
+ */
+export const formatDate = (iso: string) => format(FULL).format(parse(iso));
 
 /**
  * The month abbreviation and day for a date block.
@@ -38,14 +53,12 @@ const parse = (iso: string) => new Date(`${iso}T00:00:00Z`);
  */
 export function dateBlock(iso: string) {
   const date = parse(iso);
-  return {
-    month: date.toLocaleDateString('en-US', { ...UTC, month: 'short' }),
-    day: date.toLocaleDateString('en-US', { ...UTC, day: 'numeric' }),
-  };
+  return { month: format({ month: 'short' }).format(date), day: format({ day: 'numeric' }).format(date) };
 }
 
 /**
- * A readable date or date range, such as `Oct 14, 2026` or `Oct 14 – 16, 2026`.
+ * A readable date or date range, such as `Oct 14, 2026` or `Oct 14 – 16, 2026`, in the page's language. The range is
+ * left to `Intl`, which knows how each language joins and shortens the two ends.
  *
  * @param entry - the entry.
  * @returns the text, or an empty string when there is no date.
@@ -54,17 +67,10 @@ export function formatDates(entry: Dated) {
   const start = firstDate(entry);
   if (!start) return '';
   const end = lastDate(entry);
-  const full = (iso: string) =>
-    parse(iso).toLocaleDateString('en-US', { ...UTC, month: 'short', day: 'numeric', year: 'numeric' });
-  const circa = entry.dateTime?.circa ? 'ca. ' : '';
-  if (!end || end === start) return circa + full(start);
-  const sameMonth = start.slice(0, 7) === end.slice(0, 7);
-  const endText = sameMonth ? `${parse(end).getUTCDate()}, ${parse(end).getUTCFullYear()}` : full(end);
-  const startText = sameMonth
-    ? parse(start).toLocaleDateString('en-US', { ...UTC, month: 'short', day: 'numeric' })
-    : full(start);
-  return `${circa}${startText} – ${endText}`;
+  const circa = entry.dateTime?.circa ? `${t('circa')} ` : '';
+  if (!end || end === start) return circa + formatDate(start);
+  return circa + format(FULL).formatRange(parse(start), parse(end));
 }
 
-/** Today in the dojo's calendar as `YYYY-MM-DD` (UTC is close enough to decide upcoming from past). */
+/** Today as `YYYY-MM-DD`. UTC is close enough to decide upcoming from past. */
 export const today = () => new Date().toISOString().slice(0, 10);

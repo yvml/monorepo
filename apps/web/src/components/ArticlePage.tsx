@@ -3,6 +3,7 @@ import { PageColumn, PageHeader, Text, Title } from '@hmidmismi/ui';
 import { ContentModules } from '@/components/ContentModules';
 import { SiteLayout } from '@/components/SiteLayout';
 import { SubNav } from '@/components/SubNav';
+import { formatDate } from '@/lib/dates';
 import { localize } from '@/lib/localize';
 import { type ArticleDetail } from '@/lib/sanity';
 import { t } from '@/lib/text';
@@ -22,7 +23,7 @@ export function ArticlePage({ article, draftMode }: { article: ArticleDetail; dr
         <SubNav path="about/news" />
         <PageHeader>
           <Title level="h1">{title}</Title>
-          <p>{article.createdAt.slice(0, 10)}</p>
+          <p>{formatDate(article.createdAt.slice(0, 10))}</p>
         </PageHeader>
         <div data-sanity={sanityAttr(Boolean(draftMode), article._id, 'article', 'content')}>
           <ContentModules modules={article.content} />

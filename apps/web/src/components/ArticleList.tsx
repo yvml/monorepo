@@ -3,6 +3,7 @@ import { ItemList, ListHeader, PageColumn, Text } from '@hmidmismi/ui';
 import NextLink from 'next/link';
 import { SiteLayout } from '@/components/SiteLayout';
 import { SubNav } from '@/components/SubNav';
+import { formatDate } from '@/lib/dates';
 import { localize } from '@/lib/localize';
 import { type ArticleSummary } from '@/lib/sanity';
 import { t } from '@/lib/text';
@@ -25,7 +26,7 @@ export function ArticleList({ articles }: { articles: ArticleSummary[] }) {
             <li key={article._id}>
               <NextLink href={`/about/news/${article.slug}`}>{localize(article.title)}</NextLink>
               {' · '}
-              {article.createdAt.slice(0, 10)}
+              {formatDate(article.createdAt.slice(0, 10))}
             </li>
           ))}
         </ItemList>
