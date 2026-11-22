@@ -1,3 +1,4 @@
+// apps/studio/src/components/InstructorsInput.tsx
 import { CloseIcon } from '@sanity/icons';
 import { Autocomplete, Button, Flex, Stack } from '@sanity/ui';
 import { useEffect, useMemo, useState } from 'react';
@@ -11,12 +12,13 @@ const key = () => Math.random().toString(36).slice(2, 12);
 /**
  * Picks the people who teach a workshop. Clicking a name turns it into a search box right there, so you pick someone
  * else without leaving the form (a normal reference opens that person's document instead). The ✕ removes an
- * instructor and the last box adds another.
+ * instructor and the last box adds another. The last box also takes the studio's focus (`elementProps`), which is how
+ * Presentation scrolls to this field when an instructor is clicked on the page.
  *
  * @param props - the array input props.
  * @returns the picker.
  */
-export function InstructorsInput({ value, onChange, readOnly }: ArrayOfObjectsInputProps) {
+export function InstructorsInput({ value, onChange, readOnly, elementProps }: ArrayOfObjectsInputProps) {
   const client = useClient({ apiVersion: '2025-01-01' });
   const [people, setPeople] = useState<Person[]>([]);
   const [editing, setEditing] = useState<string | null>(null);
@@ -87,7 +89,7 @@ export function InstructorsInput({ value, onChange, readOnly }: ArrayOfObjectsIn
         </Flex>
       ))}
       <Autocomplete
-        id="instructor-add"
+        {...elementProps}
         placeholder={items.length ? 'Add another instructor' : 'Choose an instructor'}
         options={optionsFor()}
         disabled={readOnly}
