@@ -1,3 +1,4 @@
+// apps/web/tests/filters.test.ts
 import { describe, expect, it } from 'vitest';
 import {
   activeFilters,
@@ -10,8 +11,8 @@ import {
   pathWords,
   toHref,
   unknownChoices,
-} from './index';
-import type { FilterState, ListSpec } from './types';
+} from '../src/lib/filters';
+import type { FilterState, ListSpec } from '../src/lib/filters/types';
 
 type Item = { id: string; name: string; tags: string[]; colors: string[]; price: number | null; closed: boolean; at: number };
 type Ctx = { now: number };

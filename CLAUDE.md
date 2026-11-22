@@ -27,7 +27,7 @@ sanity/
   groq.ts         fragments: SLUG, FULL_NAME, image(), SUMMARY, CONTENT, ...
   queries/        one file per document type: defineQuery constants, result types, thin functions
   types.ts        generated types re-exported, plus the few shapes components accept
-filters/          the filter engine: kinds, URL state, apply, counts, active chips, useFilterState (tests beside it)
+filters/          the filter engine: kinds, URL state, apply, counts, active chips, useFilterState
 workshop-listing.ts   the workshop listing as data (a ListSpec): filters, sorts, views
 text.ts           every app string in every language (t('key')), plus the design system's words in Spanish
 localize.ts       Sanity localized fields       dates.ts          date helpers
@@ -39,6 +39,7 @@ gate.ts, preview.ts, auth.ts, locale.ts, theme.ts, visual.ts   (the preview logi
 
 ## Conventions
 
+- Tests live in `apps/web/tests/`, one file per area under test, named for it (`dates.test.ts`, `filters.test.ts`). They import from `../src/lib/...`.
 - Apps use `@hmidmismi/ui` components and variants, not their own styling: no `style`, no raw `className`, no raw `ul`/`table`/form controls (see `packages/ui/STYLES.md`). If the UI package lacks a component, add it there on a `feat/*` branch (as `EmbedFrame` was) rather than styling in the app.
 - Links to other sites open in a new tab with `rel="noopener noreferrer"` and an accessible name that says so; build every menu through `menuLinks` in `lib/menu.tsx`.
 - Shared packages change only on a branch in their own repo, then the pin is bumped here.
