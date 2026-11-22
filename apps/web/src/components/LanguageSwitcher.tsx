@@ -16,6 +16,8 @@ export function LanguageSwitcher() {
   return (
     <EditableSelect
       label={t('language')}
+      hideLabel
+      size="sm"
       value={current}
       options={LOCALES.map(({ code }) => ({ id: code, name: code.toUpperCase() }))}
       onChange={(code) => {
