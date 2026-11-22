@@ -1,6 +1,6 @@
 // apps/web/src/lib/sanity/queries/articles.ts
 import { defineQuery } from 'groq';
-import { clientFor } from '../client';
+import { clientFor, listClient } from '../client';
 import { CONTENT, SLUG } from '../groq';
 import type { ARTICLE_QUERY_RESULT, ARTICLES_QUERY_RESULT } from '../types';
 
@@ -23,7 +23,7 @@ export type ArticleDetail = NonNullable<ARTICLE_QUERY_RESULT>;
  * @param draft - whether the request is in draft mode.
  * @returns the articles.
  */
-export const listArticles = (draft: boolean) => clientFor(draft).fetch(ARTICLES_QUERY);
+export const listArticles = (draft: boolean) => listClient(draft).fetch(ARTICLES_QUERY);
 
 /**
  * One article by slug.

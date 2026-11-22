@@ -1,5 +1,5 @@
 import { defineQuery } from 'groq';
-import { clientFor } from '../client';
+import { clientFor, listClient } from '../client';
 import { CONTENT, image, SLUG, SLUG_PLAIN, SUMMARY } from '../groq';
 import type { WORKSHOP_QUERY_RESULT, WORKSHOPS_QUERY_RESULT } from '../types';
 
@@ -30,7 +30,7 @@ export type WorkshopDetail = NonNullable<WORKSHOP_QUERY_RESULT>;
  * @param draft - whether the request is in draft mode.
  * @returns the workshops, unordered.
  */
-export const listWorkshops = (draft: boolean) => clientFor(draft).fetch(WORKSHOPS_QUERY);
+export const listWorkshops = (draft: boolean) => listClient(draft).fetch(WORKSHOPS_QUERY);
 
 /**
  * One workshop by slug.

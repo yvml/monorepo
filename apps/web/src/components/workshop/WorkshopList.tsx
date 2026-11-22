@@ -11,7 +11,6 @@ import {
   Text,
   Wrap,
 } from '@hmidmismi/ui';
-import { stegaClean } from '@sanity/client/stega';
 import NextLink from 'next/link';
 import { useMemo } from 'react';
 import { Image } from '@/components/media';
@@ -22,11 +21,10 @@ import { useFilterState } from '@/hooks';
 import { localize } from '@/lib/localize';
 import { type WorkshopSummary } from '@/lib/sanity';
 import { t } from '@/lib/text';
-import { sanityAttr } from '@/lib/visual';
 import { workshopListing } from '@/lib/workshop-listing';
 
 const names = (workshop: WorkshopSummary) =>
-  workshop.instructors?.map((person) => stegaClean(person.title)).filter(Boolean).join(', ') ?? '';
+  workshop.instructors?.map((person) => person.title).filter(Boolean).join(', ') ?? '';
 const price = (workshop: WorkshopSummary) => (workshop.price == null ? '' : `$${workshop.price}`);
 const status = (workshop: WorkshopSummary) => (workshop.status === 'soldOut' ? t('soldOut') : '');
 
@@ -34,27 +32,24 @@ const status = (workshop: WorkshopSummary) => (workshop.status === 'soldOut' ? t
  * The workshop listing: the filter bar for `workshopListing`, the filters that are on as removable chips, the number of
  * matches, and the matches as a grid of cards or a table. The choices live in the address, so a filtered view can be linked.
  *
- * @param props - the workshops, today's date, and whether the request is in draft mode.
+ * @param props - the workshops and today's date.
  * @returns the listing.
  */
-export function WorkshopList({ workshops, today, draft = false }: { workshops: WorkshopSummary[]; today: string; draft?: boolean }) {
+export function WorkshopList({ workshops, today }: { workshops: WorkshopSummary[]; today: string }) {
   const context = useMemo(() => ({ today }), [today]);
   const { state, change, reset } = useFilterState(workshopListing, '/workshops');
   const shown = useMemo(() => applyFilters(workshopListing, workshops, state, context), [workshops, state, context]);
   const active = useMemo(() => activeFilters(workshopListing, workshops, state), [workshops, state]);
-  /** One field of a workshop, marked for click-to-edit in Presentation. */
-  const field = (workshop: WorkshopSummary, path: string, text: string) => (
-    <span data-sanity={sanityAttr(draft, workshop._id, 'workshop', path)}>{text}</span>
-  );
   // Computed once per workshop and shared by the table and the grid; `t` is read here so the labels follow the page's language.
+  // Nothing here is click-to-edit: a workshop is edited on its own page.
   const rows = shown.map((workshop) => ({
     workshop,
     title: localize(workshop.title),
     href: `/workshops/${workshop.slug}`,
-    dates: <Dates entry={workshop} attr={sanityAttr(draft, workshop._id, 'workshop', 'dateTime')} />,
-    instructors: field(workshop, 'instructors', names(workshop)),
-    price: field(workshop, 'price', price(workshop)),
-    status: field(workshop, 'status', status(workshop)),
+    dates: <Dates entry={workshop} />,
+    instructors: names(workshop),
+    price: price(workshop),
+    status: status(workshop),
     priceAndStatus: price(workshop) && status(workshop),
   }));
 

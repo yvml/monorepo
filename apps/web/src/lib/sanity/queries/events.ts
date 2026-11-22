@@ -1,6 +1,6 @@
 import { defineQuery } from 'groq';
 import type { Section } from '@/lib/navigation';
-import { clientFor } from '../client';
+import { clientFor, listClient } from '../client';
 import { CONTENT, image, SLUG, SUMMARY } from '../groq';
 import type { EVENT_QUERY_RESULT, EVENTS_QUERY_RESULT } from '../types';
 
@@ -29,7 +29,7 @@ const params = (section: Section) => ({ section: section.type });
  * @param draft - whether the request is in draft mode.
  * @returns the entries, in no particular order; see `splitByDate`.
  */
-export const listEvents = (section: Section, draft: boolean) => clientFor(draft).fetch(EVENTS_QUERY, params(section));
+export const listEvents = (section: Section, draft: boolean) => listClient(draft).fetch(EVENTS_QUERY, params(section));
 
 /**
  * One event or exhibition by slug.

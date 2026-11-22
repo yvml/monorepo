@@ -58,7 +58,7 @@ export default function Page(props: Props) {
     <Site title={t(WORKSHOPS.title)}>
       <PageColumn>
         <ListHeader title={t(WORKSHOPS.title)} />
-        <WorkshopList workshops={props.workshops} today={props.today} draft={Boolean(props.draftMode)} />
+        <WorkshopList workshops={props.workshops} today={props.today} />
       </PageColumn>
     </Site>
   );
