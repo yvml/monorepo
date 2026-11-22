@@ -13,3 +13,6 @@ styled-system
 
 # Local Netlify folder
 .netlify
+
+# Generated mocks
+mocks
