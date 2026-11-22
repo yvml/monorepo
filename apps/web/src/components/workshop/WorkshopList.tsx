@@ -18,10 +18,9 @@ import { FilterBar } from '@/components/filters';
 import { Dates } from '@/components/date';
 import { activeFilters, applyFilters } from '@/lib/filters';
 import { useFilterState } from '@/hooks';
-import { localize } from '@/lib/localize';
+import { localize, t } from '@/i18n';
 import { type WorkshopSummary } from '@/lib/sanity';
-import { t } from '@/lib/text';
-import { workshopListing } from '@/lib/workshop-listing';
+import { workshopListing } from '@/lib/workshops';
 
 const names = (workshop: WorkshopSummary) =>
   workshop.instructors?.map((person) => person.title).filter(Boolean).join(', ') ?? '';

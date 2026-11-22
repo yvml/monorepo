@@ -10,7 +10,7 @@ import {
   ListFilter,
 } from '@hmidmismi/ui';
 import { type FilterState, type ListSpec, num, optionsWithCounts, type Range, withValue } from '@/lib/filters';
-import { t } from '@/lib/text';
+import { t } from '@/i18n';
 
 /** A multi or select filter with more choices than this is a searchable list, not a row of chips. */
 const CHIP_LIMIT = 12;

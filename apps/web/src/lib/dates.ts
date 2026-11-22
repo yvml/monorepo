@@ -1,7 +1,6 @@
 // apps/web/src/lib/dates.ts
-import { activeLocale } from './locale';
+import { activeLocale, t } from '@/i18n';
 import type { Dated } from './sanity';
-import { t } from './text';
 
 /** The first date of an entry, or an empty string. */
 export const firstDate = (entry: Dated) => entry.dateTime?.entries?.[0]?.date ?? '';

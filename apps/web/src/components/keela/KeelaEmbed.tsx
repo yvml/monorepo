@@ -1,7 +1,7 @@
 // apps/web/src/components/keela/KeelaEmbed.tsx
 import { EmbedFrame, Link, Text } from '@hmidmismi/ui';
 import { keelaFormUrl } from '@/lib/keela';
-import { t } from '@/lib/text';
+import { t } from '@/i18n';
 
 /**
  * A Keela registration form framed in the page, with a link that opens it on its own tab. Keela sends

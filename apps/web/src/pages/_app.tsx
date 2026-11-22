@@ -5,8 +5,7 @@ import { VisualEditing } from '@sanity/visual-editing/next-pages-router';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { setActiveLocale } from '@/lib/locale';
-import { UI_TEXT } from '@/lib/text';
+import { UI_TEXT, setActiveLocale } from '@/i18n';
 
 export default function App({ Component, pageProps }: AppProps) {
   const { locale } = useRouter();

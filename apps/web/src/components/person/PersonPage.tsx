@@ -5,9 +5,8 @@ import { Blocks } from '@/components/content';
 import { Dates } from '@/components/date';
 import { Site } from '@/components/layout';
 import { Image } from '@/components/media';
-import { localize } from '@/lib/localize';
+import { localize, t } from '@/i18n';
 import type { PersonDetail } from '@/lib/sanity';
-import { t } from '@/lib/text';
 
 /**
  * One person: name, location, portrait, biography, links, and the workshops they teach.

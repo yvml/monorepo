@@ -3,9 +3,8 @@ import { PageColumn, PageHeader, Text, Title } from '@hmidmismi/ui';
 import type { ReactNode } from 'react';
 import { Site } from './Site';
 import { ContentModules } from '@/components/content';
-import { localize } from '@/lib/localize';
+import { localize, t } from '@/i18n';
 import type { PageDoc } from '@/lib/sanity';
-import { t } from '@/lib/text';
 import { sanityAttr } from '@/lib/visual';
 
 /**

@@ -1,13 +1,12 @@
-// apps/web/src/lib/text.ts
+// apps/web/src/i18n/strings.ts
 import type { UiText } from '@hmidmismi/ui';
-import { activeLocale } from './locale';
 
 /**
  * Every word the app itself puts on a page: navigation, headings of listings, filter labels, empty states. Content that
  * editors write comes from the studio; the design system's own words (`Close`, `Clear`) come from `UI_TEXT` below.
  * English is the source; a language added to `LOCALES` needs an entry in `TEXT` for every key.
  */
-const en = {
+export const en = {
   // Navigation
   navEvents: 'Events',
   navExhibitions: 'Exhibitions',
@@ -192,18 +191,6 @@ const es: Record<TextKey, string> = {
 
 /** The strings by language. */
 export const TEXT: Record<string, Record<TextKey, string>> = { en, es };
-
-/**
- * One app string in the language of the page being rendered, falling back to English.
- *
- * @param key - which string.
- * @param values - what fills each `{hole}`.
- * @returns the text.
- */
-export function t(key: TextKey, values?: Record<string, string | number>) {
-  const template = (TEXT[activeLocale()] ?? en)[key] ?? en[key];
-  return values ? template.replace(/\{(\w+)\}/g, (hole, name: string) => String(values[name] ?? hole)) : template;
-}
 
 /** The design system's own words in Spanish; English is the package default. */
 export const UI_TEXT: Record<string, Partial<UiText>> = {

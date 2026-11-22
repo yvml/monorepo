@@ -1,3 +1,4 @@
+// apps/web/src/i18n/locale.ts
 /** The languages the site is offered in. Add an entry here and in `next.config.ts` to add a language. */
 export const LOCALES = [
   { code: 'en', label: 'English' },

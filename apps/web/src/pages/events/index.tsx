@@ -1,7 +1,7 @@
 // apps/web/src/pages/events/index.tsx
 import { EventList } from '@/components/event';
 import { eventListLoader, type EventListProps } from '@/lib/event-loaders';
-import { EVENTS } from '@/lib/navigation';
+import { EVENTS } from '@/constants';
 
 export const getStaticProps = eventListLoader(EVENTS);
 

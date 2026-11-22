@@ -1,7 +1,7 @@
 // apps/web/tests/dates.test.ts
 import { afterEach, describe, expect, it } from 'vitest';
 import { formatDates } from '../src/lib/dates';
-import { setActiveLocale } from '../src/lib/locale';
+import { setActiveLocale } from '../src/i18n';
 
 const entry = (date: string, endDate?: string, circa = false) => ({
   dateTime: { circa, isRange: false, entries: [{ _key: 'a', date, endDate }] },

@@ -1,5 +1,6 @@
+// apps/web/src/lib/sanity/queries/events.ts
 import { defineQuery } from 'groq';
-import type { Section } from '@/lib/navigation';
+import { type Section } from '@/constants';
 import { clientFor, listClient } from '../client';
 import { CONTENT, image, SLUG, SUMMARY } from '../groq';
 import type { EVENT_QUERY_RESULT, EVENTS_QUERY_RESULT } from '../types';

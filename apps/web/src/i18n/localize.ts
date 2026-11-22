@@ -1,5 +1,6 @@
+// apps/web/src/i18n/localize.ts
 import { activeLocale } from './locale';
-import type { Localized, LocalizedBlocks } from './sanity/types';
+import type { Localized, LocalizedBlocks } from '@/lib/sanity';
 
 /**
  * Reads one language of a localized field, falling back to English.

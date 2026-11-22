@@ -1,8 +1,8 @@
 // apps/web/src/components/navigation/menuLinks.tsx
 import type { LinkRender, NavLink } from '@hmidmismi/ui';
 import NextLink from 'next/link';
-import type { MenuItem } from '@/lib/navigation';
-import { t } from '@/lib/text';
+import { type MenuItem } from '@/constants';
+import { t } from '@/i18n';
 
 const isWebAddress = (href: string) => /^https?:\/\//i.test(href);
 

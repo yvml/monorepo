@@ -4,8 +4,8 @@ import { stegaClean } from '@sanity/client/stega';
 import Head from 'next/head';
 import type { ReactNode } from 'react';
 import { LanguageSwitcher, mainMenu, nextLink, socialMenu, SubNav } from '@/components/navigation';
-import { SITE_NAME } from '@/lib/brand';
-import { t } from '@/lib/text';
+import { SITE_NAME } from '@/constants';
+import { t } from '@/i18n';
 
 /**
  * The page frame: the sticky header with the section tabs, the page, and the footer.

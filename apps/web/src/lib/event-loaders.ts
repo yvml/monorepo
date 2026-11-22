@@ -1,6 +1,6 @@
 // apps/web/src/lib/event-loaders.ts
 import { splitByDate, today } from './dates';
-import type { Section } from './navigation';
+import { type Section } from '@/constants';
 import { type EventDetail, type EventSummary, getEvent, listEvents } from './sanity';
 import { withDraft } from './static-props';
 

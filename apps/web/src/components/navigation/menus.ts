@@ -1,8 +1,7 @@
 // apps/web/src/components/navigation/menus.ts
 import { menuLinks } from './menuLinks';
-import { NAV_GROUPS, type NavGroup, SECTIONS } from '@/lib/navigation';
-import { SOCIAL } from '@/lib/social';
-import { t } from '@/lib/text';
+import { NAV_GROUPS, type NavGroup, SECTIONS, SOCIAL } from '@/constants';
+import { t } from '@/i18n';
 
 const groupItem = (group: NavGroup) => ({ key: group.path, label: t(group.title), href: `/${group.path}` });
 

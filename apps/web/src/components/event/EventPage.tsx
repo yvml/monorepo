@@ -7,11 +7,10 @@ import { Dates } from '@/components/date';
 import { Site } from '@/components/layout';
 import { Breadcrumbs } from '@/components/navigation';
 import { Image } from '@/components/media';
-import { localize } from '@/lib/localize';
-import { type Section } from '@/lib/navigation';
+import { localize, t } from '@/i18n';
+import { type Section } from '@/constants';
 import { type EventDetail } from '@/lib/sanity';
 import { keelaFormUrl } from '@/lib/keela';
-import { t } from '@/lib/text';
 import { sanityAttr } from '@/lib/visual';
 
 const STATUS = { tbc: 'toBeConfirmed', cancelled: 'cancelled' } as const;

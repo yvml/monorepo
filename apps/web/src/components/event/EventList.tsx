@@ -5,10 +5,9 @@ import { Site } from '@/components/layout';
 import { Dates } from '@/components/date';
 import { dateBlock, firstDate } from '@/lib/dates';
 import type { EventListProps } from '@/lib/event-loaders';
-import { localize } from '@/lib/localize';
-import { type Section } from '@/lib/navigation';
+import { localize, t } from '@/i18n';
+import { type Section } from '@/constants';
 import { type EventSummary } from '@/lib/sanity';
-import { t } from '@/lib/text';
 
 function Rows({ entries, section }: { entries: EventSummary[]; section: Section }) {
   return (

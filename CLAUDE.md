@@ -37,22 +37,20 @@ tests/           every test file
 A page-specific addition goes in the route, never behind a path check inside a shared component. Name a component for the
 thing it is in the site's own words, never a generic word (`Entry`, `Item`, `Helper`).
 
-## `apps/web/src/lib`
+## `apps/web/src/lib`, `i18n`, `constants`, `theme`
 
 ```
-sanity/
-  client.ts       clients: published, preview, clientFor(draft)
-  groq.ts         fragments: SLUG, FULL_NAME, image(), SUMMARY, CONTENT, ...
-  queries/        one file per document type: defineQuery constants, result types, thin functions
-  types.ts        generated types re-exported, plus the few shapes components accept
-filters/          the filter engine: kinds, URL state, apply, counts, active chips, useFilterState
-workshop-listing.ts   the workshop listing as data (a ListSpec): filters, sorts, views
-text.ts           every app string in every language (t('key')), plus the design system's words in Spanish
-localize.ts       Sanity localized fields       dates.ts          date helpers
-navigation.ts     sections and nav groups (titles are text keys)    menu.tsx   menu items to links (target, rel, aria)
-keela.ts          Keela address checks and form addresses           brand.ts, social.ts, placeholder.ts
-static-props.ts   getStaticProps wrapper (withDraft), revalidate time, onDemandPaths    event-loaders.ts   events and exhibitions share their loaders
-gate.ts, preview.ts, auth.ts, locale.ts, theme.ts, visual.ts   (the preview login is `src/middleware.ts`)
+i18n/             strings.ts (every app string in English and Spanish, and the design system's words in Spanish), translate.ts (t('key')),
+                  locale.ts (the languages, the active one), localize.ts (Sanity localized fields). Import from '@/i18n'.
+constants/        data that never changes at runtime: brand (SITE_NAME), placeholder, sections (events, exhibitions, workshops),
+                  menus (navigation groups, social links). Import from '@/constants'.
+theme/            the site's theme (colors, faces), which panda.config.ts and _document read
+lib/              code that does something:
+  sanity/         client.ts (published, preview, listing clients), groq.ts (fragments), queries/ (one file per document type), types.ts
+  filters/        the filter engine: kinds, URL state, apply, counts, active chips
+  workshops/      the workshop listing as a ListSpec: filters.ts, sorts.ts, instructors.ts
+  dates.ts        date helpers      keela.ts   Keela address checks      visual.ts   click-to-edit attributes
+  static-props.ts, page-loader.ts, event-loaders.ts   page data loaders      gate.ts, preview.ts, auth.ts   preview-site login (the check runs in src/middleware.ts)
 ```
 
 ## Conventions
@@ -62,7 +60,7 @@ gate.ts, preview.ts, auth.ts, locale.ts, theme.ts, visual.ts   (the preview logi
 - Apps use `@hmidmismi/ui` components and variants, not their own styling: no `style`, no raw `className`, no raw `ul`/`table`/form controls (see `packages/ui/STYLES.md`). If the UI package lacks a component, add it there on a `feat/*` branch (as `EmbedFrame` was) rather than styling in the app.
 - Links to other sites open in a new tab with `rel="noopener noreferrer"` and an accessible name that says so; build every menu through `menuLinks` in `lib/menu.tsx`.
 - Shared packages change only on a branch in their own repo, then the pin is bumped here.
-- No hardcoded wording in components or pages. Every visible string is a key in `lib/text.ts` with an English and a Spanish entry; read it with `t('key')` at render time, never at module load (menus and tabs are built per render so they follow the page's language).
+- No hardcoded wording in components or pages. Every visible string is a key in `i18n/strings.ts` with an English and a Spanish entry; read it with `t('key')` at render time, never at module load (menus and tabs are built per render so they follow the page's language).
 - A listing is a `ListSpec` (filters, sorts, views) in its own file; `FilterBar` and `useFilterState` render and persist any spec, and the choices live in the address: facets in the path (`/workshops/material/adobe/open`, one canonical order, several values joined with `+`), the rest in the query (`?min-price=200&sort=price-low&view=list`). Values are slugs, never Sanity ids. The listing is served by one optional catch-all page (`[[...path]].tsx`) that also serves the entries' own pages, so a path facet word is reserved. A new listing is a new spec, not new filter code. Filter kinds: search, select, multi, toggle, range.
 - Do not use monospace type anywhere.
 - No instructional or hint copy in the UI or the schema unless asked for.

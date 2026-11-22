@@ -6,7 +6,7 @@ import NextLink from 'next/link';
 import { Blocks } from './Blocks';
 import { Kicker } from './Kicker';
 import { Image } from '@/components/media';
-import { localize, localizedBlocks } from '@/lib/localize';
+import { localize, localizedBlocks } from '@/i18n';
 import type { ContentModule } from '@/lib/sanity';
 
 /**

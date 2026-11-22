@@ -1,8 +1,7 @@
 // apps/web/src/components/navigation/LanguageSwitcher.tsx
 import { EditableSelect } from '@hmidmismi/ui';
 import { useRouter } from 'next/router';
-import { DEFAULT_LOCALE, LOCALES } from '@/lib/locale';
-import { t } from '@/lib/text';
+import { DEFAULT_LOCALE, LOCALES, t } from '@/i18n';
 
 /**
  * Switches the page between languages with a select list that shows the language code, `EN` by default. Pages keep their

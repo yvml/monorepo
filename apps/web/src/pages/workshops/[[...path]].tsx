@@ -4,11 +4,11 @@ import { Site } from '@/components/layout';
 import { WorkshopList, WorkshopPage } from '@/components/workshop';
 import { today } from '@/lib/dates';
 import { buildUrl, parseUrl, pathWords, toHref, unknownChoices } from '@/lib/filters';
-import { WORKSHOPS } from '@/lib/navigation';
+import { WORKSHOPS } from '@/constants';
+import { t } from '@/i18n';
 import { getWorkshop, listWorkshops, type WorkshopDetail, type WorkshopSummary } from '@/lib/sanity';
 import { onDemandPaths, withDraft } from '@/lib/static-props';
-import { t } from '@/lib/text';
-import { workshopListing } from '@/lib/workshop-listing';
+import { workshopListing } from '@/lib/workshops';
 
 type Props =
   | { view: 'list'; workshops: WorkshopSummary[]; today: string; draftMode?: boolean }

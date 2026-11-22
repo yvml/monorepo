@@ -8,11 +8,10 @@ import { Dates } from '@/components/date';
 import { Site } from '@/components/layout';
 import { Breadcrumbs } from '@/components/navigation';
 import { Image } from '@/components/media';
-import { localize } from '@/lib/localize';
-import { WORKSHOPS } from '@/lib/navigation';
+import { localize, t } from '@/i18n';
+import { WORKSHOPS } from '@/constants';
 import { type WorkshopDetail } from '@/lib/sanity';
 import { keelaFormUrl } from '@/lib/keela';
-import { t } from '@/lib/text';
 import { sanityAttr } from '@/lib/visual';
 
 const FORMAT = { inPerson: 'formatInPerson', virtual: 'formatVirtual', hybrid: 'formatHybrid' } as const;

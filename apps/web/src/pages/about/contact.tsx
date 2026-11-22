@@ -3,7 +3,7 @@ import { KeelaSignup } from '@/components/keela';
 import { Page } from '@/components/layout';
 import { NEWSLETTER_URL } from '@/lib/keela';
 import { type PageProps, pageLoader } from '@/lib/page-loader';
-import { t } from '@/lib/text';
+import { t } from '@/i18n';
 
 /** The Contact page: the page from the studio, then the newsletter signup. */
 export const getStaticProps = pageLoader('about/contact');

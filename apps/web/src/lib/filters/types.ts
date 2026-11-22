@@ -1,4 +1,5 @@
-import type { TextKey } from '../text';
+// apps/web/src/lib/filters/types.ts
+import { type TextKey } from '@/i18n';
 
 /** One choice of a select or multi filter. */
 export type Option = { value: string; label: string };

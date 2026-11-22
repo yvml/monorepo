@@ -1,7 +1,7 @@
 // apps/web/src/components/content/Blocks.tsx
 import { Measure } from '@hmidmismi/ui';
 import { PortableText, type PortableTextBlock } from '@portabletext/react';
-import { localizedBlocks } from '@/lib/localize';
+import { localizedBlocks } from '@/i18n';
 import type { LocalizedBlocks } from '@/lib/sanity';
 
 /**

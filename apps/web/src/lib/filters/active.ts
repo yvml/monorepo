@@ -1,5 +1,5 @@
 // apps/web/src/lib/filters/active.ts
-import { t } from '../text';
+import { t } from '@/i18n';
 import { defaultValue, withValue } from './state';
 import type { FilterState, ListSpec, Range } from './types';
 

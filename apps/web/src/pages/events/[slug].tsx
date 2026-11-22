@@ -2,7 +2,7 @@
 import { onDemandPaths } from '@/lib/static-props';
 import { EventPage } from '@/components/event';
 import { eventLoader, type EventProps } from '@/lib/event-loaders';
-import { EVENTS } from '@/lib/navigation';
+import { EVENTS } from '@/constants';
 
 export const getStaticPaths = onDemandPaths;
 

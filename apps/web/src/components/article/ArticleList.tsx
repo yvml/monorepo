@@ -3,9 +3,8 @@ import { ItemList, ListHeader, PageColumn, Text } from '@hmidmismi/ui';
 import NextLink from 'next/link';
 import { Site } from '@/components/layout';
 import { Day } from '@/components/date';
-import { localize } from '@/lib/localize';
+import { localize, t } from '@/i18n';
 import { type ArticleSummary } from '@/lib/sanity';
-import { t } from '@/lib/text';
 
 /**
  * The News & Articles listing, newest first.

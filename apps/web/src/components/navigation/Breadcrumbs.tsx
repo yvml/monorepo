@@ -1,8 +1,8 @@
 // apps/web/src/components/navigation/Breadcrumbs.tsx
 import { BreadcrumbTrail } from '@hmidmismi/ui';
 import { nextLink } from './nextLink';
-import type { Section } from '@/lib/navigation';
-import { t } from '@/lib/text';
+import { type Section } from '@/constants';
+import { t } from '@/i18n';
 
 /**
  * The trail from the home page through a section's listing to the page being read.

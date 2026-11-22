@@ -3,9 +3,8 @@ import { PageColumn, PageHeader, Text, Title } from '@hmidmismi/ui';
 import { ContentModules } from '@/components/content';
 import { Site } from '@/components/layout';
 import { Day } from '@/components/date';
-import { localize } from '@/lib/localize';
+import { localize, t } from '@/i18n';
 import { type ArticleDetail } from '@/lib/sanity';
-import { t } from '@/lib/text';
 import { sanityAttr } from '@/lib/visual';
 
 /**

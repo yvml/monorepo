@@ -1,7 +1,7 @@
 // apps/web/src/components/media/Image.tsx
 import { Picture } from '@hmidmismi/ui';
-import { localize } from '@/lib/localize';
-import { PLACEHOLDER } from '@/lib/placeholder';
+import { localize } from '@/i18n';
+import { PLACEHOLDER } from '@/constants';
 import type { ImageData } from '@/lib/sanity';
 
 /**

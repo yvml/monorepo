@@ -4,7 +4,7 @@ import NextLink from 'next/link';
 import { Site } from '@/components/layout';
 import { Image } from '@/components/media';
 import type { PersonSummary } from '@/lib/sanity';
-import { t } from '@/lib/text';
+import { t } from '@/i18n';
 
 /**
  * Everyone who has a page, as cards with their portrait, name and location.

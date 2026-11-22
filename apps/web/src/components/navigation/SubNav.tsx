@@ -2,8 +2,8 @@
 import { BrowseNav, browseLinkClass, PageColumn } from '@hmidmismi/ui';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { groupForPath, routePath } from '@/lib/navigation';
-import { t } from '@/lib/text';
+import { groupForPath, routePath } from './path';
+import { t } from '@/i18n';
 
 /**
  * The links between the pages of a group (About YVML or Support Us), shown on every page inside it. The site frame
