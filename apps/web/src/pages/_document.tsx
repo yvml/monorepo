@@ -2,7 +2,7 @@
 import { THEME_INIT_SCRIPT } from '@hmidmismi/ui';
 import { Head, Html, Main, NextScript } from 'next/document';
 import Script from 'next/script';
-import { themeCss } from '@/lib/theme';
+import { themeCss } from '@/theme';
 
 export default function Document() {
   return (

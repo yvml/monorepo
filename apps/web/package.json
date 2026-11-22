@@ -4,15 +4,20 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "clean": "rm -rf .next .turbo node_modules",
-    "dev": "next dev",
+    "clean": "rm -rf .next .turbo node_modules styled-system",
+    "panda:build": "panda codegen && panda cssgen --outfile styled-system/styles.css",
+    "panda:watch": "panda cssgen --outfile styled-system/styles.css --watch",
+    "predev": "pnpm panda:build",
+    "dev": "concurrently -k -n css,next -c magenta,green \"pnpm panda:watch\" \"next dev\"",
+    "prebuild": "pnpm panda:build",
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "lint": "oxlint -c ../../.oxlintrc.json .",
+    "lint": "oxlint -c ../../.oxlintrc.json --ignore-pattern styled-system .",
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
+    "@capsizecss/metrics": "^4.3.0",
     "@hmidmismi/auth": "workspace:*",
     "@hmidmismi/sanity-types": "workspace:*",
     "@hmidmismi/ui": "workspace:*",
@@ -27,10 +32,14 @@
   },
   "devDependencies": {
     "@hmidmismi/tsconfig": "workspace:*",
+    "@pandacss/dev": "^1.12.0",
+    "@pandacss/preset-base": "^1.12.0",
+    "@pandacss/preset-panda": "^1.12.1",
     "@types/node": "^22.0.0",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.3.0",
     "better-auth": "^1.7.6",
+    "concurrently": "^9.2.1",
     "typescript": "^5.7.0",
     "vitest": "^2.1.9"
   }

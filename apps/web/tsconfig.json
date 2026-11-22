@@ -4,5 +4,5 @@
     "baseUrl": ".",
     "paths": { "@/*": ["./src/*"] }
   },
-  "include": ["next-env.d.ts", "src", "tests", "next.config.ts"]
+  "include": ["next-env.d.ts", "src", "tests", "next.config.ts", "panda.config.ts"]
 }

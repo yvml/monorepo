@@ -1,5 +1,5 @@
 // apps/web/src/pages/_app.tsx
-import '@hmidmismi/ui/styles.css';
+import '../../styled-system/styles.css';
 import { UiProvider } from '@hmidmismi/ui';
 import { VisualEditing } from '@sanity/visual-editing/next-pages-router';
 import type { AppProps } from 'next/app';
