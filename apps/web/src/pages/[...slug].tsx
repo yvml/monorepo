@@ -1,20 +1,13 @@
-import { PageTemplate } from '@/components/PageTemplate';
-import { onDemandPaths, withDraft } from '@/lib/static-props';
-import { getPage, type PageDoc } from '@/lib/sanity';
+// apps/web/src/pages/[...slug].tsx
+import { Page } from '@/components/layout';
+import { type PageProps, pageLoader } from '@/lib/page-loader';
+import { onDemandPaths } from '@/lib/static-props';
 
-type Props = { page: PageDoc; path: string; draftMode?: boolean };
-
-/** Static pages from the studio's Page type: `/about`, and nested ones such as `/about/history`. */
+/** Pages from the studio's Page type: `/about`, and nested ones such as `/about/history`. */
 export const getStaticPaths = onDemandPaths;
 
-export const getStaticProps = withDraft<Props>(async (context, draft) => {
-  const parts = context.params?.slug;
-  const path = Array.isArray(parts) ? parts.join('/') : parts;
-  if (!path) return { notFound: true };
-  const page = await getPage(path, draft);
-  return page ? { props: { page, path } } : { notFound: true };
-});
+export const getStaticProps = pageLoader();
 
-export default function Page({ page, path, draftMode }: Props) {
-  return <PageTemplate page={page} path={path} draftMode={draftMode} />;
+export default function StaticPage({ page, draftMode }: PageProps) {
+  return <Page page={page} draftMode={draftMode} />;
 }

@@ -1,5 +1,5 @@
 // apps/web/src/pages/exhibitions/index.tsx
-import { EventList } from '@/components/EventList';
+import { EventList } from '@/components/event';
 import { eventListLoader, type EventListProps } from '@/lib/event-loaders';
 import { EXHIBITIONS } from '@/lib/navigation';
 

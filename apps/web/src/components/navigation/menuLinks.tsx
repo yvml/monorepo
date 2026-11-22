@@ -1,20 +1,8 @@
+// apps/web/src/components/navigation/menuLinks.tsx
 import type { LinkRender, NavLink } from '@hmidmismi/ui';
 import NextLink from 'next/link';
+import type { MenuItem } from '@/lib/navigation';
 import { t } from '@/lib/text';
-
-/** One entry of a menu. */
-export type MenuItem = {
-  /** Identifies the item in its menu. */
-  key: string;
-  /** The visible text. */
-  label: string;
-  /** A route (`/about`), a web address (`https://…`), or a `mailto:`, `tel:` or `#` link. */
-  href: string;
-  /** The accessible name when it should say more than the label, such as `YVML on Instagram`. */
-  ariaLabel?: string;
-  /** Forces a link to open in a new tab, or keeps one that would. Defaults to true for `http(s)` addresses. */
-  external?: boolean;
-};
 
 const isWebAddress = (href: string) => /^https?:\/\//i.test(href);
 

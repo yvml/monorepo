@@ -19,6 +19,24 @@ pnpm + Turborepo monorepo for YVML. `apps/web` is Next 15 (pages router), `apps/
 - **Verify before saying done.** Typecheck, run the pages, and for data-layer changes compare old and new results on the real dataset. Report what was checked and what was not. Never leave a tree that does not typecheck.
 - **Easy to extend.** A new document type is one query file and, at most, one fragment.
 
+## `apps/web/src`
+
+```
+components/<domain>/   one folder per domain, each with a barrel `index.ts`; import from the folder (`@/components/workshop`)
+  article/ event/ workshop/ person/   List and Page components for each document type
+  layout/        Site (the frame) and Page (a page written in the studio)
+  navigation/    everything that moves a visitor around: SubNav, Breadcrumbs, LanguageSwitcher, the menus, nextLink
+  content/       Blocks, ContentModules, Kicker      media/   Image      date/   Dates, Day
+  filters/       FilterBar (generic, takes any ListSpec)      keela/   KeelaEmbed, KeelaSignup
+hooks/           custom React hooks (useFilterState)
+lib/             code with no React: queries, the filter engine, text, dates, loaders
+pages/           routes only: a loader, and one component. A route owns what is specific to it (Contact adds the signup)
+tests/           every test file
+```
+
+A page-specific addition goes in the route, never behind a path check inside a shared component. Name a component for the
+thing it is in the site's own words, never a generic word (`Entry`, `Item`, `Helper`).
+
 ## `apps/web/src/lib`
 
 ```

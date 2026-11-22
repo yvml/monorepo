@@ -1,3 +1,4 @@
+// apps/web/src/components/content/Kicker.tsx
 import { Label } from '@hmidmismi/ui';
 import type { ReactNode } from 'react';
 

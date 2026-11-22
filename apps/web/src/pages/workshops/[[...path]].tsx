@@ -1,8 +1,7 @@
 // apps/web/src/pages/workshops/[[...path]].tsx
 import { ListHeader, PageColumn } from '@hmidmismi/ui';
-import { SiteLayout } from '@/components/SiteLayout';
-import { WorkshopList } from '@/components/WorkshopList';
-import { WorkshopPage } from '@/components/WorkshopPage';
+import { Site } from '@/components/layout';
+import { WorkshopList, WorkshopPage } from '@/components/workshop';
 import { today } from '@/lib/dates';
 import { buildUrl, parseUrl, pathWords, toHref, unknownChoices } from '@/lib/filters';
 import { WORKSHOPS } from '@/lib/navigation';
@@ -56,11 +55,11 @@ export const getStaticProps = withDraft<Props>(async (context, draft) => {
 export default function Page(props: Props) {
   if (props.view === 'detail') return <WorkshopPage entry={props.entry} draftMode={props.draftMode} />;
   return (
-    <SiteLayout title={t(WORKSHOPS.title)}>
+    <Site title={t(WORKSHOPS.title)}>
       <PageColumn>
         <ListHeader title={t(WORKSHOPS.title)} />
         <WorkshopList workshops={props.workshops} today={props.today} draft={Boolean(props.draftMode)} />
       </PageColumn>
-    </SiteLayout>
+    </Site>
   );
 }

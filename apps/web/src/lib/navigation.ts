@@ -1,3 +1,5 @@
+// apps/web/src/lib/navigation.ts
+import { DEFAULT_LOCALE, LOCALES } from './locale';
 import type { TextKey } from './text';
 
 /**
@@ -56,5 +58,26 @@ export const NAV_GROUPS: NavGroup[] = [
 export const groupForPath = (path: string) =>
   NAV_GROUPS.find((group) => path === group.path || path.startsWith(`${group.path}/`));
 
-/** The path of the Contact Us page, which carries the newsletter signup. */
-export const CONTACT_PATH = 'about/contact';
+const LOCALE_PREFIX = new RegExp(`^/(${LOCALES.filter(({ code }) => code !== DEFAULT_LOCALE).map(({ code }) => code).join('|')})(?=/|$)`);
+
+/**
+ * The site path of an address, as `groupForPath` and the navigation read it.
+ *
+ * @param asPath - the router's address, such as `/es/about/staff?x=1`.
+ * @returns the path without the language, query or outer slashes: `about/staff`.
+ */
+export const routePath = (asPath: string) => (asPath.split(/[?#]/)[0] ?? '').replace(LOCALE_PREFIX, '').replace(/^\/+|\/+$/g, '');
+
+/** One entry of a menu. */
+export type MenuItem = {
+  /** Identifies the item in its menu. */
+  key: string;
+  /** The visible text. */
+  label: string;
+  /** A route (`/about`), a web address (`https://…`), or a `mailto:`, `tel:` or `#` link. */
+  href: string;
+  /** The accessible name when it should say more than the label, such as `YVML on Instagram`. */
+  ariaLabel?: string;
+  /** Forces a link to open in a new tab, or keeps one that would. Defaults to true for `http(s)` addresses. */
+  external?: boolean;
+};

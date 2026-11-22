@@ -1,5 +1,5 @@
 // apps/web/src/pages/about/news/index.tsx
-import { ArticleList } from '@/components/ArticleList';
+import { ArticleList } from '@/components/article';
 import { type ArticleSummary, listArticles } from '@/lib/sanity';
 import { withDraft } from '@/lib/static-props';
 

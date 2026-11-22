@@ -1,9 +1,8 @@
-// apps/web/src/components/ArticleList.tsx
+// apps/web/src/components/article/ArticleList.tsx
 import { ItemList, ListHeader, PageColumn, Text } from '@hmidmismi/ui';
 import NextLink from 'next/link';
-import { SiteLayout } from '@/components/SiteLayout';
-import { SubNav } from '@/components/SubNav';
-import { formatDate } from '@/lib/dates';
+import { Site } from '@/components/layout';
+import { Day } from '@/components/date';
 import { localize } from '@/lib/localize';
 import { type ArticleSummary } from '@/lib/sanity';
 import { t } from '@/lib/text';
@@ -16,9 +15,8 @@ import { t } from '@/lib/text';
  */
 export function ArticleList({ articles }: { articles: ArticleSummary[] }) {
   return (
-    <SiteLayout title={t('navNews')}>
+    <Site title={t('navNews')}>
       <PageColumn>
-        <SubNav path="about/news" />
         <ListHeader title={t('navNews')} />
         {!articles.length && <Text>{t('emptyArticles')}</Text>}
         <ItemList>
@@ -26,11 +24,11 @@ export function ArticleList({ articles }: { articles: ArticleSummary[] }) {
             <li key={article._id}>
               <NextLink href={`/about/news/${article.slug}`}>{localize(article.title)}</NextLink>
               {' · '}
-              {formatDate(article.createdAt.slice(0, 10))}
+              <Day iso={article.createdAt.slice(0, 10)} />
             </li>
           ))}
         </ItemList>
       </PageColumn>
-    </SiteLayout>
+    </Site>
   );
 }

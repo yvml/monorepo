@@ -1,4 +1,4 @@
-// apps/web/src/components/LanguageSwitcher.tsx
+// apps/web/src/components/navigation/LanguageSwitcher.tsx
 import { EditableSelect } from '@hmidmismi/ui';
 import { useRouter } from 'next/router';
 import { DEFAULT_LOCALE, LOCALES } from '@/lib/locale';

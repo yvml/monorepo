@@ -1,3 +1,4 @@
+// apps/web/src/components/keela/KeelaSignup.tsx
 import { stegaClean } from '@sanity/client/stega';
 import Head from 'next/head';
 import Script from 'next/script';

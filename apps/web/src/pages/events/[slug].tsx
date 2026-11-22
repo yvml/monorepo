@@ -1,6 +1,6 @@
 // apps/web/src/pages/events/[slug].tsx
 import { onDemandPaths } from '@/lib/static-props';
-import { EventPage } from '@/components/EventPage';
+import { EventPage } from '@/components/event';
 import { eventLoader, type EventProps } from '@/lib/event-loaders';
 import { EVENTS } from '@/lib/navigation';
 

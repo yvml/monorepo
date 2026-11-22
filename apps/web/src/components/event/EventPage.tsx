@@ -1,11 +1,12 @@
-// apps/web/src/components/EventPage.tsx
-import { Link, PageColumn, TermList, TermRow, Text } from '@hmidmismi/ui';
+// apps/web/src/components/event/EventPage.tsx
+import { CenteredLines, Link, PageColumn, PageHeader, TermList, TermRow, Text, Title } from '@hmidmismi/ui';
 import { stegaClean } from '@sanity/client/stega';
-import { ContentModules } from '@/components/ContentModules';
-import { EntryHeader } from '@/components/EntryHeader';
-import { KeelaEmbed } from '@/components/KeelaEmbed';
-import { SiteLayout } from '@/components/SiteLayout';
-import { formatDates } from '@/lib/dates';
+import { ContentModules } from '@/components/content';
+import { KeelaEmbed } from '@/components/keela';
+import { Dates } from '@/components/date';
+import { Site } from '@/components/layout';
+import { Breadcrumbs } from '@/components/navigation';
+import { Image } from '@/components/media';
 import { localize } from '@/lib/localize';
 import { type Section } from '@/lib/navigation';
 import { type EventDetail } from '@/lib/sanity';
@@ -29,13 +30,22 @@ export function EventPage({ section, entry, draftMode }: { section: Section; ent
   const open = entry.status !== 'cancelled';
 
   return (
-    <SiteLayout title={title}>
+    <Site title={title}>
       <PageColumn as="article">
-        <EntryHeader section={section} id={entry._id} title={title} image={entry.image} attr={attr}>
-          {status && <p data-sanity={attr('status')}>{status}</p>}
-          <p data-sanity={attr('dateTime')}>{formatDates(entry)}</p>
-          {entry.location && <p data-sanity={attr('location')}>{entry.location}</p>}
-        </EntryHeader>
+        <Breadcrumbs section={section} id={entry._id} title={title} />
+        <PageHeader>
+          <Title level="h1">{title}</Title>
+          <CenteredLines>
+            {status && <p data-sanity={attr('status')}>{status}</p>}
+            <p>
+              <Dates entry={entry} attr={attr('dateTime')} />
+            </p>
+            {entry.location && <p data-sanity={attr('location')}>{entry.location}</p>}
+          </CenteredLines>
+        </PageHeader>
+        <div data-sanity={attr('image')}>
+          <Image image={entry.image} label={title} />
+        </div>
         {!keela && entry.registrationUrl && open && (
           <TermList ruled>
             <TermRow term={t('termRegistration')}>
@@ -47,6 +57,6 @@ export function EventPage({ section, entry, draftMode }: { section: Section; ent
         {keela && open && <KeelaEmbed url={keela} title={t('registerFor', { title: stegaClean(title) })} />}
         {!entry.content?.length && <Text>{t('detailsToFollow')}</Text>}
       </PageColumn>
-    </SiteLayout>
+    </Site>
   );
 }

@@ -1,4 +1,4 @@
-// apps/web/src/components/FilterBar.tsx
+// apps/web/src/components/filters/FilterBar.tsx
 import {
   Chip,
   ComboboxMultiSelect,

@@ -1,8 +1,7 @@
-// apps/web/src/lib/filters/use-filter-state.ts
+// apps/web/src/hooks/useFilterState.ts
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
-import { defaultState, parseUrl, toHref } from './state';
-import type { FilterState, ListSpec } from './types';
+import { defaultState, type FilterState, type ListSpec, parseUrl, toHref } from '@/lib/filters';
 
 /**
  * The listing's filter state, kept in the address (`/workshops/material/adobe/open?sort=price-low`) so a filtered view can

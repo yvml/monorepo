@@ -1,4 +1,5 @@
-import type { MenuItem } from '@/lib/menu';
+// apps/web/src/lib/social.ts
+import type { MenuItem } from './navigation';
 
 /** YVML's social media accounts, as menu items for the header and footer. */
 export const SOCIAL: MenuItem[] = [

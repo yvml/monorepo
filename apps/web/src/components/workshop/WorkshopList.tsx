@@ -1,4 +1,4 @@
-// apps/web/src/components/WorkshopList.tsx
+// apps/web/src/components/workshop/WorkshopList.tsx
 import {
   CardItem,
   Cell,
@@ -14,10 +14,11 @@ import {
 import { stegaClean } from '@sanity/client/stega';
 import NextLink from 'next/link';
 import { useMemo } from 'react';
-import { Hero } from '@/components/ContentModules';
-import { FilterBar } from '@/components/FilterBar';
-import { formatDates } from '@/lib/dates';
-import { activeFilters, applyFilters, useFilterState } from '@/lib/filters';
+import { Image } from '@/components/media';
+import { FilterBar } from '@/components/filters';
+import { Dates } from '@/components/date';
+import { activeFilters, applyFilters } from '@/lib/filters';
+import { useFilterState } from '@/hooks';
 import { localize } from '@/lib/localize';
 import { type WorkshopSummary } from '@/lib/sanity';
 import { t } from '@/lib/text';
@@ -50,7 +51,7 @@ export function WorkshopList({ workshops, today, draft = false }: { workshops: W
     workshop,
     title: localize(workshop.title),
     href: `/workshops/${workshop.slug}`,
-    dates: field(workshop, 'dateTime', formatDates(workshop)),
+    dates: <Dates entry={workshop} attr={sanityAttr(draft, workshop._id, 'workshop', 'dateTime')} />,
     instructors: field(workshop, 'instructors', names(workshop)),
     price: field(workshop, 'price', price(workshop)),
     status: field(workshop, 'status', status(workshop)),
@@ -107,7 +108,7 @@ export function WorkshopList({ workshops, today, draft = false }: { workshops: W
             <Cell key={row.workshop._id} span="3">
               <CardItem>
                 <NextLink href={row.href}>
-                  <Hero image={row.workshop.image} label={row.title} decorative />
+                  <Image image={row.workshop.image} label={row.title} decorative />
                   {row.title}
                 </NextLink>
                 <Text variant="small">{row.dates}</Text>

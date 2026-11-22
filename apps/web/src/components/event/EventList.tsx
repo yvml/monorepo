@@ -1,8 +1,9 @@
-// apps/web/src/components/EventList.tsx
+// apps/web/src/components/event/EventList.tsx
 import { DatedList, DatedRow, ListHeader, PageColumn, Text } from '@hmidmismi/ui';
 import NextLink from 'next/link';
-import { SiteLayout } from '@/components/SiteLayout';
-import { dateBlock, firstDate, formatDates } from '@/lib/dates';
+import { Site } from '@/components/layout';
+import { Dates } from '@/components/date';
+import { dateBlock, firstDate } from '@/lib/dates';
 import type { EventListProps } from '@/lib/event-loaders';
 import { localize } from '@/lib/localize';
 import { type Section } from '@/lib/navigation';
@@ -22,7 +23,7 @@ function Rows({ entries, section }: { entries: EventSummary[]; section: Section 
             dateTime={firstDate(entry)}
             title={<NextLink href={`/${section.path}/${entry.slug}`}>{localize(entry.title)}</NextLink>}
             subtitle={
-              entry.status === 'cancelled' ? t('cancelled') : entry.status === 'tbc' ? t('toBeConfirmed') : formatDates(entry)
+              entry.status === 'cancelled' ? t('cancelled') : entry.status === 'tbc' ? t('toBeConfirmed') : <Dates entry={entry} />
             }
             aside={entry.location}
           />
@@ -41,7 +42,7 @@ function Rows({ entries, section }: { entries: EventSummary[]; section: Section 
 export function EventList({ section, upcoming, past, undated }: EventListProps) {
   const empty = !upcoming.length && !past.length && !undated.length;
   return (
-    <SiteLayout title={t(section.title)}>
+    <Site title={t(section.title)}>
       <PageColumn>
         <ListHeader title={t(section.title)} count={upcoming.length ? t('upcomingCount', { count: upcoming.length }) : undefined} />
         {empty && <Text>{t(section.empty)}</Text>}
@@ -54,6 +55,6 @@ export function EventList({ section, upcoming, past, undated }: EventListProps) 
           </>
         )}
       </PageColumn>
-    </SiteLayout>
+    </Site>
   );
 }

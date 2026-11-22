@@ -1,12 +1,13 @@
-// apps/web/src/components/WorkshopPage.tsx
-import { Link, PageColumn, TermList, TermRow, Text } from '@hmidmismi/ui';
+// apps/web/src/components/workshop/WorkshopPage.tsx
+import { CenteredLines, Link, PageColumn, PageHeader, TermList, TermRow, Text, Title } from '@hmidmismi/ui';
 import { stegaClean } from '@sanity/client/stega';
 import NextLink from 'next/link';
-import { ContentModules } from '@/components/ContentModules';
-import { EntryHeader } from '@/components/EntryHeader';
-import { KeelaEmbed } from '@/components/KeelaEmbed';
-import { SiteLayout } from '@/components/SiteLayout';
-import { formatDates } from '@/lib/dates';
+import { ContentModules } from '@/components/content';
+import { KeelaEmbed } from '@/components/keela';
+import { Dates } from '@/components/date';
+import { Site } from '@/components/layout';
+import { Breadcrumbs } from '@/components/navigation';
+import { Image } from '@/components/media';
 import { localize } from '@/lib/localize';
 import { WORKSHOPS } from '@/lib/navigation';
 import { type WorkshopDetail } from '@/lib/sanity';
@@ -33,12 +34,21 @@ export function WorkshopPage({ entry, draftMode }: { entry: WorkshopDetail; draf
   const materials = entry.materials?.map((term) => stegaClean(localize(term))).join(', ');
 
   return (
-    <SiteLayout title={title}>
+    <Site title={title}>
       <PageColumn as="article">
-        <EntryHeader section={WORKSHOPS} id={entry._id} title={title} image={entry.image} attr={attr}>
-          {soldOut && <p data-sanity={attr('status')}>{t('soldOut')}</p>}
-          <p data-sanity={attr('dateTime')}>{formatDates(entry)}</p>
-        </EntryHeader>
+        <Breadcrumbs section={WORKSHOPS} id={entry._id} title={title} />
+        <PageHeader>
+          <Title level="h1">{title}</Title>
+          <CenteredLines>
+            {soldOut && <p data-sanity={attr('status')}>{t('soldOut')}</p>}
+            <p>
+              <Dates entry={entry} attr={attr('dateTime')} />
+            </p>
+          </CenteredLines>
+        </PageHeader>
+        <div data-sanity={attr('image')}>
+          <Image image={entry.image} label={title} />
+        </div>
         <TermList ruled>
           {entry.instructors?.length ? (
             <TermRow term={t('termInstructors')}>
@@ -91,6 +101,6 @@ export function WorkshopPage({ entry, draftMode }: { entry: WorkshopDetail; draf
         {keela && !soldOut && <KeelaEmbed url={keela} title={t('registerFor', { title: stegaClean(title) })} />}
         {!entry.content?.length && !entry.instructors?.length && <Text>{t('detailsToFollow')}</Text>}
       </PageColumn>
-    </SiteLayout>
+    </Site>
   );
 }
