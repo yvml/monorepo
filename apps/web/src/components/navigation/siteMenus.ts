@@ -6,7 +6,7 @@ import { t } from '@/i18n';
 const groupItem = (group: NavGroup) => ({ key: group.path, label: t(group.title), href: `/${group.path}` });
 
 /**
- * About YVML first, then the listings, then Support Us. Built per render: the labels follow the page's language.
+ * About YVML first, then the listings, then People, then Support Us. Built per render: the labels follow the page's language.
  *
  * @returns the navigation links.
  */
@@ -14,6 +14,7 @@ export const mainMenu = () =>
   menuLinks([
     ...NAV_GROUPS.filter((group) => group.path === 'about').map(groupItem),
     ...SECTIONS.map((section) => ({ key: section.type, label: t(section.title), href: `/${section.path}` })),
+    { key: 'people', label: t('navPeople'), href: '/people' },
     ...NAV_GROUPS.filter((group) => group.path === 'support').map(groupItem),
   ]);
 

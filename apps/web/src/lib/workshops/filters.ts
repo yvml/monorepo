@@ -1,7 +1,7 @@
 // apps/web/src/lib/workshops/filters.ts
 import { type Instructor, lastName } from './instructors';
 import { localize } from '@/i18n';
-import { lastDate } from '@/lib/dates';
+import { isPast } from '@/lib/dates';
 import type { Filter, Option } from '@/lib/filters';
 import type { WorkshopSummary } from '@/lib/sanity';
 
@@ -15,11 +15,6 @@ type Reference = { _id: string; slug?: string | null };
 const slugs = (refs: Reference[] | null | undefined) => (refs ?? []).flatMap((ref) => (ref.slug ? [ref.slug] : []));
 const term = (ref: Term) => localize(ref.title);
 const byLabel = (a: Option, b: Option) => a.label.localeCompare(b.label);
-
-const isPast = (workshop: WorkshopSummary, today: string) => {
-  const end = lastDate(workshop);
-  return end !== '' && end < today;
-};
 
 /** The distinct values of a list of references across the workshops, as options sorted by label. */
 function distinct<R extends Reference>(

@@ -7,10 +7,19 @@ import type { TextKey } from '@/i18n';
  * its own document type.
  */
 export const SECTIONS = [
-  { type: 'event', docType: 'event', path: 'events', title: 'navEvents', empty: 'emptyEvents' },
-  { type: 'exhibition', docType: 'event', path: 'exhibitions', title: 'navExhibitions', empty: 'emptyExhibitions' },
-  { type: 'workshop', docType: 'workshop', path: 'workshops', title: 'navWorkshops', empty: 'emptyWorkshops' },
-] as const satisfies readonly { type: string; docType: string; path: string; title: TextKey; empty: TextKey }[];
+  { type: 'event', docType: 'event', path: 'events', title: 'navEvents', empty: 'emptyEvents', results: 'resultsOfEvents', noMatch: 'noEventsMatch' },
+  { type: 'exhibition', docType: 'event', path: 'exhibitions', title: 'navExhibitions', empty: 'emptyExhibitions', results: 'resultsOfExhibitions', noMatch: 'noExhibitionsMatch' },
+  { type: 'workshop', docType: 'workshop', path: 'workshops', title: 'navWorkshops', empty: 'emptyWorkshops', results: 'resultsOfWorkshops', noMatch: 'noWorkshopsMatch' },
+] as const satisfies readonly {
+  type: string;
+  docType: string;
+  path: string;
+  title: TextKey;
+  empty: TextKey;
+  /** The count line above a filtered listing, and what to say when nothing matches. */
+  results: TextKey;
+  noMatch: TextKey;
+}[];
 
 export type Section = (typeof SECTIONS)[number];
 

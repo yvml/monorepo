@@ -12,6 +12,12 @@ export function lastDate(entry: Dated) {
   return last?.endDate ?? last?.date ?? '';
 }
 
+/** Whether an entry is over: it has a last day and that day is before `today`. */
+export const isPast = (entry: Dated, today: string) => {
+  const end = lastDate(entry);
+  return end !== '' && end < today;
+};
+
 /**
  * Splits entries into those still to come (or in progress) and those over.
  *

@@ -1,11 +1,11 @@
 // apps/web/src/lib/loaders/event-loaders.ts
-import { splitByDate, today } from '@/lib/dates';
+import { today } from '@/lib/dates';
 import { type EventDetail, type EventSummary, getEvent, listEvents } from '@/lib/sanity';
 import { withDraft } from './static-props';
 import { type Section } from '@/constants';
 
-/** An events or exhibitions listing: the section and its entries, split by date. */
-export type EventListProps = { section: Section; upcoming: EventSummary[]; past: EventSummary[]; undated: EventSummary[] };
+/** An events or exhibitions listing: the section, all its entries, and today's date, which the filters need. */
+export type EventListProps = { section: Section; events: EventSummary[]; today: string };
 
 /** An event or exhibition page. */
 export type EventProps = { entry: EventDetail; draftMode?: boolean };
@@ -20,7 +20,7 @@ export type EventProps = { entry: EventDetail; draftMode?: boolean };
  */
 export const eventListLoader = (section: Section) =>
   withDraft<EventListProps>(async (_context, draft) => ({
-    props: { section, ...splitByDate(await listEvents(section, draft), today()) },
+    props: { section, events: await listEvents(section, draft), today: today() },
   }));
 
 /**

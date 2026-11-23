@@ -1,20 +1,10 @@
 // apps/web/src/components/workshop/WorkshopList.tsx
-import {
-  CardItem,
-  Cell,
-  Chip,
-  Grid,
-  PageTable,
-  PageTd,
-  PageTh,
-  Stack,
-  Text,
-  Wrap,
-} from '@hmidmismi/ui';
+import { CardItem, Cell, Grid, PageTable, PageTd, PageTh, Stack, Text } from '@hmidmismi/ui';
 import NextLink from 'next/link';
 import { useMemo } from 'react';
 import { SanityImage } from '@/components/media';
-import { FilterBar } from '@/components/filters';
+import { FilterBar, FilterSummary } from '@/components/filters';
+import { WORKSHOPS } from '@/constants';
 import { Dates } from '@/components/date';
 import { activeFilters, applyFilters } from '@/lib/filters';
 import { useFilterState } from '@/hooks';
@@ -56,21 +46,15 @@ export function WorkshopList({ workshops, today }: { workshops: WorkshopSummary[
     <Stack gap="4">
       <FilterBar spec={workshopListing} items={workshops} context={context} state={state} onChange={change} />
 
-      {active.length > 0 && (
-        <Wrap gap="2">
-          {active.map((filter) => (
-            <Chip key={filter.id} removable label={t('removeFilter', { name: filter.label })} onClick={() => change(filter.remove)}>
-              {filter.label}
-            </Chip>
-          ))}
-          <Chip onClick={reset}>{t('clearFilters')}</Chip>
-        </Wrap>
-      )}
-
-      <div aria-live="polite">
-        <Text>{t('resultsOfWorkshops', { shown: shown.length, total: workshops.length })}</Text>
-      </div>
-      {shown.length === 0 && <Text>{t('noWorkshopsMatch')}</Text>}
+      <FilterSummary
+        active={active}
+        onChange={change}
+        onReset={reset}
+        shown={shown.length}
+        total={workshops.length}
+        resultsKey={WORKSHOPS.results}
+        noMatchKey={WORKSHOPS.noMatch}
+      />
 
       {state.view === 'list' ? (
         <PageTable
