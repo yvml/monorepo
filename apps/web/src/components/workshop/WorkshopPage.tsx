@@ -8,6 +8,7 @@ import { Dates } from '@/components/date';
 import { Site } from '@/components/layout';
 import { Breadcrumbs } from '@/components/navigation';
 import { SanityImage } from '@/components/media';
+import { WorkshopTerm } from './WorkshopTerm';
 import { localize, t } from '@/i18n';
 import { WORKSHOPS } from '@/constants';
 import { type WorkshopDetail } from '@/lib/sanity';
@@ -50,45 +51,39 @@ export function WorkshopPage({ entry, draftMode }: { entry: WorkshopDetail; draf
         </div>
         <TermList ruled>
           {entry.instructors?.length ? (
-            <TermRow term={t('termInstructors')}>
-              <span data-sanity={attr('instructors')}>
-                {entry.instructors.map((person, index) => (
-                  <span key={person._id}>
-                    {index > 0 && ', '}
-                    {person.slug ? (
-                      <NextLink href={`/people/${person.slug}`}>{stegaClean(person.title)}</NextLink>
-                    ) : (
-                      stegaClean(person.title)
-                    )}
-                  </span>
-                ))}
-              </span>
-            </TermRow>
+            <WorkshopTerm term="termInstructors" field="instructors" attr={attr}>
+              {entry.instructors.map((person, index) => (
+                <span key={person._id}>
+                  {index > 0 && ', '}
+                  {person.slug ? <NextLink href={`/people/${person.slug}`}>{stegaClean(person.title)}</NextLink> : stegaClean(person.title)}
+                </span>
+              ))}
+            </WorkshopTerm>
           ) : null}
           {entry.format && (
-            <TermRow term={t('termFormat')}>
-              <span data-sanity={attr('format')}>{t(FORMAT[entry.format])}</span>
-            </TermRow>
+            <WorkshopTerm term="termFormat" field="format" attr={attr}>
+              {t(FORMAT[entry.format])}
+            </WorkshopTerm>
           )}
           {entry.price != null && (
-            <TermRow term={t('termPrice')}>
-              <span data-sanity={attr('price')}>{`$${entry.price}`}</span>
-            </TermRow>
+            <WorkshopTerm term="termPrice" field="price" attr={attr}>
+              {`$${entry.price}`}
+            </WorkshopTerm>
           )}
           {entry.scholarshipAvailable && (
-            <TermRow term={t('termScholarship')}>
-              <span data-sanity={attr('scholarshipAvailable')}>{t('scholarshipFull')}</span>
-            </TermRow>
+            <WorkshopTerm term="termScholarship" field="scholarshipAvailable" attr={attr}>
+              {t('scholarshipFull')}
+            </WorkshopTerm>
           )}
           {types && (
-            <TermRow term={t('termType')}>
-              <span data-sanity={attr('workshopTypes')}>{types}</span>
-            </TermRow>
+            <WorkshopTerm term="termType" field="workshopTypes" attr={attr}>
+              {types}
+            </WorkshopTerm>
           )}
           {materials && (
-            <TermRow term={t('termMaterials')}>
-              <span data-sanity={attr('materials')}>{materials}</span>
-            </TermRow>
+            <WorkshopTerm term="termMaterials" field="materials" attr={attr}>
+              {materials}
+            </WorkshopTerm>
           )}
           {!keela && entry.registrationUrl && !soldOut && (
             <TermRow term={t('termRegistration')}>
