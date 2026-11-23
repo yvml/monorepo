@@ -2,12 +2,12 @@
 import { validatePreviewUrl } from '@sanity/preview-url-secret';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { isPreviewSite, safeNext } from '@/lib/preview/flags';
-import { issuePreviewCredential, previewCookie } from '@/lib/preview/access';
+import { issuePreviewCredential, previewCookie, previewSecret } from '@/lib/preview/access';
 import { previewClient } from '@/lib/sanity';
 
 /**
  * Called by the studio's Presentation tool. It proves itself with Sanity's one-time secret, then turns on Next's
- * draft mode, gives the editor the signed credential the middleware checks, and redirects to the page being edited.
+ * draft mode, gives the editor the signed credential the preview login accepts, and redirects to the page being edited.
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!isPreviewSite || !process.env.SANITY_API_READ_TOKEN) {
@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
   res.setDraftMode({ enable: true });
-  const secret = process.env.BETTER_AUTH_SECRET;
+  const secret = previewSecret();
   if (secret) {
     // Keep the cookies Next just set and add ours beside them.
     const set = res.getHeader('Set-Cookie');

@@ -1,4 +1,6 @@
 // apps/web/src/lib/preview/access.ts
+// Who may see the private preview site, apart from the Clerk login itself. It runs in the middleware and in the
+// draft-mode route handlers, so it uses Web Crypto only.
 
 /** The cookie that proves an editor came in through the studio's Presentation tool. */
 export const PREVIEW_COOKIE = 'yvml_preview';
@@ -26,9 +28,18 @@ const fromBase64Url = (text: string) => {
 };
 
 /**
+ * The secret credentials are signed with: `PREVIEW_COOKIE_SECRET`, at least 32 characters. A shorter one counts as none,
+ * so nothing can be issued or verified.
+ */
+export const previewSecret = () => {
+  const secret = process.env.PREVIEW_COOKIE_SECRET;
+  return secret && secret.length >= 32 ? secret : undefined;
+};
+
+/**
  * A credential that says the holder passed the studio's one-time secret check: an expiry time and an HMAC of it, made
- * with a secret only the server knows. Next's own draft-mode cookie cannot be checked in middleware, so this is what
- * the middleware checks to let an editor in.
+ * with a secret only the server knows. The studio's iframe cannot carry a Clerk session (a third-party cookie, and
+ * Clerk's sign-in page refuses to be framed), so this is how an editor in Presentation gets in.
  *
  * @param secret - the server's signing secret.
  * @param now - the current time in milliseconds.
@@ -59,7 +70,7 @@ export async function verifyPreviewCredential(value: string | undefined, secret:
 
 /**
  * The `Set-Cookie` header for a credential. It is sent to the studio's iframe, so in production it is `SameSite=None;
- * Secure`, as Next's own draft-mode cookies are.
+ * Secure; Partitioned`: the browser only sends it inside that iframe.
  *
  * @param value - the credential, or an empty string to clear it.
  * @param production - whether this is a production build.
@@ -67,18 +78,37 @@ export async function verifyPreviewCredential(value: string | undefined, secret:
  */
 export function previewCookie(value: string, production = process.env.NODE_ENV === 'production') {
   const attributes = ['Path=/', 'HttpOnly', value ? `Max-Age=${MAX_AGE}` : 'Max-Age=0', production ? 'SameSite=None' : 'SameSite=Lax'];
-  if (production) attributes.push('Secure');
+  if (production) attributes.push('Secure', 'Partitioned');
   return `${PREVIEW_COOKIE}=${value}; ${attributes.join('; ')}`;
 }
 
-/** The routes a visitor without access must still reach: signing in, the draft-mode routes, and two static files. Exact paths only. */
-const PUBLIC_PATHS = new Set(['/sign-in', '/favicon.ico', '/placeholder.svg', '/api/draft-mode/enable', '/api/draft-mode/disable']);
+/**
+ * Whether an email may see the preview site, from `PREVIEW_ALLOWED_EMAILS`: comma-separated addresses and `@domain`
+ * entries, such as `jason@example.com, @yvml.org`. Empty or unset lets nobody in.
+ *
+ * @param email - the signed-in person's primary email.
+ * @param list - the allow-list; defaults to the environment's.
+ * @returns true when the address or its domain is listed.
+ */
+export function isAllowedEmail(email: string | undefined | null, list = process.env.PREVIEW_ALLOWED_EMAILS ?? '') {
+  if (!email) return false;
+  const address = email.trim().toLowerCase();
+  const domain = address.slice(address.lastIndexOf('@'));
+  return list
+    .split(',')
+    .map((entry) => entry.trim().toLowerCase())
+    .filter(Boolean)
+    .some((entry) => (entry.startsWith('@') ? entry === domain : entry === address));
+}
+
+/** The routes open to everyone on the preview site: the draft-mode routes, which check the studio's secret themselves, and two static files. Exact paths only. */
+const PUBLIC_PATHS = new Set(['/api/draft-mode/enable', '/api/draft-mode/disable', '/favicon.ico', '/placeholder.svg']);
 
 /**
- * Whether a path is open to everyone on the private preview site. The match is exact, so `/sign-in-notes` is a page
- * like any other and needs access. The language prefix is already gone from `request.nextUrl.pathname`.
+ * Whether a path is open to everyone on the preview site. The match is exact, so `/placeholder.svg-notes` is a page like
+ * any other and needs a login. The language prefix is already gone from `request.nextUrl.pathname`.
  *
  * @param pathname - the request's path.
- * @returns true for the public routes, and for the sign-in API under `/api/auth/`.
+ * @returns true for the public routes.
  */
-export const isPublicPath = (pathname: string) => PUBLIC_PATHS.has(pathname) || pathname.startsWith('/api/auth/');
+export const isPublicPath = (pathname: string) => PUBLIC_PATHS.has(pathname);

@@ -41,7 +41,7 @@ Rules: a change to a shared repo goes on a `feat/*` or `fix/*` branch with a con
 ## What the web app does now
 
 - **Pages** are incremental static (`withDraft` in `lib/loaders/static.ts`, revalidated every 60 s; dynamic routes generate on first visit). Draft mode (Presentation) bypasses the cache. Listings carry no click-to-edit markers: entries are edited on their own pages. A cached page has no query string, so `?sort=`, `?q=` and the like are read in the browser after hydration, and a non-canonical order of path facets redirects without the query.
-- **Preview login** is `src/middleware.ts` (Node runtime): without a session or the draft-mode cookie it redirects to `/sign-in`. Local development needs `PREVIEW_SITE=true` and `PREVIEW_REQUIRE_LOGIN=false` in `apps/web/.env`.
+- **Preview login** is Clerk with its Google connector: `src/middleware.preview.ts` is middleware only in builds with `PREVIEW_SITE=true` and login on (`next.config.ts` adds `preview.ts` to `pageExtensions`), so the live site and the pull request previews have no middleware. Signed-in people must be on `PREVIEW_ALLOWED_EMAILS`; the studio's Presentation iframe carries a signed credential set by `/api/draft-mode/enable` (`PREVIEW_COOKIE_SECRET`). No database. Local development uses `PREVIEW_SITE=true` and `PREVIEW_REQUIRE_LOGIN=false`.
 - **Language in the address**: English has no prefix, Spanish is `/es/...`. `/en/...` redirects to the plain address in `netlify.toml` (Next's own redirects loop under `i18n`).
 - **Filtering** (`lib/filters/`, `components/filters/`): a listing is a `ListSpec` (kinds: search, select, multi, toggle, range; sorts; views). Listings: workshops (`lib/filters/workshop.ts`) and events and exhibitions (`lib/filters/event.ts`), each with its sorts from `lib/sorts/`; `personFilter` is shared by anything that has people. State lives in the address: facets in the path (`/workshops/material/adobe/open`), the rest in the query. One catch-all page serves the workshop listing and a workshop's own page, so `open`, `closed`, `material`, `type`, `instructor` are reserved.
 - **Styling**: the app builds its own stylesheet from the design system's preset and `src/theme/` (neutral palette, no monospace face).
@@ -52,7 +52,7 @@ Rules: a change to a shared repo goes on a `feat/*` or `fix/*` branch with a con
 
 Typecheck (web and studio), lint (0 errors), 34 tests (filters, dates, workshop and event listings), `next build`, and in Chrome every page type, the filter bar (search, toggle, path facet, list view, clear, back), the Spanish pages and the language select, dark mode applied before first paint, and the draft-mode route. The data layer matched the old queries on the live dataset (84 combinations).
 
-Not verified: events and exhibitions with real data (the dataset has none; fixtures only), anything on the deployed staging or preview sites, the session check in `middleware.ts` against the database (no `BETTER_AUTH_SECRET` locally), the `/en` redirect (Netlify only), and in the studio whether clicking an instructor now scrolls to the field.
+Not verified: events and exhibitions with real data (the dataset has none; fixtures only), anything on the deployed staging or preview sites, the Clerk sign-in with the Google connector and the allow-list (needs the Clerk keys; the credential, public-path and redirect branches were run against a gated build with dummy keys), the `/en` redirect (Netlify only), and in the studio whether clicking an instructor now scrolls to the field.
 
 ## Deployments
 
@@ -77,7 +77,7 @@ Saved in `~/.claude/projects/-Users-jasloe-projects-yvml/memory/`: a question ge
 1. Merge the pull requests in order, merge the UI branches, bump the pins here and in `chorusworks/monorepo`.
 2. Redeploy staging and preview and check the workshop listing and Presentation there.
 3. Decide the Lazy Eye and main-site design direction from the mocks, then build it for real (the theme in `src/theme/` and the home page are placeholders).
-4. Open items: AI alt text (`@sanity/assist` is installed, not configured); the Google OAuth client and `auth_*` tables; map `preview.yvml.org` and finish the `staging.yvml.org` certificate; chips as real links for crawlers (needs a link version of `Chip` in the UI package); a Sanity webhook for on-demand revalidation; component tests; the instructor and material comboboxes show no counts because the UI package's combobox ignores option updates.
+4. Open items: AI alt text (`@sanity/assist` is installed, not configured); the Clerk application (enable the Google connector, copy the two keys, set the preview branch's environment: the keys, `PREVIEW_ALLOWED_EMAILS`, `PREVIEW_COOKIE_SECRET`) and checking the login on the `preview` deploy; map `preview.yvml.org` and finish the `staging.yvml.org` certificate; chips as real links for crawlers (needs a link version of `Chip` in the UI package); a Sanity webhook for on-demand revalidation; component tests; the instructor and material comboboxes show no counts because the UI package's combobox ignores option updates.
 5. Archive `chorusworks/clients`, `chorusworks/sanity-core` and `chorusworks/sanity-types` once nothing points at them.
 
 ## Gotchas

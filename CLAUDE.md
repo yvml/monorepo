@@ -51,7 +51,7 @@ lib/              code that does something. The folder is the concern, the file 
                   workshop.ts and event.ts each define one listing: its filters, sorts and views in one object
   sorts/          comparators shared by listings: date, price, person (last name)
   loaders/        page data, one file per domain (page, event, workshop, article, person), slug.ts for a page about one document, static.ts (withDraft, revalidate)
-  preview/        the private preview site: flags, gate (session check), access (the signed credential editors get from /api/draft-mode/enable, and the exact public paths), auth
+  preview/        the private preview site: flags, access (the signed credential the studio iframe carries, the email allow-list, the exact public paths)
   dates.ts        date helpers      keela.ts   Keela address checks
 ```
 

@@ -1,11 +1,20 @@
 // apps/web/next.config.ts
 import type { NextConfig } from 'next';
+import { requireLogin } from './src/lib/preview/flags';
+
+const PAGE_EXTENSIONS = ['tsx', 'ts', 'jsx', 'js'];
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   /** The shared packages ship TypeScript source, so Next compiles them. */
-  transpilePackages: ['@hmidmismi/ui', '@hmidmismi/auth', '@hmidmismi/sanity-types'],
-  /** English at `/`, Spanish at `/es`. Keep in step with `LOCALES` in `src/lib/locale.ts`. */
+  transpilePackages: ['@hmidmismi/ui', '@hmidmismi/sanity-types'],
+  /**
+   * `src/middleware.preview.ts` (the Clerk login) is only picked up as middleware when `preview.ts` is a page extension,
+   * which it is for the gated preview site alone. Every other build, the live site and the pull request previews, has no
+   * middleware at all.
+   */
+  pageExtensions: requireLogin ? [...PAGE_EXTENSIONS, 'preview.ts'] : PAGE_EXTENSIONS,
+  /** English at `/`, Spanish at `/es`. Keep in step with `LOCALES` in `src/i18n/locale.ts`. */
   i18n: {
     locales: ['en', 'es'],
     defaultLocale: 'en',

@@ -1,6 +1,6 @@
 // apps/web/tests/preview-access.test.ts
 import { describe, expect, it } from 'vitest';
-import { isPublicPath, issuePreviewCredential, previewCookie, verifyPreviewCredential } from '../src/lib/preview/access';
+import { isAllowedEmail, isPublicPath, issuePreviewCredential, previewCookie, verifyPreviewCredential } from '../src/lib/preview/access';
 
 const secret = 'test-secret-with-enough-length-to-be-real';
 const now = Date.parse('2026-11-23T12:00:00Z');
@@ -33,7 +33,7 @@ describe('the preview credential', () => {
   });
 
   it('is set so the studio iframe can send it in production, and cleared with an empty value', () => {
-    expect(previewCookie('abc', true)).toContain('SameSite=None; Secure');
+    expect(previewCookie('abc', true)).toContain('SameSite=None; Secure; Partitioned');
     expect(previewCookie('abc', false)).toContain('SameSite=Lax');
     expect(previewCookie('', true)).toContain('Max-Age=0');
   });
@@ -41,14 +41,31 @@ describe('the preview credential', () => {
 
 describe('public paths', () => {
   it('are matched exactly', () => {
-    for (const open of ['/sign-in', '/favicon.ico', '/placeholder.svg', '/api/draft-mode/enable', '/api/draft-mode/disable', '/api/auth/session']) {
+    for (const open of ['/favicon.ico', '/placeholder.svg', '/api/draft-mode/enable', '/api/draft-mode/disable']) {
       expect(isPublicPath(open)).toBe(true);
     }
   });
 
   it('do not extend to lookalikes, which are pages like any other', () => {
-    for (const closed of ['/sign-in-notes', '/sign-in/extra', '/placeholder.svg-notes', '/faviconXico-private', '/favicon.ico/x', '/api/authx', '/api/draft-mode/enable-notes', '/', '/about']) {
+    for (const closed of ['/sign-in', '/sign-in-notes', '/placeholder.svg-notes', '/faviconXico-private', '/favicon.ico/x', '/api/auth/session', '/api/draft-mode/enable-notes', '/', '/about']) {
       expect(isPublicPath(closed)).toBe(false);
     }
+  });
+});
+
+describe('the allow-list', () => {
+  const list = 'jason@example.com, @yvml.org';
+
+  it('lets in a listed address or any address on a listed domain, in any case', () => {
+    expect(isAllowedEmail('Jason@Example.com', list)).toBe(true);
+    expect(isAllowedEmail('anyone@yvml.org', list)).toBe(true);
+  });
+
+  it('refuses everyone else, a lookalike domain, and an empty list', () => {
+    expect(isAllowedEmail('other@example.com', list)).toBe(false);
+    expect(isAllowedEmail('someone@notyvml.org', list)).toBe(false);
+    expect(isAllowedEmail('someone@yvml.org.evil.com', list)).toBe(false);
+    expect(isAllowedEmail('jason@example.com', '')).toBe(false);
+    expect(isAllowedEmail(undefined, list)).toBe(false);
   });
 });

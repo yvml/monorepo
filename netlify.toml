@@ -16,7 +16,10 @@
 [context.branch-deploy.environment]
   NEXT_PUBLIC_ENVIRONMENT = "preview"
 
-# The long-lived `preview` branch is preview.yvml.org: the same site, showing Sanity drafts. Set
+# The long-lived `preview` branch is preview.yvml.org: the same site, showing Sanity drafts, behind a Clerk login
+# (apps/web/src/middleware.preview.ts, built only when PREVIEW_SITE=true). Also set for this branch only:
+# NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY, CLERK_SECRET_KEY, PREVIEW_ALLOWED_EMAILS (comma separated emails or @domain),
+# PREVIEW_COOKIE_SECRET (32+ random characters). Set
 # SANITY_API_READ_TOKEN (Viewer role) for this branch in the Netlify UI; it stays server-side. Never set
 # PREVIEW_SITE in the production context.
 [context.preview.environment]
