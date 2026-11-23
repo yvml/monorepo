@@ -60,6 +60,14 @@ const ids = (list: Item[]) => list.map((item) => item.id);
 const read = (segments: string[], query: Record<string, string | string[]> = {}) => parseUrl(spec, segments, query) as FilterState;
 
 describe('the address', () => {
+  it('keeps a plus sign typed in a search, and writes several query values with commas', () => {
+    const typed = { ...defaultState(spec), values: { ...defaultState(spec).values, q: 'c++' } };
+    expect(toHref(spec, '/things', typed)).toBe('/things?q=c%2B%2B');
+    const colors = read([], { color: 'blue,red' });
+    expect(colors.values.color).toEqual(['blue', 'red']);
+    expect(toHref(spec, '/things', colors)).toBe('/things?color=blue,red');
+  });
+
   it('is empty at the defaults', () => {
     expect(buildUrl(spec, defaultState(spec))).toEqual({ segments: [], query: {} });
     expect(toHref(spec, '/things', defaultState(spec))).toBe('/things');
@@ -106,7 +114,7 @@ describe('the address', () => {
   it('puts a multi filter that has no path segment in the query, repeated or joined', () => {
     expect(read([], { color: ['red', 'blue'] }).values.color).toEqual(['red', 'blue']);
     expect(read([], { color: 'red+blue' }).values.color).toEqual(['red', 'blue']);
-    expect(buildUrl(spec, read([], { color: ['red', 'blue'] })).query).toEqual({ color: 'blue+red' });
+    expect(buildUrl(spec, read([], { color: ['red', 'blue'] })).query).toEqual({ color: 'blue,red' });
   });
 
   it('is a miss when a path segment is not one the listing has', () => {
