@@ -12,6 +12,7 @@
     "build": "sanity build",
     "deploy": "sanity deploy",
     "typegen": "sanity schema extract --force && sanity typegen generate",
+    "typegen:generate": "sanity typegen generate",
     "clean": "rm -rf dist .sanity .turbo node_modules",
     "typecheck": "tsc --noEmit",
     "lint": "oxlint -c ../../.oxlintrc.json .",
