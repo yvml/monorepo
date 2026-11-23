@@ -67,7 +67,8 @@ export function buildUrl<T, C>(spec: ListSpec<T, C>, state: FilterState): UrlPar
 export function toHref<T, C>(spec: ListSpec<T, C>, basePath: string, state: FilterState) {
   const { segments, query } = buildUrl(spec, state);
   const path = [basePath, ...segments.map(encodeURIComponent)].join('/');
-  const search = new URLSearchParams(query).toString().replace(/%2B/g, '+');
+  // A plus sign in a value stays encoded (%2B): a bare one reads back as a space. Commas, which join several values, are legal as they are.
+  const search = new URLSearchParams(query).toString().replace(/%2C/g, ',');
   return search ? `${path}?${search}` : path;
 }
 

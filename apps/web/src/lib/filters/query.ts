@@ -34,7 +34,7 @@ export function readQuery<T, C>(filter: Filter<T, C>, query: Query): FilterValue
     }
     case 'multi': {
       const raw = query[filter.key];
-      const all = (Array.isArray(raw) ? raw : raw ? [raw] : []).flatMap((part) => part.split('+')).filter(Boolean);
+      const all = (Array.isArray(raw) ? raw : raw ? [raw] : []).flatMap((part) => part.split(/[,+\s]+/)).filter(Boolean);
       return all.length ? [...new Set(all)] : undefined;
     }
     case 'toggle': {
@@ -66,7 +66,7 @@ export function writeQuery<T, C>(filter: Filter<T, C>, value: FilterValue, query
       return;
     case 'multi': {
       const chosen = [...(value as string[])].sort();
-      if (chosen.length) query[filter.key] = chosen.join('+');
+      if (chosen.length) query[filter.key] = chosen.join(',');
       return;
     }
     case 'toggle':
