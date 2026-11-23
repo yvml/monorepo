@@ -79,7 +79,7 @@ export function parseUrl<T, C>(spec: ListSpec<T, C>, segments: string[], query: 
       }
       case 'multi': {
         const raw = query[filter.key];
-        const all = (Array.isArray(raw) ? raw : raw ? [raw] : []).flatMap((part) => part.split('+')).filter(Boolean);
+        const all = (Array.isArray(raw) ? raw : raw ? [raw] : []).flatMap((part) => part.split(/[,+\s]+/)).filter(Boolean);
         if (all.length) state.values[filter.key] = [...new Set(all)];
         break;
       }
@@ -122,7 +122,7 @@ export function buildUrl<T, C>(spec: ListSpec<T, C>, state: FilterState): UrlPar
       const chosen = [...(value as string[])].sort();
       if (!chosen.length) continue;
       if (filter.segment) segments.push(filter.segment, chosen.join('+'));
-      else query[filter.key] = chosen.join('+');
+      else query[filter.key] = chosen.join(',');
     } else if (filter.kind === 'select') {
       if (value === '') continue;
       if (filter.segment === true) segments.push(String(value));
@@ -155,7 +155,8 @@ export function buildUrl<T, C>(spec: ListSpec<T, C>, state: FilterState): UrlPar
 export function toHref<T, C>(spec: ListSpec<T, C>, basePath: string, state: FilterState) {
   const { segments, query } = buildUrl(spec, state);
   const path = [basePath, ...segments.map(encodeURIComponent)].join('/');
-  const search = new URLSearchParams(query).toString().replace(/%2B/g, '+');
+  // A plus sign in a value stays encoded (%2B): a bare one reads back as a space. Commas, which join several values, are legal as they are.
+  const search = new URLSearchParams(query).toString().replace(/%2C/g, ',');
   return search ? `${path}?${search}` : path;
 }
 
