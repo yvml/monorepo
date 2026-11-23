@@ -117,6 +117,9 @@ importers:
       '@sanity/visual-editing':
         specifier: ^6.2.0
         version: 6.2.0(@sanity/client@7.28.0)(@types/react@19.3.0)(next@15.5.29(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(styled-components@6.6.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(typescript@5.9.3)(vitest@2.1.9(@types/node@22.20.5)(jsdom@29.1.1(@noble/hashes@2.4.0))(lightningcss@1.33.0))
+      groq:
+        specifier: ^6.24.0
+        version: 6.24.0
       next:
         specifier: 15.5.29
         version: 15.5.29(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -145,6 +148,9 @@ importers:
       typescript:
         specifier: ^5.7.0
         version: 5.9.3
+      vitest:
+        specifier: ^2.1.9
+        version: 2.1.9(@types/node@22.20.5)(jsdom@29.1.1(@noble/hashes@2.4.0))(lightningcss@1.33.0)
 
   packages/auth:
     dependencies:
@@ -5014,6 +5020,10 @@ packages:
 
   groq@6.21.0:
     resolution: {integrity: sha512-xxw5Fz/8xD0neK5PnfczzkFgPSz2FVAQMxuysZhCj9TnVpkR7yI83wrdQwzikZ/pGZElrVvfGeWrDsbPwYeOcw==}
+    engines: {node: '>=22.12'}
+
+  groq@6.24.0:
+    resolution: {integrity: sha512-HzSEcR/exLPAyvOdpzkn+UXYIrp5aYNFzVnAv2IB+XTRXQlkbczhmItJ5xXewbpxqDxJkjowaYT7ovbV0Z+sTg==}
     engines: {node: '>=22.12'}
 
   gunzip-maybe@1.4.2:
@@ -13432,6 +13442,8 @@ snapshots:
       obug: 2.2.1
 
   groq@6.21.0: {}
+
+  groq@6.24.0: {}
 
   gunzip-maybe@1.4.2:
     dependencies:

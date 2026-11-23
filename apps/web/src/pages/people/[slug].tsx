@@ -1,14 +1,16 @@
-import { CenteredLines, Link, PageColumn, PageHeader, TermList, TermRow, Text, Title } from '@hmidmismi/ui';
+import { CenteredLines, ItemList, Link, PageColumn, PageHeader, TermList, TermRow, Text, Title } from '@hmidmismi/ui';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { Blocks, Hero } from '@/components/ContentModules';
 import { SiteLayout } from '@/components/SiteLayout';
-import { formatDates, localize } from '@/lib/events';
+import { SITE_NAME } from '@/lib/brand';
+import { formatDates } from '@/lib/dates';
+import { localize } from '@/lib/localize';
+import { getPerson, type PersonDetail } from '@/lib/sanity';
+import { t } from '@/lib/text';
 import { withPreviewGate } from '@/lib/gate';
-import { getPerson, type Person } from '@/lib/people';
-import { SITE_NAME } from '@/lib/site';
 
-type Props = { person: Person };
+type Props = { person: PersonDetail };
 
 export const getServerSideProps = withPreviewGate<Props>(async (context, draft) => {
   const slug = context.params?.slug;
@@ -18,7 +20,7 @@ export const getServerSideProps = withPreviewGate<Props>(async (context, draft) 
 });
 
 export default function Page({ person }: Props) {
-  const name = person.title ?? 'Unnamed';
+  const name = person.title ?? t('unnamed');
   const workshops = person.workshops ?? [];
 
   return (
@@ -32,33 +34,35 @@ export default function Page({ person }: Props) {
           <Title level="h1">{name}</Title>
           {person.location && <CenteredLines><p>{person.location}</p></CenteredLines>}
         </PageHeader>
-        <Hero image={person.portrait} label={`Portrait of ${name}`} />
+        <Hero image={person.portrait} label={t('portraitOf', { name })} />
         <Blocks value={person.biography} />
         {person.links?.length ? (
           <TermList ruled>
-            {person.links.map((link) => (
-              <TermRow key={link._key} term={link.label}>
-                <Link href={link.url}>{link.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</Link>
-              </TermRow>
-            ))}
+            {person.links.map((link) =>
+              link.url ? (
+                <TermRow key={link._key} term={link.label ?? link.url}>
+                  <Link href={link.url}>{link.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</Link>
+                </TermRow>
+              ) : null
+            )}
           </TermList>
         ) : null}
         {workshops.length > 0 && (
           <>
-            <Title level="h2">Workshops</Title>
-            <ul>
+            <Title level="h2">{t('navWorkshops')}</Title>
+            <ItemList>
               {workshops.map((workshop) => (
                 <li key={workshop._id}>
                   <NextLink href={`/workshops/${workshop.slug}`}>{localize(workshop.title)}</NextLink>
                   {' · '}
                   {formatDates(workshop)}
-                  {workshop.status === 'soldOut' && ' · Sold out'}
+                  {workshop.status === 'soldOut' && ` · ${t('soldOut')}`}
                 </li>
               ))}
-            </ul>
+            </ItemList>
           </>
         )}
-        {!person.biography?.length && !workshops.length && !person.links?.length && <Text>Details to follow.</Text>}
+        {!person.biography?.length && !workshops.length && !person.links?.length && <Text>{t('detailsToFollow')}</Text>}
       </PageColumn>
     </SiteLayout>
   );

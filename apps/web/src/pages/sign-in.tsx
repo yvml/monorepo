@@ -6,8 +6,8 @@ import { isPreviewSite, safeNext } from '@/lib/preview';
 
 type Props = { next: string };
 
-export const getServerSideProps: GetServerSideProps<Props> = async ({ query }) =>
-  isPreviewSite ? { props: { next: safeNext(query.next) } } : { notFound: true };
+export const getServerSideProps: GetServerSideProps<Props> = ({ query }) =>
+  Promise.resolve(isPreviewSite ? { props: { next: safeNext(query.next) } } : { notFound: true });
 
 export default function SignIn({ next }: Props) {
   return (

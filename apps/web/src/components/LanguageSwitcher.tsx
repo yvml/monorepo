@@ -1,28 +1,29 @@
-import NextLink from 'next/link';
+import { Chip, Wrap } from '@hmidmismi/ui';
 import { useRouter } from 'next/router';
 import { LOCALES } from '@/lib/locale';
+import { t } from '@/lib/text';
 
 /**
- * Links to the current page in each language. The current language is plain text. Pages keep their English slugs in
- * every language, so the path is the same and only the language prefix changes.
+ * Switches the page to another language. Pages keep their English slugs in every language, so the path is the same and
+ * only the language prefix changes. The current language is the pressed chip.
  *
  * @returns the switcher.
  */
 export function LanguageSwitcher() {
   const router = useRouter();
   return (
-    <nav aria-label="Language" style={{ display: 'flex', gap: '0.75rem' }}>
-      {LOCALES.map(({ code, label }) =>
-        code === router.locale ? (
-          <span key={code} aria-current="true" lang={code} style={{ fontWeight: 700 }}>
-            {label}
-          </span>
-        ) : (
-          <NextLink key={code} href={router.asPath} locale={code} lang={code} hrefLang={code}>
-            {label}
-          </NextLink>
-        )
-      )}
-    </nav>
+    <Wrap gap="1" role="group" aria-label={t('language')}>
+      {LOCALES.map(({ code, label }) => (
+        <Chip
+          key={code}
+          pressed={code === router.locale}
+          onClick={() => {
+            if (code !== router.locale) void router.push(router.asPath, undefined, { locale: code });
+          }}
+        >
+          {label}
+        </Chip>
+      ))}
+    </Wrap>
   );
 }

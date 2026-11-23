@@ -1,5 +1,7 @@
+import { BrowseNav, browseLinkClass } from '@hmidmismi/ui';
 import NextLink from 'next/link';
-import { groupForPath } from '@/lib/site';
+import { groupForPath } from '@/lib/navigation';
+import { t } from '@/lib/text';
 
 /**
  * The links between the pages of a group (About YVML or Support Us), shown on every page inside it.
@@ -12,20 +14,17 @@ export function SubNav({ path }: { path: string }) {
   if (!group) return null;
   const items = [{ title: group.title, path: group.path }, ...group.children];
   return (
-    <nav aria-label={group.title}>
-      <ul style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem 1.25rem', listStyle: 'none', padding: 0 }}>
-        {items.map((item) => (
-          <li key={item.path}>
-            <NextLink
-              href={`/${item.path}`}
-              aria-current={item.path === path ? 'page' : undefined}
-              style={item.path === path ? { fontWeight: 700 } : undefined}
-            >
-              {item.title}
-            </NextLink>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <BrowseNav label={t(group.title)}>
+      {items.map((item) => (
+        <NextLink
+          key={item.path}
+          href={`/${item.path}`}
+          className={browseLinkClass(item.path === path)}
+          aria-current={item.path === path ? 'page' : undefined}
+        >
+          {t(item.title)}
+        </NextLink>
+      ))}
+    </BrowseNav>
   );
 }

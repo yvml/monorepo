@@ -5,12 +5,16 @@ import NextLink from 'next/link';
 import { ContentModules, Hero } from '@/components/ContentModules';
 import { KeelaEmbed } from '@/components/KeelaEmbed';
 import { nextLink, SiteLayout } from '@/components/SiteLayout';
-import { type Entry, formatDates, localize } from '@/lib/events';
+import { SITE_NAME } from '@/lib/brand';
+import { formatDates } from '@/lib/dates';
+import { localize } from '@/lib/localize';
+import { WORKSHOPS } from '@/lib/navigation';
+import { type WorkshopDetail } from '@/lib/sanity';
 import { keelaFormUrl } from '@/lib/keela';
-import { SITE_NAME, WORKSHOPS } from '@/lib/site';
+import { t } from '@/lib/text';
 import { sanityAttr } from '@/lib/visual';
 
-const FORMAT = { inPerson: 'In person', virtual: 'Virtual', hybrid: 'In person + virtual' } as const;
+const FORMAT = { inPerson: 'formatInPerson', virtual: 'formatVirtual', hybrid: 'formatHybrid' } as const;
 
 /**
  * A workshop page: title, sold-out status, dates, image, instructors (linked to their pages), format, price,
@@ -19,7 +23,7 @@ const FORMAT = { inPerson: 'In person', virtual: 'Virtual', hybrid: 'In person +
  * @param props - the workshop and whether the request is in draft mode.
  * @returns the page.
  */
-export function WorkshopPage({ entry, draftMode }: { entry: Entry; draftMode?: boolean }) {
+export function WorkshopPage({ entry, draftMode }: { entry: WorkshopDetail; draftMode?: boolean }) {
   const title = localize(entry.title);
   /** Makes an element click-to-edit for one field of this workshop in Presentation. */
   const attr = (path?: string) => sanityAttr(Boolean(draftMode), entry._id, 'workshop', path);
@@ -38,14 +42,14 @@ export function WorkshopPage({ entry, draftMode }: { entry: Entry; draftMode?: b
         <BreadcrumbTrail
           home={nextLink('/')}
           steps={[
-            { key: WORKSHOPS.type, label: WORKSHOPS.title, link: nextLink(`/${WORKSHOPS.path}`) },
+            { key: WORKSHOPS.type, label: t(WORKSHOPS.title), link: nextLink(`/${WORKSHOPS.path}`) },
             { key: entry._id, label: title, current: true },
           ]}
         />
         <PageHeader>
           <Title level="h1">{title}</Title>
           <CenteredLines>
-            {soldOut && <p data-sanity={attr('status')}>Sold out</p>}
+            {soldOut && <p data-sanity={attr('status')}>{t('soldOut')}</p>}
             <p data-sanity={attr('dateTime')}>{formatDates(entry)}</p>
           </CenteredLines>
         </PageHeader>
@@ -54,7 +58,7 @@ export function WorkshopPage({ entry, draftMode }: { entry: Entry; draftMode?: b
         </div>
         <TermList ruled>
           {entry.instructors?.length ? (
-            <TermRow term="Instructors">
+            <TermRow term={t('termInstructors')}>
               <span data-sanity={attr('instructors')}>
                 {entry.instructors.map((person, index) => (
                   <span key={person._id}>
@@ -70,39 +74,39 @@ export function WorkshopPage({ entry, draftMode }: { entry: Entry; draftMode?: b
             </TermRow>
           ) : null}
           {entry.format && (
-            <TermRow term="Format">
-              <span data-sanity={attr('format')}>{FORMAT[entry.format]}</span>
+            <TermRow term={t('termFormat')}>
+              <span data-sanity={attr('format')}>{t(FORMAT[entry.format])}</span>
             </TermRow>
           )}
           {entry.price != null && (
-            <TermRow term="Price">
+            <TermRow term={t('termPrice')}>
               <span data-sanity={attr('price')}>{`$${entry.price}`}</span>
             </TermRow>
           )}
           {entry.scholarshipAvailable && (
-            <TermRow term="Scholarship">
-              <span data-sanity={attr('scholarshipAvailable')}>Full scholarship available</span>
+            <TermRow term={t('termScholarship')}>
+              <span data-sanity={attr('scholarshipAvailable')}>{t('scholarshipFull')}</span>
             </TermRow>
           )}
           {types && (
-            <TermRow term="Type">
+            <TermRow term={t('termType')}>
               <span data-sanity={attr('workshopTypes')}>{types}</span>
             </TermRow>
           )}
           {materials && (
-            <TermRow term="Materials">
+            <TermRow term={t('termMaterials')}>
               <span data-sanity={attr('materials')}>{materials}</span>
             </TermRow>
           )}
           {!keela && entry.registrationUrl && !soldOut && (
-            <TermRow term="Registration">
-              <Link href={entry.registrationUrl}>Register</Link>
+            <TermRow term={t('termRegistration')}>
+              <Link href={entry.registrationUrl}>{t('register')}</Link>
             </TermRow>
           )}
         </TermList>
         <ContentModules modules={entry.content} />
-        {keela && !soldOut && <KeelaEmbed url={keela} title={`Register for ${stegaClean(title)}`} />}
-        {!entry.content?.length && !entry.instructors?.length && <Text>Details to follow.</Text>}
+        {keela && !soldOut && <KeelaEmbed url={keela} title={t('registerFor', { title: stegaClean(title) })} />}
+        {!entry.content?.length && !entry.instructors?.length && <Text>{t('detailsToFollow')}</Text>}
       </PageColumn>
     </SiteLayout>
   );

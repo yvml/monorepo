@@ -1,8 +1,8 @@
 import { ArticlePage } from '@/components/ArticlePage';
-import { type Article, getArticle } from '@/lib/articles';
+import { type ArticleDetail, getArticle } from '@/lib/sanity';
 import { withPreviewGate } from '@/lib/gate';
 
-type Props = { article: Article; draftMode?: boolean };
+type Props = { article: ArticleDetail; draftMode?: boolean };
 
 export const getServerSideProps = withPreviewGate<Props>(async (context, draft) => {
   const slug = context.params?.slug;
