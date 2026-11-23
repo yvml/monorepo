@@ -1,4 +1,4 @@
-// apps/web/src/lib/loaders/static-props.ts
+// apps/web/src/lib/loaders/static.ts
 import type { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
 
 /**

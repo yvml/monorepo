@@ -45,11 +45,12 @@ i18n/             strings.ts (every app string in English and Spanish, and the d
 constants/        data that never changes at runtime: brand (SITE_NAME), placeholder, sections (events, exhibitions, workshops),
                   menus (navigation groups, social links). Import from '@/constants'.
 theme/            the site's theme (colors, faces), which panda.config.ts and _document read
-lib/              code that does something:
-  sanity/         client.ts (published, preview, listing clients), groq.ts (fragments), queries/ (one file per document type), types.ts, dataAttribute.ts (click-to-edit)
-  filters/        the filter engine: types, state (defaults), url (parse and build addresses), apply, active chips
-  workshops/      the workshop listing as a ListSpec: filters.ts, sorts.ts, instructors.ts
-  loaders/        page data: static-props (withDraft, revalidate), page-loader, event-loaders
+lib/              code that does something. The folder is the concern, the file is the domain (singular: article, event, page, person, workshop):
+  sanity/         client.ts (published, preview, listing clients), groq.ts (fragments), types.ts, dataAttribute.ts (click-to-edit), queries/<domain>.ts
+  filters/        the filter engine at the root (types, state, path, query, url, apply, active); reference.ts and person.ts build filters from the documents an item refers to;
+                  workshop.ts and event.ts each define one listing: its filters, sorts and views in one object
+  sorts/          comparators shared by listings: date, price, person (last name)
+  loaders/        page data, one file per domain (page, event, workshop, article, person), slug.ts for a page about one document, static.ts (withDraft, revalidate)
   preview/        the private preview site: flags, gate (who may view), auth
   dates.ts        date helpers      keela.ts   Keela address checks
 ```

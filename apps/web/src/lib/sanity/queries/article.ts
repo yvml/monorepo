@@ -1,4 +1,4 @@
-// apps/web/src/lib/sanity/queries/articles.ts
+// apps/web/src/lib/sanity/queries/article.ts
 import { defineQuery } from 'groq';
 import { clientFor, listClient } from '../client';
 import { CONTENT, SLUG } from '../groq';

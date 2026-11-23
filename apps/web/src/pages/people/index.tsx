@@ -1,14 +1,9 @@
 // apps/web/src/pages/people/index.tsx
 import { PersonList } from '@/components/person';
-import { listPeople, type PersonSummary } from '@/lib/sanity';
-import { withDraft } from '@/lib/loaders';
+import { type PersonListProps, personListLoader } from '@/lib/loaders';
 
-type Props = { people: PersonSummary[] };
+export const getStaticProps = personListLoader;
 
-export const getStaticProps = withDraft<Props>(async (_context, draft) => ({
-  props: { people: await listPeople(draft) },
-}));
-
-export default function PeopleRoute({ people }: Props) {
+export default function PersonListRoute({ people }: PersonListProps) {
   return <PersonList people={people} />;
 }

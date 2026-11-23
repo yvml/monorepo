@@ -9,8 +9,7 @@ import { type Section } from '@/constants';
 import { useFilterState } from '@/hooks';
 import { localize, t } from '@/i18n';
 import { dateBlock, firstDate, splitByDate } from '@/lib/dates';
-import { eventListing } from '@/lib/events';
-import { activeFilters, applyFilters } from '@/lib/filters';
+import { activeFilters, applyFilters, eventListing } from '@/lib/filters';
 import { type EventListProps } from '@/lib/loaders';
 import { type EventSummary } from '@/lib/sanity';
 

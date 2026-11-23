@@ -1,7 +1,6 @@
-// apps/web/tests/workshops.test.ts
+// apps/web/tests/workshop.test.ts
 import { describe, expect, it } from 'vitest';
-import { applyFilters, optionsWithCounts, parseUrl } from '@/lib/filters';
-import { workshopListing } from '@/lib/workshops';
+import { applyFilters, optionsWithCounts, parseUrl, workshopListing } from '@/lib/filters';
 
 const title = (value: string) => [{ _key: 'en', value }];
 const workshop = (id: string, extra: Record<string, unknown> = {}) => ({
@@ -39,5 +38,11 @@ describe('workshop listing', () => {
   it('lists instructors by last name, falling back to the last word of the name', () => {
     const options = optionsWithCounts(workshopListing, items, parseUrl(workshopListing, [], {})!, context, 'instructor');
     expect(options.map((option) => option.label)).toEqual(['Zed Adams', 'Amy Zhou']);
+  });
+
+  it('leaves out a person with no slug, since an address can only carry slugs', () => {
+    const unaddressable = [workshop('x', { instructors: [{ _id: 'p9', title: 'No Slug', familyName: 'Slug', nameGiven: 'No', slug: null }] })] as never[];
+    const options = optionsWithCounts(workshopListing, unaddressable, parseUrl(workshopListing, [], {})!, context, 'instructor');
+    expect(options).toEqual([]);
   });
 });

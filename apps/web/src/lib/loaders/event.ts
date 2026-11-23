@@ -1,7 +1,8 @@
-// apps/web/src/lib/loaders/event-loaders.ts
+// apps/web/src/lib/loaders/event.ts
 import { today } from '@/lib/dates';
 import { type EventDetail, type EventSummary, getEvent, listEvents } from '@/lib/sanity';
-import { withDraft } from './static-props';
+import { slugLoader } from './slug';
+import { withDraft } from './static';
 import { type Section } from '@/constants';
 
 /** An events or exhibitions listing: the section, all its entries, and today's date, which the filters need. */
@@ -29,10 +30,4 @@ export const eventListLoader = (section: Section) =>
  * @param section - events or exhibitions.
  * @returns the loader to export as the page's data function.
  */
-export const eventLoader = (section: Section) =>
-  withDraft<EventProps>(async (context, draft) => {
-    const slug = context.params?.slug;
-    if (typeof slug !== 'string') return { notFound: true };
-    const entry = await getEvent(section, slug, draft);
-    return entry ? { props: { entry } } : { notFound: true };
-  });
+export const eventLoader = (section: Section) => slugLoader('entry', (slug, draft) => getEvent(section, slug, draft));

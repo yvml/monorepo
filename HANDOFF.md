@@ -10,7 +10,7 @@ Commands from the root: `pnpm typecheck`, `pnpm typegen` (rerun after any schema
 
 ## Where the work is
 
-Nothing is merged to `main`. The web work is on seven stacked branches, all pushed; each has a pull request into the one below it, in this order:
+`feat/web-data-layer` is merged to `main`. The rest of the web work is on stacked branches, all pushed; each has a pull request into the one below it, in this order:
 
 1. `feat/web-data-layer` (off `main`): dark mode init, newsletter signup, menus and social links, the Sanity data layer, the English/Spanish text map, the filter engine and path-based workshop URLs, `CLAUDE.md`.
 2. `refactor/filters-and-listing`: first review pass, ISR for every page, the preview login moved to `src/middleware.ts`, dates by language, tests in `apps/web/tests/`.
@@ -19,6 +19,7 @@ Nothing is merged to `main`. The web work is on seven stacked branches, all push
 5. `refactor/constants-and-i18n`: `i18n/` and `constants/` out of `lib/`, the workshop listing split into `lib/workshops/`.
 6. `refactor/rules-and-names`: theme variables from Panda, sign-in and Lazy Eye on shared components and text keys, names that say what a file is.
 7. `refactor/filter-components`: the filter bar and URL code split by filter kind, strings per language, filters for events and exhibitions, a People tab.
+8. `refactor/lib-structure`: `lib/` organised by concern with singular domain files: listings in `lib/filters/` (workshop, event) with `lib/sorts/` and a shared `personFilter`, one loader file per domain in `lib/loaders/`, query files renamed to singular.
 
 The `mocks` branch is local only: `main` plus the static design mocks in `mocks/` (`70bf03f`, `efe8cf3`). Uncommitted: the `packages/sanity-core` submodule is marked modified (edits to `documentFields.ts` and `seo.ts` that predate this work), and `mocks/` shows as untracked on the other branches.
 
@@ -39,10 +40,10 @@ Rules: a change to a shared repo goes on a `feat/*` or `fix/*` branch with a con
 
 ## What the web app does now
 
-- **Pages** are incremental static (`withDraft` in `lib/loaders/static-props.ts`, revalidated every 60 s; dynamic routes generate on first visit). Draft mode (Presentation) bypasses the cache. Listings carry no click-to-edit markers: entries are edited on their own pages. A cached page has no query string, so `?sort=`, `?q=` and the like are read in the browser after hydration, and a non-canonical order of path facets redirects without the query.
+- **Pages** are incremental static (`withDraft` in `lib/loaders/static.ts`, revalidated every 60 s; dynamic routes generate on first visit). Draft mode (Presentation) bypasses the cache. Listings carry no click-to-edit markers: entries are edited on their own pages. A cached page has no query string, so `?sort=`, `?q=` and the like are read in the browser after hydration, and a non-canonical order of path facets redirects without the query.
 - **Preview login** is `src/middleware.ts` (Node runtime): without a session or the draft-mode cookie it redirects to `/sign-in`. Local development needs `PREVIEW_SITE=true` and `PREVIEW_REQUIRE_LOGIN=false` in `apps/web/.env`.
 - **Language in the address**: English has no prefix, Spanish is `/es/...`. `/en/...` redirects to the plain address in `netlify.toml` (Next's own redirects loop under `i18n`).
-- **Filtering** (`lib/filters/`, `components/filters/`): a listing is a `ListSpec` (kinds: search, select, multi, toggle, range; sorts; views). Specs: workshops (`lib/workshops/`) and events and exhibitions (`lib/events/`). State lives in the address: facets in the path (`/workshops/material/adobe/open`), the rest in the query. One catch-all page serves the workshop listing and a workshop's own page, so `open`, `closed`, `material`, `type`, `instructor` are reserved.
+- **Filtering** (`lib/filters/`, `components/filters/`): a listing is a `ListSpec` (kinds: search, select, multi, toggle, range; sorts; views). Listings: workshops (`lib/filters/workshop.ts`) and events and exhibitions (`lib/filters/event.ts`), each with its sorts from `lib/sorts/`; `personFilter` is shared by anything that has people. State lives in the address: facets in the path (`/workshops/material/adobe/open`), the rest in the query. One catch-all page serves the workshop listing and a workshop's own page, so `open`, `closed`, `material`, `type`, `instructor` are reserved.
 - **Styling**: the app builds its own stylesheet from the design system's preset and `src/theme/` (neutral palette, no monospace face).
 - **Text**: every app string is a key in `i18n/strings/`, read with `t('key')` at render time.
 - **Keela**: registration forms use `KeelaEmbed` (iframe via `EmbedFrame`); the newsletter signup on `/about/contact` uses `KeelaSignup` (Keela's own script), placed by the Contact route.

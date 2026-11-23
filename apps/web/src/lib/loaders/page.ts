@@ -1,6 +1,6 @@
-// apps/web/src/lib/loaders/page-loader.ts
+// apps/web/src/lib/loaders/page.ts
 import { type PageDoc, getPage } from '@/lib/sanity';
-import { withDraft } from './static-props';
+import { withDraft } from './static';
 
 /** A page written in the studio. */
 export type PageProps = { page: PageDoc; draftMode?: boolean };

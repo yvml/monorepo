@@ -1,4 +1,4 @@
-// apps/web/src/lib/sanity/queries/events.ts
+// apps/web/src/lib/sanity/queries/event.ts
 import { defineQuery } from 'groq';
 import { type Section } from '@/constants';
 import { clientFor, listClient } from '../client';

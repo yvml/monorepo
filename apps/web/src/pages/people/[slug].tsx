@@ -1,19 +1,11 @@
 // apps/web/src/pages/people/[slug].tsx
 import { PersonPage } from '@/components/person';
-import { getPerson, type PersonDetail } from '@/lib/sanity';
-import { onDemandPaths, withDraft } from '@/lib/loaders';
-
-type Props = { person: PersonDetail };
+import { onDemandPaths, type PersonProps, personLoader } from '@/lib/loaders';
 
 export const getStaticPaths = onDemandPaths;
 
-export const getStaticProps = withDraft<Props>(async (context, draft) => {
-  const slug = context.params?.slug;
-  if (typeof slug !== 'string') return { notFound: true };
-  const person = await getPerson(slug, draft);
-  return person ? { props: { person } } : { notFound: true };
-});
+export const getStaticProps = personLoader;
 
-export default function PersonRoute({ person }: Props) {
+export default function PersonRoute({ person }: PersonProps) {
   return <PersonPage person={person} />;
 }

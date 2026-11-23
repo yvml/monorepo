@@ -6,3 +6,7 @@ export * from './query';
 export * from './state';
 export * from './url';
 export * from './types';
+export * from './event';
+export * from './person';
+export * from './reference';
+export * from './workshop';

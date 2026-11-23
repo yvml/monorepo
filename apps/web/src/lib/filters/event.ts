@@ -1,8 +1,9 @@
-// apps/web/src/lib/events/index.ts
-import { firstDate, isPast } from '@/lib/dates';
+// apps/web/src/lib/filters/event.ts
+import type { ListSpec } from './types';
 import { localize } from '@/i18n';
-import type { ListSpec } from '@/lib/filters';
+import { isPast } from '@/lib/dates';
 import type { EventSummary } from '@/lib/sanity';
+import { byDate } from '@/lib/sorts';
 
 /** What the event filters need beyond the event: today, as `YYYY-MM-DD`. */
 export type EventContext = { today: string };
@@ -26,6 +27,6 @@ export const eventListing: ListSpec<EventSummary, EventContext> = {
       matches: (event, on, { today }) => on || !isPast(event, today),
     },
   ],
-  sorts: [{ value: 'soonest', label: 'sortDateAsc', compare: (a, b) => firstDate(a).localeCompare(firstDate(b)) }],
+  sorts: [{ value: 'soonest', label: 'sortDateAsc', compare: byDate }],
   defaultSort: 'soonest',
 };

@@ -6,11 +6,10 @@ import { SanityImage } from '@/components/media';
 import { FilterBar, FilterSummary } from '@/components/filters';
 import { WORKSHOPS } from '@/constants';
 import { Dates } from '@/components/date';
-import { activeFilters, applyFilters } from '@/lib/filters';
+import { activeFilters, applyFilters, workshopListing } from '@/lib/filters';
 import { useFilterState } from '@/hooks';
 import { localize, t } from '@/i18n';
 import { type WorkshopSummary } from '@/lib/sanity';
-import { workshopListing } from '@/lib/workshops';
 
 const names = (workshop: WorkshopSummary) =>
   workshop.instructors?.map((person) => person.title).filter(Boolean).join(', ') ?? '';

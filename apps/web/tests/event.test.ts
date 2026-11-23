@@ -1,7 +1,6 @@
-// apps/web/tests/events.test.ts
+// apps/web/tests/event.test.ts
 import { describe, expect, it } from 'vitest';
-import { eventListing } from '@/lib/events';
-import { applyFilters, buildUrl, parseUrl } from '@/lib/filters';
+import { applyFilters, buildUrl, eventListing, parseUrl } from '@/lib/filters';
 
 const event = (id: string, date: string | null, extra: Record<string, unknown> = {}) => ({
   _id: id,
