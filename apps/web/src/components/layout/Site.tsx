@@ -32,7 +32,8 @@ export function Site({ title, children }: { title?: string; children: ReactNode 
         }
       />
       <SubNav />
-      {children}
+      {/* The page's one main landmark, so screen-reader users can jump to the content. */}
+      <main>{children}</main>
       <SiteFooter
         links={[...tabs, ...socialMenu]}
         copyright={`© ${new Date().getFullYear()} ${SITE_NAME}`}

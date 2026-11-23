@@ -1,6 +1,6 @@
 // apps/web/tests/dates.test.ts
 import { afterEach, describe, expect, it } from 'vitest';
-import { formatDates } from '../src/lib/dates';
+import { dateBlock, formatDate, formatDates } from '../src/lib/dates';
 import { setActiveLocale } from '../src/i18n';
 
 const entry = (date: string, endDate?: string, circa = false) => ({
@@ -26,5 +26,16 @@ describe('formatDates', () => {
 
   it('is empty without a date', () => {
     expect(formatDates({ dateTime: null })).toBe('');
+  });
+});
+
+describe('an entry with no date', () => {
+  it('gives an empty date block and an empty date instead of throwing', () => {
+    expect(dateBlock('')).toEqual({ month: '', day: '' });
+    expect(formatDate('')).toBe('');
+  });
+
+  it('still formats a real day as a block', () => {
+    expect(dateBlock('2026-10-14')).toEqual({ month: 'Oct', day: '14' });
   });
 });

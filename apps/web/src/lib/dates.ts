@@ -46,17 +46,18 @@ const FULL = { month: 'short', day: 'numeric', year: 'numeric' } as const;
  * One date as text, such as `Oct 14, 2026`.
  *
  * @param iso - `YYYY-MM-DD`.
- * @returns the date in the page's language.
+ * @returns the date in the page's language, or an empty string when there is none.
  */
-export const formatDate = (iso: string) => format(FULL).format(parse(iso));
+export const formatDate = (iso: string) => (iso ? format(FULL).format(parse(iso)) : '');
 
 /**
  * The month abbreviation and day for a date block.
  *
- * @param iso - `YYYY-MM-DD`.
- * @returns for example `{ month: 'Oct', day: '14' }`.
+ * @param iso - `YYYY-MM-DD`, or an empty string for an entry with no date.
+ * @returns for example `{ month: 'Oct', day: '14' }`; both empty when there is no date, because formatting an invalid date throws.
  */
 export function dateBlock(iso: string) {
+  if (!iso) return { month: '', day: '' };
   const date = parse(iso);
   return { month: format({ month: 'short' }).format(date), day: format({ day: 'numeric' }).format(date) };
 }
