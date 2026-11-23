@@ -5,7 +5,7 @@ import type { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { SITE_NAME } from '@/constants';
 import { t } from '@/i18n';
-import { isPreviewSite, safeNext } from '@/lib/preview';
+import { isPreviewSite, safeNext } from '@/lib/preview/flags';
 
 type Props = { next: string };
 

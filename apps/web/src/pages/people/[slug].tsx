@@ -1,7 +1,7 @@
 // apps/web/src/pages/people/[slug].tsx
 import { PersonPage } from '@/components/person';
 import { getPerson, type PersonDetail } from '@/lib/sanity';
-import { onDemandPaths, withDraft } from '@/lib/static-props';
+import { onDemandPaths, withDraft } from '@/lib/loaders';
 
 type Props = { person: PersonDetail };
 

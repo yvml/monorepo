@@ -1,7 +1,7 @@
 // apps/web/src/pages/about/news/index.tsx
 import { ArticleList } from '@/components/article';
 import { type ArticleSummary, listArticles } from '@/lib/sanity';
-import { withDraft } from '@/lib/static-props';
+import { withDraft } from '@/lib/loaders';
 
 type Props = { articles: ArticleSummary[] };
 

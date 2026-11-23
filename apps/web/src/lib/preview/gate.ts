@@ -1,4 +1,4 @@
-// apps/web/src/lib/gate.ts
+// apps/web/src/lib/preview/gate.ts
 import { getSessionCookie } from 'better-auth/cookies';
 import { getAuth } from './auth';
 

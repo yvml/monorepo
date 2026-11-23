@@ -1,3 +1,4 @@
+// apps/web/src/lib/preview/flags.ts
 /**
  * Whether this deployment is the private preview site. Only the preview deployment sets `PREVIEW_SITE=true`:
  * it reads drafts, serves the sign-in page and the draft-mode routes, and (unless `PREVIEW_REQUIRE_LOGIN=false`)

@@ -1,5 +1,6 @@
+// apps/web/src/pages/api/draft-mode/disable.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { isPreviewSite } from '@/lib/preview';
+import { isPreviewSite } from '@/lib/preview/flags';
 
 export default function handler(_req: NextApiRequest, res: NextApiResponse) {
   if (!isPreviewSite) {

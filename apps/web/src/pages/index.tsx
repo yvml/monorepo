@@ -1,7 +1,7 @@
 // apps/web/src/pages/index.tsx
 import { PageColumn, Title } from '@hmidmismi/ui';
 import { Site } from '@/components/layout';
-import { withDraft } from '@/lib/static-props';
+import { withDraft } from '@/lib/loaders';
 
 export const getStaticProps = withDraft();
 

@@ -4,7 +4,7 @@ import NextLink from 'next/link';
 import { Blocks } from '@/components/content';
 import { Dates } from '@/components/date';
 import { Site } from '@/components/layout';
-import { Image } from '@/components/media';
+import { SanityImage } from '@/components/media';
 import { localize, t } from '@/i18n';
 import type { PersonDetail } from '@/lib/sanity';
 
@@ -29,7 +29,7 @@ export function PersonPage({ person }: { person: PersonDetail }) {
             </CenteredLines>
           )}
         </PageHeader>
-        <Image image={person.portrait} label={t('portraitOf', { name })} />
+        <SanityImage image={person.portrait} label={t('portraitOf', { name })} />
         <Blocks value={person.biography} />
         {person.links?.length ? (
           <TermList ruled>

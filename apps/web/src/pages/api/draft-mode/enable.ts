@@ -1,6 +1,7 @@
+// apps/web/src/pages/api/draft-mode/enable.ts
 import { validatePreviewUrl } from '@sanity/preview-url-secret';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { isPreviewSite, safeNext } from '@/lib/preview';
+import { isPreviewSite, safeNext } from '@/lib/preview/flags';
 import { previewClient } from '@/lib/sanity';
 
 /**

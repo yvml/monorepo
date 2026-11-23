@@ -5,7 +5,7 @@ import { Site } from '@/components/layout';
 import { Day } from '@/components/date';
 import { localize, t } from '@/i18n';
 import { type ArticleDetail } from '@/lib/sanity';
-import { sanityAttr } from '@/lib/visual';
+import { sanityAttr } from '@/lib/sanity/dataAttribute';
 
 /**
  * One article: title, date and content modules.

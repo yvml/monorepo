@@ -1,4 +1,4 @@
-// apps/web/src/components/media/Image.tsx
+// apps/web/src/components/media/SanityImage.tsx
 import { Picture } from '@hmidmismi/ui';
 import { localize } from '@/i18n';
 import { PLACEHOLDER } from '@/constants';
@@ -10,7 +10,7 @@ import type { ImageData } from '@/lib/sanity';
  * @param props - the image; a label that becomes its alt text when the image has none of its own; whether it only decorates (a card whose title already names it); and whether to show the placeholder when there is no image (on by default).
  * @returns the picture, or nothing when there is no image and the placeholder is off.
  */
-export function Image({
+export function SanityImage({
   image,
   label,
   decorative = false,

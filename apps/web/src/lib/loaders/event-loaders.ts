@@ -1,8 +1,8 @@
-// apps/web/src/lib/event-loaders.ts
-import { splitByDate, today } from './dates';
-import { type Section } from '@/constants';
-import { type EventDetail, type EventSummary, getEvent, listEvents } from './sanity';
+// apps/web/src/lib/loaders/event-loaders.ts
+import { splitByDate, today } from '@/lib/dates';
+import { type EventDetail, type EventSummary, getEvent, listEvents } from '@/lib/sanity';
 import { withDraft } from './static-props';
+import { type Section } from '@/constants';
 
 /** An events or exhibitions listing: the section and its entries, split by date. */
 export type EventListProps = { section: Section; upcoming: EventSummary[]; past: EventSummary[]; undated: EventSummary[] };

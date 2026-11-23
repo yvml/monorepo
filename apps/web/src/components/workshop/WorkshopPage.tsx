@@ -7,12 +7,12 @@ import { KeelaEmbed } from '@/components/keela';
 import { Dates } from '@/components/date';
 import { Site } from '@/components/layout';
 import { Breadcrumbs } from '@/components/navigation';
-import { Image } from '@/components/media';
+import { SanityImage } from '@/components/media';
 import { localize, t } from '@/i18n';
 import { WORKSHOPS } from '@/constants';
 import { type WorkshopDetail } from '@/lib/sanity';
+import { sanityAttr } from '@/lib/sanity/dataAttribute';
 import { keelaFormUrl } from '@/lib/keela';
-import { sanityAttr } from '@/lib/visual';
 
 const FORMAT = { inPerson: 'formatInPerson', virtual: 'formatVirtual', hybrid: 'formatHybrid' } as const;
 
@@ -46,7 +46,7 @@ export function WorkshopPage({ entry, draftMode }: { entry: WorkshopDetail; draf
           </CenteredLines>
         </PageHeader>
         <div data-sanity={attr('image')}>
-          <Image image={entry.image} label={title} />
+          <SanityImage image={entry.image} label={title} />
         </div>
         <TermList ruled>
           {entry.instructors?.length ? (

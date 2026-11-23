@@ -1,7 +1,7 @@
 // apps/web/src/middleware.ts
 import { type NextRequest, NextResponse } from 'next/server';
-import { DRAFT_COOKIE, mayView } from '@/lib/gate';
-import { requireLogin } from '@/lib/preview';
+import { DRAFT_COOKIE, mayView } from '@/lib/preview/gate';
+import { requireLogin } from '@/lib/preview/flags';
 
 /**
  * Keeps the preview site private. Pages are generated ahead and cached (see `lib/static-props.ts`), so the check cannot

@@ -1,5 +1,5 @@
-// apps/web/src/lib/page-loader.ts
-import { getPage, type PageDoc } from './sanity';
+// apps/web/src/lib/loaders/page-loader.ts
+import { type PageDoc, getPage } from '@/lib/sanity';
 import { withDraft } from './static-props';
 
 /** A page written in the studio. */

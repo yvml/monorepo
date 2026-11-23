@@ -2,7 +2,7 @@
 import { CardItem, Cell, Grid, ListHeader, PageColumn, Text } from '@hmidmismi/ui';
 import NextLink from 'next/link';
 import { Site } from '@/components/layout';
-import { Image } from '@/components/media';
+import { SanityImage } from '@/components/media';
 import type { PersonSummary } from '@/lib/sanity';
 import { t } from '@/i18n';
 
@@ -23,7 +23,7 @@ export function PersonList({ people }: { people: PersonSummary[] }) {
             <Cell key={person._id} span="3">
               <CardItem>
                 <NextLink href={`/people/${person.slug}`}>
-                  <Image image={person.portrait} label={person.title ?? ''} decorative />
+                  <SanityImage image={person.portrait} label={person.title ?? ''} decorative />
                   {person.title}
                 </NextLink>
                 {person.location && <Text variant="small">{person.location}</Text>}

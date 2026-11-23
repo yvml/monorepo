@@ -1,7 +1,6 @@
 // apps/web/src/pages/exhibitions/[slug].tsx
-import { onDemandPaths } from '@/lib/static-props';
+import { type EventProps, eventLoader, onDemandPaths } from '@/lib/loaders';
 import { EventPage } from '@/components/event';
-import { eventLoader, type EventProps } from '@/lib/event-loaders';
 import { EXHIBITIONS } from '@/constants';
 
 export const getStaticPaths = onDemandPaths;

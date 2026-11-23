@@ -5,7 +5,7 @@ import { Site } from './Site';
 import { ContentModules } from '@/components/content';
 import { localize, t } from '@/i18n';
 import type { PageDoc } from '@/lib/sanity';
-import { sanityAttr } from '@/lib/visual';
+import { sanityAttr } from '@/lib/sanity/dataAttribute';
 
 /**
  * A page written in the studio (About, Support, Youth Programs, ...): its title and its content modules in one reading

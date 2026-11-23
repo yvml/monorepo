@@ -7,7 +7,7 @@ import { buildUrl, parseUrl, pathWords, toHref, unknownChoices } from '@/lib/fil
 import { WORKSHOPS } from '@/constants';
 import { t } from '@/i18n';
 import { getWorkshop, listWorkshops, type WorkshopDetail, type WorkshopSummary } from '@/lib/sanity';
-import { onDemandPaths, withDraft } from '@/lib/static-props';
+import { onDemandPaths, withDraft } from '@/lib/loaders';
 import { workshopListing } from '@/lib/workshops';
 
 type Props =

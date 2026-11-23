@@ -1,7 +1,8 @@
+// apps/web/src/pages/api/auth/[...all].ts
 import { toNodeHandler } from 'better-auth/node';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getAuth } from '@/lib/auth';
-import { isPreviewSite } from '@/lib/preview';
+import { getAuth } from '@/lib/preview/auth';
+import { isPreviewSite } from '@/lib/preview/flags';
 
 /** Better Auth's endpoints need the raw request body. */
 export const config = { api: { bodyParser: false } };

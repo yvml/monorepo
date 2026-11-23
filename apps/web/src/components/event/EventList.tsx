@@ -4,7 +4,7 @@ import NextLink from 'next/link';
 import { Site } from '@/components/layout';
 import { Dates } from '@/components/date';
 import { dateBlock, firstDate } from '@/lib/dates';
-import type { EventListProps } from '@/lib/event-loaders';
+import { type EventListProps } from '@/lib/loaders';
 import { localize, t } from '@/i18n';
 import { type Section } from '@/constants';
 import { type EventSummary } from '@/lib/sanity';

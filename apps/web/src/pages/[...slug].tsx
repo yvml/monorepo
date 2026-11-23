@@ -1,7 +1,6 @@
 // apps/web/src/pages/[...slug].tsx
 import { Page } from '@/components/layout';
-import { type PageProps, pageLoader } from '@/lib/page-loader';
-import { onDemandPaths } from '@/lib/static-props';
+import { type PageProps, onDemandPaths, pageLoader } from '@/lib/loaders';
 
 /** Pages from the studio's Page type: `/about`, and nested ones such as `/about/history`. */
 export const getStaticPaths = onDemandPaths;

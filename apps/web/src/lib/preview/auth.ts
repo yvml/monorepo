@@ -1,5 +1,6 @@
+// apps/web/src/lib/preview/auth.ts
 import { createAuth } from '@hmidmismi/auth/server';
-import { isPreviewSite } from './preview';
+import { isPreviewSite } from './flags';
 
 const list = (value: string | undefined) =>
   value

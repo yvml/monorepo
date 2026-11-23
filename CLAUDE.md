@@ -29,7 +29,7 @@ components/<domain>/   one folder per domain, each with a barrel `index.ts`; imp
   content/       Blocks, ContentModules, Kicker      media/   Image      date/   Dates, Day
   filters/       FilterBar (generic, takes any ListSpec)      keela/   KeelaEmbed, KeelaSignup
 hooks/           custom React hooks (useFilterState)
-lib/             code with no React: queries, the filter engine, text, dates, loaders
+lib/             code with no React: queries, the filter engine, dates, loaders
 pages/           routes only: a loader, and one component. A route owns what is specific to it (Contact adds the signup)
 tests/           every test file
 ```
@@ -46,11 +46,12 @@ constants/        data that never changes at runtime: brand (SITE_NAME), placeho
                   menus (navigation groups, social links). Import from '@/constants'.
 theme/            the site's theme (colors, faces), which panda.config.ts and _document read
 lib/              code that does something:
-  sanity/         client.ts (published, preview, listing clients), groq.ts (fragments), queries/ (one file per document type), types.ts
-  filters/        the filter engine: kinds, URL state, apply, counts, active chips
+  sanity/         client.ts (published, preview, listing clients), groq.ts (fragments), queries/ (one file per document type), types.ts, dataAttribute.ts (click-to-edit)
+  filters/        the filter engine: types, state (defaults), url (parse and build addresses), apply, active chips
   workshops/      the workshop listing as a ListSpec: filters.ts, sorts.ts, instructors.ts
-  dates.ts        date helpers      keela.ts   Keela address checks      visual.ts   click-to-edit attributes
-  static-props.ts, page-loader.ts, event-loaders.ts   page data loaders      gate.ts, preview.ts, auth.ts   preview-site login (the check runs in src/middleware.ts)
+  loaders/        page data: static-props (withDraft, revalidate), page-loader, event-loaders
+  preview/        the private preview site: flags, gate (who may view), auth
+  dates.ts        date helpers      keela.ts   Keela address checks
 ```
 
 ## Conventions

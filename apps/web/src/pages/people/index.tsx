@@ -1,7 +1,7 @@
 // apps/web/src/pages/people/index.tsx
 import { PersonList } from '@/components/person';
 import { listPeople, type PersonSummary } from '@/lib/sanity';
-import { withDraft } from '@/lib/static-props';
+import { withDraft } from '@/lib/loaders';
 
 type Props = { people: PersonSummary[] };
 

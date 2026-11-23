@@ -1,7 +1,7 @@
 // apps/web/src/pages/about/news/[slug].tsx
 import { ArticlePage } from '@/components/article';
 import { type ArticleDetail, getArticle } from '@/lib/sanity';
-import { onDemandPaths, withDraft } from '@/lib/static-props';
+import { onDemandPaths, withDraft } from '@/lib/loaders';
 
 type Props = { article: ArticleDetail; draftMode?: boolean };
 

@@ -13,7 +13,7 @@ import {
 } from '@hmidmismi/ui';
 import NextLink from 'next/link';
 import { useMemo } from 'react';
-import { Image } from '@/components/media';
+import { SanityImage } from '@/components/media';
 import { FilterBar } from '@/components/filters';
 import { Dates } from '@/components/date';
 import { activeFilters, applyFilters } from '@/lib/filters';
@@ -102,7 +102,7 @@ export function WorkshopList({ workshops, today }: { workshops: WorkshopSummary[
             <Cell key={row.workshop._id} span="3">
               <CardItem>
                 <NextLink href={row.href}>
-                  <Image image={row.workshop.image} label={row.title} decorative />
+                  <SanityImage image={row.workshop.image} label={row.title} decorative />
                   {row.title}
                 </NextLink>
                 <Text variant="small">{row.dates}</Text>

@@ -3,7 +3,7 @@ import { Link, PageColumn, Text, Title } from '@hmidmismi/ui';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { t } from '@/i18n';
-import { withDraft } from '@/lib/static-props';
+import { withDraft } from '@/lib/loaders';
 
 export const getStaticProps = withDraft();
 

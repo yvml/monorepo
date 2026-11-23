@@ -6,12 +6,12 @@ import { KeelaEmbed } from '@/components/keela';
 import { Dates } from '@/components/date';
 import { Site } from '@/components/layout';
 import { Breadcrumbs } from '@/components/navigation';
-import { Image } from '@/components/media';
+import { SanityImage } from '@/components/media';
 import { localize, t } from '@/i18n';
 import { type Section } from '@/constants';
 import { type EventDetail } from '@/lib/sanity';
+import { sanityAttr } from '@/lib/sanity/dataAttribute';
 import { keelaFormUrl } from '@/lib/keela';
-import { sanityAttr } from '@/lib/visual';
 
 const STATUS = { tbc: 'toBeConfirmed', cancelled: 'cancelled' } as const;
 
@@ -43,7 +43,7 @@ export function EventPage({ section, entry, draftMode }: { section: Section; ent
           </CenteredLines>
         </PageHeader>
         <div data-sanity={attr('image')}>
-          <Image image={entry.image} label={title} />
+          <SanityImage image={entry.image} label={title} />
         </div>
         {!keela && entry.registrationUrl && open && (
           <TermList ruled>

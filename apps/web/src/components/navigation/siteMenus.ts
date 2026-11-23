@@ -1,4 +1,4 @@
-// apps/web/src/components/navigation/menus.ts
+// apps/web/src/components/navigation/siteMenus.ts
 import { menuLinks } from './menuLinks';
 import { NAV_GROUPS, type NavGroup, SECTIONS, SOCIAL } from '@/constants';
 import { t } from '@/i18n';
