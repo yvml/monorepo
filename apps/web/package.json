@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf .next .turbo node_modules",
+    "predev": "pnpm --filter @yvml/studio typegen:generate",
     "dev": "next dev",
+    "prebuild": "pnpm --filter @yvml/studio typegen:generate",
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
