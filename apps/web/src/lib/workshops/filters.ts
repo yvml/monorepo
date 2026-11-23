@@ -11,9 +11,8 @@ export type WorkshopContext = { today: string };
 type Term = NonNullable<WorkshopSummary['workshopTypes']>[number];
 type Reference = { _id: string; slug?: string | null };
 
-/** What an address says for a referenced document: its slug, or its id when it has none. */
-const slugOf = (ref: Reference) => ref.slug ?? ref._id;
-const slugs = (refs: Reference[] | null | undefined) => (refs ?? []).map(slugOf);
+/** What an address says for a referenced document is its slug, never its id. A document without one cannot be addressed, so filters leave it out. */
+const slugs = (refs: Reference[] | null | undefined) => (refs ?? []).flatMap((ref) => (ref.slug ? [ref.slug] : []));
 const term = (ref: Term) => localize(ref.title);
 const byLabel = (a: Option, b: Option) => a.label.localeCompare(b.label);
 
@@ -29,17 +28,21 @@ function distinct<R extends Reference>(
   label: (ref: R) => string
 ) {
   const seen = new Map<string, Option>();
-  for (const workshop of workshops) for (const ref of pick(workshop) ?? []) seen.set(slugOf(ref), { value: slugOf(ref), label: label(ref) });
+  for (const workshop of workshops) {
+    for (const ref of pick(workshop) ?? []) if (ref.slug) seen.set(ref.slug, { value: ref.slug, label: label(ref) });
+  }
   return [...seen.values()].sort(byLabel);
 }
 
 /** The instructors the workshops have, as options sorted by last name. */
 function instructorOptions(workshops: WorkshopSummary[]) {
   const people = new Map<string, Instructor>();
-  for (const workshop of workshops) for (const person of workshop.instructors ?? []) people.set(slugOf(person), person);
+  for (const workshop of workshops) {
+    for (const person of workshop.instructors ?? []) if (person.slug) people.set(person.slug, person);
+  }
   return [...people.values()]
     .sort((a, b) => lastName(a).localeCompare(lastName(b)) || (a.nameGiven ?? '').localeCompare(b.nameGiven ?? ''))
-    .map((person) => ({ value: slugOf(person), label: person.title ?? lastName(person) }));
+    .map((person) => ({ value: person.slug as string, label: person.title ?? lastName(person) }));
 }
 
 /** Search, instructors, types and materials (several at once), availability, a price range, and past workshops on or off. */

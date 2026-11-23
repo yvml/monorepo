@@ -16,6 +16,9 @@ const LOADING = '<div class="keela-loading"><div></div><div></div><div></div><di
  * A Keela form, such as the newsletter signup, embedded the way Keela supplies it: its script frames the form and
  * resizes the frame as the form changes. The frame is given an accessible name once the script has made it.
  *
+ * The one place the app sets a class by hand: `keela-embed-form` and `data-src` are Keela's contract, not styling. Its script
+ * finds the element by them and fills it.
+ *
  * @param props - the form address and an accessible name for the frame.
  * @returns the form, or nothing when the address is not a Keela form.
  */
