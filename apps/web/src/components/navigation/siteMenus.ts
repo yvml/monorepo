@@ -18,5 +18,5 @@ export const mainMenu = () =>
     ...NAV_GROUPS.filter((group) => group.path === 'support').map(groupItem),
   ]);
 
-/** The social media links, in the header's utility row and at the end of the footer's links. */
+/** The social media links, at the end of the footer's links. */
 export const socialMenu = menuLinks(SOCIAL);

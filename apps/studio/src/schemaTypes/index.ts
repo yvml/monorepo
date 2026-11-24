@@ -7,7 +7,7 @@ import {
   textModule,
 } from '@hmidmismi/sanity-core';
 import { imageModule, kickerModule, peopleModule } from '../lib';
-import { article, event, material, page, person, schedule, workshop, workshopType } from './documents';
+import { article, event, material, notice, page, person, schedule, workshop, workshopType } from './documents';
 import { localizedSlugType } from './localizedSlugType';
 
 /** Document types an internal link in rich text may point at. */
@@ -22,6 +22,7 @@ export const schemaTypes = [
   kickerModule,
   localizedSlugType,
   material,
+  notice,
   page,
   peopleModule,
   person,

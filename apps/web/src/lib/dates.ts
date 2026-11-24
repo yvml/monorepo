@@ -82,3 +82,46 @@ export function formatDates(entry: Dated) {
 
 /** Today as `YYYY-MM-DD`. UTC is close enough to decide upcoming from past. */
 export const today = () => new Date().toISOString().slice(0, 10);
+
+/**
+ * The day and time of day at the lab, where the studio's dates and times are meant: they are stored as plain strings in
+ * local time, so "now" has to be read in that zone, not the server's.
+ *
+ * @param now - the moment to read.
+ * @param timeZone - the lab's IANA time zone.
+ * @returns the day as `YYYY-MM-DD` and the time as `HH:mm`.
+ */
+export function localMoment(now: Date, timeZone: string) {
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat('en-US', {
+      timeZone,
+      hourCycle: 'h23',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+      .formatToParts(now)
+      .map(({ type, value }) => [type, value])
+  );
+  return { day: `${parts.year}-${parts.month}-${parts.day}`, time: `${parts.hour}:${parts.minute}` };
+}
+
+/**
+ * Whether an entry is under way at a moment: one of its dates covers the day and, when that date has times, the time falls
+ * between them. A date with no times, or marked all day, covers the whole day. A range uses only its first date.
+ *
+ * @param entry - the entry.
+ * @param day - the day, `YYYY-MM-DD`.
+ * @param time - the time of day, `HH:mm`.
+ * @returns whether the entry is happening.
+ */
+export function isHappening(entry: Dated, day: string, time: string) {
+  const entries = entry.dateTime?.entries ?? [];
+  return (entry.dateTime?.isRange ? entries.slice(0, 1) : entries).some((item) => {
+    if (!item.date || item.date > day || (item.endDate ?? item.date) < day) return false;
+    if (item.allDay) return true;
+    return (!item.startTime || item.startTime <= time) && (!item.endTime || time < item.endTime);
+  });
+}

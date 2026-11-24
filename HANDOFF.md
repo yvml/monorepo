@@ -58,7 +58,8 @@ Not verified: events and exhibitions with real data (the dataset has none; fixtu
 
 - **Mocks**: https://yvml-mocks.netlify.app (Netlify site `9926452c-9063-4cf9-90ba-7e97de575fce`). Deploy: `cd mocks && python3 make.py && netlify deploy --prod --dir dist --site 9926452c-9063-4cf9-90ba-7e97de575fce`. Behind Netlify Visitor access until turned off. Every deploy URL is listed in `mocks/DEPLOYS.md` (on the `mocks` branch).
 - **Staging** https://yvml.netlify.app and **preview** https://preview--yvml.netlify.app (the studio's Presentation target): built from earlier `main`/`preview`; none of this session's web work is deployed. `staging.yvml.org` waits on a certificate for the Hover DNS; `preview.yvml.org` is not mapped to the `preview` branch.
-- Live: none of the preview variables set, and `/sign-in`, `/api/auth/*` and `/api/draft-mode/*` answer 404. Preview: `PREVIEW_SITE=true`, `PREVIEW_REQUIRE_LOGIN=false` (the Google login gate is not set up: no OAuth client or `auth_*` tables yet).
+- Live: none of the preview variables set, and `/api/draft-mode/*` answers 404. Preview: `PREVIEW_SITE=true`, `PREVIEW_REQUIRE_LOGIN=false` (the Clerk login is built but switched off until the cutover below, so the preview site is open to anyone with the URL).
+- **At the cutover to the production domain, turn the preview login on:** (1) create the Clerk application and enable its Google connector; its domain is the host the gated preview site is served on; (2) on the `preview` branch's Netlify environment remove `PREVIEW_REQUIRE_LOGIN`, and set `CLERK_SECRET_KEY`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `PREVIEW_ALLOWED_EMAILS` and `PREVIEW_COOKIE_SECRET` (32+ random characters); (3) optionally add `"email": "{{user.primary_email_address}}"` to Clerk's session token; (4) redeploy and check sign-in, the allow-list's 403 and Presentation.
 
 ## The mocks (`mocks/`, branch `mocks`)
 
@@ -77,7 +78,7 @@ Saved in `~/.claude/projects/-Users-jasloe-projects-yvml/memory/`: a question ge
 1. Merge the pull requests in order, merge the UI branches, bump the pins here and in `chorusworks/monorepo`.
 2. Redeploy staging and preview and check the workshop listing and Presentation there.
 3. Decide the Lazy Eye and main-site design direction from the mocks, then build it for real (the theme in `src/theme/` and the home page are placeholders).
-4. Open items: AI alt text (`@sanity/assist` is installed, not configured); the Clerk application (enable the Google connector, copy the two keys, set the preview branch's environment: the keys, `PREVIEW_ALLOWED_EMAILS`, `PREVIEW_COOKIE_SECRET`) and checking the login on the `preview` deploy; map `preview.yvml.org` and finish the `staging.yvml.org` certificate; chips as real links for crawlers (needs a link version of `Chip` in the UI package); a Sanity webhook for on-demand revalidation; component tests; the instructor and material comboboxes show no counts because the UI package's combobox ignores option updates.
+4. Open items: AI alt text (`@sanity/assist` is installed, not configured); the Clerk login, deferred to the production cutover (see Deployments); map `preview.yvml.org` and finish the `staging.yvml.org` certificate; chips as real links for crawlers (needs a link version of `Chip` in the UI package); a Sanity webhook for on-demand revalidation; component tests; the instructor and material comboboxes show no counts because the UI package's combobox ignores option updates.
 5. Archive `chorusworks/clients`, `chorusworks/sanity-core` and `chorusworks/sanity-types` once nothing points at them.
 
 ## Gotchas

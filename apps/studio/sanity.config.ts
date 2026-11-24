@@ -173,6 +173,7 @@ export default defineConfig({
                   .items([
                     sortedList(S, 'article', 'Articles', BY_TITLE),
                     sortedList(S, 'event', 'Events', BY_DATE),
+                    S.documentTypeListItem('notice').title('Notices'),
                     sortedList(S, 'page', 'Pages', BY_TITLE),
                     sortedList(S, 'person', 'People', BY_LAST_NAME),
                     sortedList(S, 'workshop', 'Workshops', BY_DATE),

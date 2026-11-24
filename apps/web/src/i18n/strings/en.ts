@@ -25,9 +25,23 @@ export const en = {
   navGovernmentPartners: 'Government Partners',
   navDonorInformation: 'Information for Donors',
   language: 'Language',
-  footerNote: "Dates and registration are on each entry's page.",
-  upcomingEvents: 'Upcoming events',
+  copyright: '© {year} {name}',
+  nonprofitStatus: '{name} is a 501(c)(3) registered in the state of California. EIN {ein}',
+  siteBy: 'Site by {name}',
   opensInNewTab: 'opens in a new tab',
+  happeningNow: 'Happening now',
+
+  // Weather in the header
+  weatherLabel: 'Weather in {place}: {temperature}°F, {condition}',
+  weatherSunny: 'Sunny',
+  weatherClear: 'Clear',
+  weatherPartlyCloudy: 'Partly cloudy',
+  weatherCloudy: 'Cloudy',
+  weatherFog: 'Fog',
+  weatherDrizzle: 'Drizzle',
+  weatherRain: 'Rain',
+  weatherSnow: 'Snow',
+  weatherStorm: 'Thunderstorms',
 
   // Listings
   emptyEvents: 'No events are listed.',
