@@ -1,12 +1,9 @@
-import { EventList, type EventListProps } from '@/components/EventList';
-import { splitByDate, today } from '@/lib/dates';
-import { EXHIBITIONS } from '@/lib/navigation';
-import { listEvents } from '@/lib/sanity';
-import { withPreviewGate } from '@/lib/gate';
+// apps/web/src/pages/exhibitions/index.tsx
+import { EventList } from '@/components/event';
+import { type EventListProps, eventListLoader } from '@/lib/loaders';
+import { EXHIBITIONS } from '@/constants';
 
-export const getServerSideProps = withPreviewGate<EventListProps>(async (_context, draft) => ({
-  props: { section: EXHIBITIONS, ...splitByDate(await listEvents(EXHIBITIONS, draft), today()) },
-}));
+export const getStaticProps = eventListLoader(EXHIBITIONS);
 
 export default function Page(props: EventListProps) {
   return <EventList {...props} />;

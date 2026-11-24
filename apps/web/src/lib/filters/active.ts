@@ -1,14 +1,10 @@
-import { t } from '../text';
-import { defaultValue } from './state';
+// apps/web/src/lib/filters/active.ts
+import { t } from '@/i18n';
+import { defaultValue, withValue } from './state';
 import type { FilterState, ListSpec, Range } from './types';
 
 /** One filter that is on, as a removable chip: what it says and how to turn it off. */
 export type ActiveFilter = { id: string; label: string; remove: (state: FilterState) => FilterState };
-
-const set = (state: FilterState, key: string, value: FilterState['values'][string]): FilterState => ({
-  ...state,
-  values: { ...state.values, [key]: value },
-});
 
 /**
  * The filters that are on, one chip each (a multi filter gives one per choice).
@@ -25,12 +21,12 @@ export function activeFilters<T, C>(spec: ListSpec<T, C>, items: T[], state: Fil
     const name = t(filter.label);
     switch (filter.kind) {
       case 'search':
-        if (value !== '') out.push({ id: filter.key, label: `${name}: “${String(value)}”`, remove: (s) => set(s, filter.key, '') });
+        if (value !== '') out.push({ id: filter.key, label: `${name}: “${String(value)}”`, remove: (s) => withValue(s, filter.key, '') });
         break;
       case 'select': {
         if (value === '') break;
         const option = filter.options.find((candidate) => candidate.value === value);
-        out.push({ id: filter.key, label: `${name}: ${option ? t(option.label) : String(value)}`, remove: (s) => set(s, filter.key, '') });
+        out.push({ id: filter.key, label: `${name}: ${option ? t(option.label) : String(value)}`, remove: (s) => withValue(s, filter.key, '') });
         break;
       }
       case 'multi': {
@@ -40,17 +36,17 @@ export function activeFilters<T, C>(spec: ListSpec<T, C>, items: T[], state: Fil
           out.push({
             id: `${filter.key}:${chosen}`,
             label: `${name}: ${label}`,
-            remove: (s) => set(s, filter.key, ((s.values[filter.key] as string[]) ?? []).filter((other) => other !== chosen)),
+            remove: (s) => withValue(s, filter.key, ((s.values[filter.key] as string[]) ?? []).filter((other) => other !== chosen)),
           });
         }
         break;
       }
       case 'toggle':
-        if (value !== (filter.defaultOn ?? false)) out.push({ id: filter.key, label: name, remove: (s) => set(s, filter.key, filter.defaultOn ?? false) });
+        if (value !== (filter.defaultOn ?? false)) out.push({ id: filter.key, label: name, remove: (s) => withValue(s, filter.key, filter.defaultOn ?? false) });
         break;
       case 'range': {
         const { min, max } = value as Range;
-        if (min !== null || max !== null) out.push({ id: filter.key, label: `${name}: ${min ?? ''}–${max ?? ''}`, remove: (s) => set(s, filter.key, { min: null, max: null }) });
+        if (min !== null || max !== null) out.push({ id: filter.key, label: `${name}: ${min ?? ''}–${max ?? ''}`, remove: (s) => withValue(s, filter.key, { min: null, max: null }) });
         break;
       }
     }

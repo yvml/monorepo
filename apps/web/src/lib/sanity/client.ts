@@ -33,6 +33,16 @@ export function previewClient() {
 }
 
 /**
+ * The client for a listing. A listing is not edited in place (its entries are edited on their own pages), so even in
+ * draft mode its text carries no click-to-edit markers: they would make every title and name on the page an edit
+ * target instead of a link, and end up inside filter labels and search text.
+ *
+ * @param draft - whether the request is in draft mode.
+ * @returns the client for the request, with the editing markers off.
+ */
+export const listClient = (draft: boolean) => clientFor(draft).withConfig({ stega: false });
+
+/**
  * The client for a request.
  *
  * @param draft - whether the request is in draft mode.

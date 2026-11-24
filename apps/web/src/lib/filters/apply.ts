@@ -1,4 +1,5 @@
-import { t } from '../text';
+// apps/web/src/lib/filters/apply.ts
+import { t } from '@/i18n';
 import { defaultValue } from './state';
 import type { CountedOption, Filter, FilterState, ListSpec, Option, Range } from './types';
 

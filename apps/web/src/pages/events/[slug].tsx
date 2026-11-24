@@ -1,17 +1,12 @@
-import { EventPage } from '@/components/EventPage';
-import { EVENTS } from '@/lib/navigation';
-import { type EventDetail, getEvent } from '@/lib/sanity';
-import { withPreviewGate } from '@/lib/gate';
+// apps/web/src/pages/events/[slug].tsx
+import { type EventProps, eventLoader, onDemandPaths } from '@/lib/loaders';
+import { EventPage } from '@/components/event';
+import { EVENTS } from '@/constants';
 
-type Props = { entry: EventDetail; draftMode?: boolean };
+export const getStaticPaths = onDemandPaths;
 
-export const getServerSideProps = withPreviewGate<Props>(async (context, draft) => {
-  const slug = context.params?.slug;
-  if (typeof slug !== 'string') return { notFound: true };
-  const entry = await getEvent(EVENTS, slug, draft);
-  return entry ? { props: { entry } } : { notFound: true };
-});
+export const getStaticProps = eventLoader(EVENTS);
 
-export default function Page({ entry, draftMode }: Props) {
+export default function Page({ entry, draftMode }: EventProps) {
   return <EventPage section={EVENTS} entry={entry} draftMode={draftMode} />;
 }

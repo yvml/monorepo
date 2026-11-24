@@ -1,20 +1,16 @@
+// apps/web/src/pages/index.tsx
 import { PageColumn, Title } from '@hmidmismi/ui';
-import Head from 'next/head';
-import { SiteLayout } from '@/components/SiteLayout';
-import { withPreviewGate } from '@/lib/gate';
+import { Site } from '@/components/layout';
+import { withDraft } from '@/lib/loaders';
 
-export const getServerSideProps = withPreviewGate();
+export const getStaticProps = withDraft();
 
 export default function Home() {
   return (
-    <SiteLayout>
-      <Head>
-        <title>YVML</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+    <Site>
       <PageColumn>
         <Title level="h1">YVML</Title>
       </PageColumn>
-    </SiteLayout>
+    </Site>
   );
 }
