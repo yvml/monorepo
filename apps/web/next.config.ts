@@ -6,6 +6,8 @@ const PAGE_EXTENSIONS = ['tsx', 'ts', 'jsx', 'js'];
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  /** Sanity's images are served through Next so the page may read their pixels (the home's duotones are made in a canvas). */
+  images: { remotePatterns: [{ protocol: 'https', hostname: 'cdn.sanity.io' }] },
   /** The shared packages ship TypeScript source, so Next compiles them. */
   transpilePackages: ['@hmidmismi/ui', '@hmidmismi/sanity-types'],
   /**

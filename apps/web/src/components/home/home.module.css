@@ -1,0 +1,43 @@
+/* apps/web/src/components/home/home.module.css
+   What the two home designs share: the faces, the paper and ink colours with their dark pair, the notice bar, the theme
+   button, the material colours and the footer. */
+@font-face{font-family:"Allo";src:url("/fonts/AlloVariable.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Instrument Serif";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/instrument-serif-400-latin.woff2") format("woff2")}
+@font-face{font-family:"Instrument Serif";font-style:italic;font-weight:400;font-display:swap;src:url("/fonts/instrument-serif-400-italic-latin.woff2") format("woff2")}
+
+.root{
+  --bg:#ece8e1;--ink:#1b1712;--mute:#554e44;--line:#c9c2b5;--focus:#2f55c4;
+  --serif:"Instrument Serif",Georgia,serif;--sans:"Allo",system-ui,sans-serif;
+  --pad:clamp(1rem,3vw,2.5rem);--ease:cubic-bezier(.16,1,.3,1);
+  background:var(--bg);color:var(--ink);font:400 1.0625rem/1.55 var(--sans);font-variation-settings:"ROND" 30;min-height:100vh;
+}
+:global(html.dark) .root{--bg:#17130f;--ink:#f1ebe1;--mute:#b9b0a2;--line:#3a332a;--focus:#8aa8ff}
+/* :where keeps these defaults at the lowest specificity, so any class in the two designs wins over them */
+:where(.root) *,:where(.root) *::before,:where(.root) *::after{box-sizing:border-box}
+:where(.root) ul{list-style:none}
+:where(.root) img{display:block;max-width:100%}
+:where(.root) a{color:inherit;text-underline-offset:.22em}
+:where(.root) :focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:2px}
+
+/* material colour: --m / --m-dk text and --t / --t-dk panel tint, set on an element by materialStyle() */
+.root [data-m]{--mc:var(--m);--tc:var(--t)}
+:global(html.dark) .root [data-m]{--mc:var(--m-dk);--tc:var(--t-dk)}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.notice{background:var(--ink);color:var(--bg);text-align:center;padding:.6rem var(--pad);font-size:.9375rem}
+.notice a{text-decoration:none}
+.notice a:hover{text-decoration:underline}
+.notice b{font-weight:500;margin-right:.75rem}
+
+.themeButton{display:inline-grid;place-items:center;width:44px;min-height:44px;padding:0;border:0;border-radius:50%;background:transparent;color:inherit;cursor:pointer}
+.themeButton:hover{background:rgba(255,255,255,.22)}
+
+.footer{padding:clamp(3rem,8vw,6rem) var(--pad) 2rem;background:var(--bg);color:var(--ink);position:relative;z-index:1}
+.footerWord{font:400 clamp(2.5rem,8.5vw,6rem)/.95 var(--serif);letter-spacing:-.01em;margin-bottom:clamp(2rem,5vw,3.5rem)}
+.footerCols{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:2rem;font-size:.9375rem}
+.footerCols h2{font:500 .875rem/1 var(--sans);color:var(--mute);margin-bottom:.75rem}
+.footerCols h2 a{text-decoration:none;color:var(--ink)}
+.footerCols li{margin-bottom:.35rem}
+.legal{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;margin-top:2rem;padding-top:1rem;border-top:1px solid var(--line);font-size:.875rem;color:var(--mute)}
+.legal a{color:inherit}

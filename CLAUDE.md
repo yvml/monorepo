@@ -42,7 +42,7 @@ thing it is in the site's own words, never a generic word (`Entry`, `Item`, `Hel
 ```
 i18n/             strings.ts (every app string in English and Spanish, and the design system's words in Spanish), translate.ts (t('key')),
                   locale.ts (the languages, the active one), localize.ts (Sanity localized fields). Import from '@/i18n'.
-constants/        data that never changes at runtime: brand (SITE_NAME), placeholder, sections (events, exhibitions, workshops),
+constants/        data that never changes at runtime: brand (SITE_SHORT_NAME), placeholder, sections (events, exhibitions, workshops),
                   menus (navigation groups, social links). Import from '@/constants'.
 theme/            the site's theme (colors, faces), which panda.config.ts and _document read
 lib/              code that does something. The folder is the concern, the file is the domain (singular: article, event, page, person, workshop):
