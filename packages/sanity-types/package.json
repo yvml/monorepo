@@ -8,8 +8,7 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "clean": "rm -rf dist .turbo node_modules",
-    "typecheck": "tsc --noEmit"
+    "clean": "rm -rf dist .turbo node_modules"
   },
   "peerDependencies": {
     "@sanity/client": "^7.20.0 || ^8.0.0"
