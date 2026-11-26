@@ -2,7 +2,8 @@
 import { useMotionValue, useScroll, useTransform } from 'motion/react';
 import Link from 'next/link';
 import { type ReactNode, useCallback, useMemo, useRef } from 'react';
-import { HomeFooter, HomeNotice, shared, workshopView } from '@/components/home';
+import { HomeFooter, HomeNotice, shared } from '@/components/home';
+import { workshopView } from '@/lib/workshop';
 import { ORG_NAME } from '@/constants';
 import type { WorkshopSummary } from '@/lib/sanity';
 import { Bar } from './Bar';

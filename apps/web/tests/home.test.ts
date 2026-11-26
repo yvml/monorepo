@@ -1,7 +1,7 @@
 // apps/web/tests/home.test.ts
 import { describe, expect, it } from 'vitest';
 import { materialHue } from '../src/components/home/materials';
-import { workshopView } from '../src/components/home/workshopView';
+import { workshopView } from '../src/lib/workshop';
 
 describe('materialHue', () => {
   it('turns a material name into its hue slug', () => {

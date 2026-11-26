@@ -1,10 +1,10 @@
 // apps/web/src/components/person/PersonList.tsx
-import { Cell, Grid, ItemList, PageColumn, Row, Stack, Text } from '@hmidmismi/ui';
+import { ItemList, PageColumn, Row, Stack, Text } from '@hmidmismi/ui';
 import NextLink from 'next/link';
 import { useMemo } from 'react';
 import { FilterBar, FilterSummary } from '@/components/filters';
 import { Site, TitleRow } from '@/components/layout';
-import { SanityImage } from '@/components/media';
+import { ImageGrid, SanityImage } from '@/components/media';
 import { useFilterState } from '@/hooks';
 import { t } from '@/i18n';
 import { activeFilters, applyFilters, personListing } from '@/lib/filters';
@@ -61,19 +61,15 @@ export function PersonList({ people }: { people: PersonSummary[] }) {
             ))}
           </ItemList>
         ) : (
-          <Grid>
-            {shown.map((person) => (
-              <Cell key={person._id} span="3">
-                <Stack gap="1">
-                  <NextLink href={`/people/${person.slug}`}>
-                    <SanityImage image={person.portrait} label={person.title ?? ''} decorative />
-                    {person.title}
-                  </NextLink>
-                  {person.location && <Text variant="small">{person.location}</Text>}
-                </Stack>
-              </Cell>
-            ))}
-          </Grid>
+          <ImageGrid
+            items={shown.map((person) => ({
+              id: person._id,
+              href: `/people/${person.slug}`,
+              title: person.title ?? '',
+              image: person.portrait,
+              lines: [person.location],
+            }))}
+          />
         )}
       </PageColumn>
     </Site>

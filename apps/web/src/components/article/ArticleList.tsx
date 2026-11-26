@@ -1,8 +1,8 @@
 // apps/web/src/components/article/ArticleList.tsx
-import { ItemList, PageColumn, Text } from '@hmidmismi/ui';
+import { ItemList, PageColumn, Row, Text } from '@hmidmismi/ui';
 import NextLink from 'next/link';
-import { Site, TitleRow } from '@/components/layout';
 import { Day } from '@/components/date';
+import { Site, TitleRow } from '@/components/layout';
 import { localize, t } from '@/i18n';
 import { type ArticleSummary } from '@/lib/sanity';
 
@@ -18,12 +18,14 @@ export function ArticleList({ articles }: { articles: ArticleSummary[] }) {
       <PageColumn>
         <TitleRow title={t('navNews')} />
         {!articles.length && <Text>{t('emptyArticles')}</Text>}
-        <ItemList>
+        <ItemList gap="0" closed>
           {articles.map((article) => (
             <li key={article._id}>
-              <NextLink href={`/about/news/${article.slug}`}>{localize(article.title)}</NextLink>
-              {' · '}
-              <Day iso={article.createdAt.slice(0, 10)} />
+              <Row
+                layout="plain"
+                title={<NextLink href={`/about/news/${article.slug}`}>{localize(article.title)}</NextLink>}
+                meta={<Day iso={article.createdAt.slice(0, 10)} />}
+              />
             </li>
           ))}
         </ItemList>

@@ -1,11 +1,11 @@
 // apps/web/src/components/event/EventList.tsx
-import { Cell, Grid, ItemList, Label, PageColumn, Row, Stack, Text } from '@hmidmismi/ui';
+import { ItemList, Label, PageColumn, Row, Stack, Text } from '@hmidmismi/ui';
 import NextLink from 'next/link';
 import { useMemo } from 'react';
 import { Dates } from '@/components/date';
 import { FilterBar, FilterSummary } from '@/components/filters';
 import { Site, TitleRow } from '@/components/layout';
-import { SanityImage } from '@/components/media';
+import { ImageGrid } from '@/components/media';
 import { type Section } from '@/constants';
 import { useFilterState } from '@/hooks';
 import { localize, t } from '@/i18n';
@@ -17,22 +17,15 @@ import { type EventSummary } from '@/lib/sanity';
 function Entries({ entries, section, view }: { entries: EventSummary[]; section: Section; view: string }) {
   if (view === 'grid') {
     return (
-      <Grid>
-        {entries.map((entry) => (
-          <Cell key={entry._id} span="3">
-            <Stack gap="1">
-              <NextLink href={`/${section.path}/${entry.slug}`}>
-                <SanityImage image={entry.image} label={localize(entry.title)} decorative />
-                {localize(entry.title)}
-              </NextLink>
-              <Text variant="small">
-                {entry.status === 'cancelled' ? t('cancelled') : entry.status === 'tbc' ? t('toBeConfirmed') : <Dates entry={entry} />}
-              </Text>
-              {entry.location && <Text variant="small">{entry.location}</Text>}
-            </Stack>
-          </Cell>
-        ))}
-      </Grid>
+      <ImageGrid
+        items={entries.map((entry) => ({
+          id: entry._id,
+          href: `/${section.path}/${entry.slug}`,
+          title: localize(entry.title),
+          image: entry.image,
+          lines: [entry.status === 'cancelled' ? t('cancelled') : entry.status === 'tbc' ? t('toBeConfirmed') : <Dates entry={entry} />, entry.location],
+        }))}
+      />
     );
   }
   return (

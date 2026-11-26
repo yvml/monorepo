@@ -21,9 +21,9 @@ export function ArticlePage({ article, draftMode }: { article: ArticleDetail; dr
       <PageColumn as="article">
         <CenteredHeader>
           <Title level="h1">{title}</Title>
-          <p>
+          <Text>
             <Day iso={article.createdAt.slice(0, 10)} />
-          </p>
+          </Text>
         </CenteredHeader>
         <div data-sanity={sanityAttr(Boolean(draftMode), article._id, 'article', 'content')}>
           <ContentModules modules={article.content} />

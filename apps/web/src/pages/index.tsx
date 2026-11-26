@@ -25,12 +25,12 @@ import { Hero } from '@/components/home/Hero';
 import { ImpactStats } from '@/components/home/ImpactStats';
 import { LazyEyeSection } from '@/components/home/LazyEyeSection';
 import { materialHue } from '@/components/home/materials';
-import { workshopView } from '@/components/home/workshopView';
 import { PageFooter, PageHeader } from '@/components/layout';
 import { NoticeBar } from '@/components/notice';
 import { ORG_NAME, SITE_SHORT_NAME } from '@/constants';
 import { t } from '@/i18n';
 import { type HomeProps, homeLoader } from '@/lib/loaders';
+import { workshopView } from '@/lib/workshop';
 
 export const getStaticProps = homeLoader;
 

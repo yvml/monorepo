@@ -1,8 +1,8 @@
 // apps/web/src/components/event/EventPage.tsx
-import { ItemList, Link, PageColumn, Pair, Stack, Text, Title } from '@hmidmismi/ui';
+import { ItemList, Link, PageColumn, Stack, Text, Title } from '@hmidmismi/ui';
 import { CenteredHeader } from '@/components/layout';
 import { stegaClean } from '@sanity/client/stega';
-import { ContentModules } from '@/components/content';
+import { ContentModules, Term } from '@/components/content';
 import { KeelaEmbed } from '@/components/keela';
 import { Dates } from '@/components/date';
 import { Site } from '@/components/layout';
@@ -48,9 +48,9 @@ export function EventPage({ section, entry, draftMode }: { section: Section; ent
         </div>
         {!keela && entry.registrationUrl && open && (
           <ItemList as="dl" layout="pairs" ruled>
-            <Pair label={t('termRegistration')}>
+            <Term term="termRegistration">
               <Link href={entry.registrationUrl}>{t('register')}</Link>
-            </Pair>
+            </Term>
           </ItemList>
         )}
         <ContentModules modules={entry.content} />

@@ -1,15 +1,14 @@
 // apps/web/src/components/workshop/WorkshopPage.tsx
-import { ItemList, Link, PageColumn, Pair, Stack, Text, Title } from '@hmidmismi/ui';
+import { ItemList, Link, PageColumn, Stack, Text, Title } from '@hmidmismi/ui';
 import { CenteredHeader } from '@/components/layout';
 import { stegaClean } from '@sanity/client/stega';
 import NextLink from 'next/link';
-import { ContentModules } from '@/components/content';
+import { ContentModules, Term } from '@/components/content';
 import { KeelaEmbed } from '@/components/keela';
 import { Dates } from '@/components/date';
 import { Site } from '@/components/layout';
 import { Breadcrumbs } from '@/components/navigation';
 import { SanityImage } from '@/components/media';
-import { WorkshopTerm } from './WorkshopTerm';
 import { localize, t } from '@/i18n';
 import { WORKSHOPS } from '@/constants';
 import { type WorkshopDetail } from '@/lib/sanity';
@@ -52,44 +51,44 @@ export function WorkshopPage({ entry, draftMode }: { entry: WorkshopDetail; draf
         </div>
         <ItemList as="dl" layout="pairs" ruled>
           {entry.instructors?.length ? (
-            <WorkshopTerm term="termInstructors" field="instructors" attr={attr}>
+            <Term term="termInstructors" attr={attr('instructors')}>
               {entry.instructors.map((person, index) => (
                 <span key={person._id}>
                   {index > 0 && ', '}
                   {person.slug ? <NextLink href={`/people/${person.slug}`}>{stegaClean(person.title)}</NextLink> : stegaClean(person.title)}
                 </span>
               ))}
-            </WorkshopTerm>
+            </Term>
           ) : null}
           {entry.format && (
-            <WorkshopTerm term="termFormat" field="format" attr={attr}>
+            <Term term="termFormat" attr={attr('format')}>
               {t(FORMAT[entry.format])}
-            </WorkshopTerm>
+            </Term>
           )}
           {entry.price != null && (
-            <WorkshopTerm term="termPrice" field="price" attr={attr}>
+            <Term term="termPrice" attr={attr('price')}>
               {`$${entry.price}`}
-            </WorkshopTerm>
+            </Term>
           )}
           {entry.scholarshipAvailable && (
-            <WorkshopTerm term="termScholarship" field="scholarshipAvailable" attr={attr}>
+            <Term term="termScholarship" attr={attr('scholarshipAvailable')}>
               {t('scholarshipFull')}
-            </WorkshopTerm>
+            </Term>
           )}
           {types && (
-            <WorkshopTerm term="termType" field="workshopTypes" attr={attr}>
+            <Term term="termType" attr={attr('workshopTypes')}>
               {types}
-            </WorkshopTerm>
+            </Term>
           )}
           {materials && (
-            <WorkshopTerm term="termMaterials" field="materials" attr={attr}>
+            <Term term="termMaterials" attr={attr('materials')}>
               {materials}
-            </WorkshopTerm>
+            </Term>
           )}
           {!keela && entry.registrationUrl && !soldOut && (
-            <Pair label={t('termRegistration')}>
+            <Term term="termRegistration">
               <Link href={entry.registrationUrl}>{t('register')}</Link>
-            </Pair>
+            </Term>
           )}
         </ItemList>
         <ContentModules modules={entry.content} />
