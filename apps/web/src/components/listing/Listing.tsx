@@ -54,15 +54,22 @@ const joined = (lines: ReactNode[]) =>
       </span>
     )) as unknown as ReactNode;
 
-function Entries({ items, view }: { items: ListingItem[]; view: string }) {
+/**
+ * Entries as a list of rows or a grid of cards. A listing renders its matches with it, and so can any page that lists
+ * a few entries, such as a person's workshops.
+ *
+ * @param props - the entries and the view, `list` or `grid`.
+ * @returns the entries.
+ */
+export function ListingEntries({ items, view }: { items: ListingItem[]; view: string }) {
   if (view === 'grid') return <ImageGrid items={items} />;
   return (
     <ItemList gap="0" closed>
       {items.map((entry) => (
         <li key={entry.id}>
           <Row
-            layout={entry.lead ? 'dated' : 'thumb'}
-            lead={entry.lead ?? <SanityImage image={entry.image} label={entry.title} decorative />}
+            layout={entry.lead ? 'dated' : 'image' in entry ? 'thumb' : 'plain'}
+            lead={entry.lead ?? ('image' in entry ? <SanityImage image={entry.image} label={entry.title} decorative /> : undefined)}
             title={<NextLink href={entry.href}>{entry.title}</NextLink>}
             meta={joined(entry.lines)}
           />
@@ -112,7 +119,7 @@ export function Listing<T, C>({ title, count, spec, basePath, items, context, it
           .map((part, index) => (
             <Stack key={part.title ?? index} gap="4">
               {part.title && <TitleRow title={part.title} />}
-              <Entries items={part.items.map(item)} view={state.view} />
+              <ListingEntries items={part.items.map(item)} view={state.view} />
             </Stack>
           ))}
       </PageColumn>

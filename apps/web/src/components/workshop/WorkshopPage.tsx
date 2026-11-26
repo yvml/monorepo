@@ -1,12 +1,11 @@
 // apps/web/src/components/workshop/WorkshopPage.tsx
-import { ItemList, Link, PageColumn, Stack, Text, Title } from '@hmidmismi/ui';
-import { CenteredHeader } from '@/components/layout';
+import { ItemList, Link, PageColumn, Text } from '@hmidmismi/ui';
 import { stegaClean } from '@sanity/client/stega';
 import NextLink from 'next/link';
 import { ContentModules, Term } from '@/components/content';
 import { KeelaEmbed } from '@/components/keela';
 import { Dates } from '@/components/date';
-import { Site } from '@/components/layout';
+import { DetailHeader, Site } from '@/components/layout';
 import { Breadcrumbs } from '@/components/navigation';
 import { SanityImage } from '@/components/media';
 import { localize, t } from '@/i18n';
@@ -37,15 +36,10 @@ export function WorkshopPage({ entry, draftMode }: { entry: WorkshopDetail; draf
     <Site title={title}>
       <PageColumn as="article">
         <Breadcrumbs section={WORKSHOPS} id={entry._id} title={title} />
-        <CenteredHeader>
-          <Title level="h1">{title}</Title>
-          <Stack gap="1" align="center">
-            {soldOut && <p data-sanity={attr('status')}>{t('soldOut')}</p>}
-            <p>
-              <Dates entry={entry} attr={attr('dateTime')} />
-            </p>
-          </Stack>
-        </CenteredHeader>
+        <DetailHeader
+          title={title}
+          lines={[soldOut && <span data-sanity={attr('status')}>{t('soldOut')}</span>, <Dates key="dates" entry={entry} attr={attr('dateTime')} />]}
+        />
         <div data-sanity={attr('image')}>
           <SanityImage image={entry.image} label={title} />
         </div>

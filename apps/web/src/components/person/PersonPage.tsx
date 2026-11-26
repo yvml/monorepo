@@ -1,10 +1,9 @@
 // apps/web/src/components/person/PersonPage.tsx
-import { ItemList, Link, PageColumn, Pair, Stack, Text, Title } from '@hmidmismi/ui';
-import { CenteredHeader } from '@/components/layout';
-import NextLink from 'next/link';
+import { ItemList, Link, PageColumn, Pair, Text, Title } from '@hmidmismi/ui';
 import { Blocks } from '@/components/content';
-import { Dates } from '@/components/date';
-import { Site } from '@/components/layout';
+import { DetailHeader, Site } from '@/components/layout';
+import { ListingEntries } from '@/components/listing';
+import { formatDates } from '@/lib/dates';
 import { SanityImage } from '@/components/media';
 import { localize, t } from '@/i18n';
 import type { PersonDetail } from '@/lib/sanity';
@@ -22,14 +21,7 @@ export function PersonPage({ person }: { person: PersonDetail }) {
   return (
     <Site title={name}>
       <PageColumn as="article">
-        <CenteredHeader>
-          <Title level="h1">{name}</Title>
-          {person.location && (
-            <Stack gap="1" align="center">
-              <p>{person.location}</p>
-            </Stack>
-          )}
-        </CenteredHeader>
+        <DetailHeader title={name} lines={[person.location]} />
         <SanityImage image={person.portrait} label={t('portraitOf', { name })} />
         <Blocks value={person.biography} />
         {person.links?.length ? (
@@ -46,16 +38,15 @@ export function PersonPage({ person }: { person: PersonDetail }) {
         {workshops.length > 0 && (
           <>
             <Title level="h2">{t('navWorkshops')}</Title>
-            <ItemList>
-              {workshops.map((workshop) => (
-                <li key={workshop._id}>
-                  <NextLink href={`/workshops/${workshop.slug}`}>{localize(workshop.title)}</NextLink>
-                  {' · '}
-                  <Dates entry={workshop} />
-                  {workshop.status === 'soldOut' && ` · ${t('soldOut')}`}
-                </li>
-              ))}
-            </ItemList>
+            <ListingEntries
+              view="list"
+              items={workshops.map((workshop) => ({
+                id: workshop._id,
+                href: `/workshops/${workshop.slug}`,
+                title: localize(workshop.title),
+                lines: [formatDates(workshop), workshop.status === 'soldOut' && t('soldOut')],
+              }))}
+            />
           </>
         )}
         {!person.biography?.length && !workshops.length && !person.links?.length && <Text>{t('detailsToFollow')}</Text>}

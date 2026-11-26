@@ -1,8 +1,7 @@
 // apps/web/src/components/article/ArticlePage.tsx
-import { PageColumn, Text, Title } from '@hmidmismi/ui';
-import { CenteredHeader } from '@/components/layout';
+import { PageColumn, Text } from '@hmidmismi/ui';
 import { ContentModules } from '@/components/content';
-import { Site } from '@/components/layout';
+import { DetailHeader, Site } from '@/components/layout';
 import { Day } from '@/components/date';
 import { localize, t } from '@/i18n';
 import { type ArticleDetail } from '@/lib/sanity';
@@ -19,12 +18,7 @@ export function ArticlePage({ article, draftMode }: { article: ArticleDetail; dr
   return (
     <Site title={title}>
       <PageColumn as="article">
-        <CenteredHeader>
-          <Title level="h1">{title}</Title>
-          <Text>
-            <Day iso={article.createdAt.slice(0, 10)} />
-          </Text>
-        </CenteredHeader>
+        <DetailHeader title={title} lines={[<Day key="day" iso={article.createdAt.slice(0, 10)} />]} />
         <div data-sanity={sanityAttr(Boolean(draftMode), article._id, 'article', 'content')}>
           <ContentModules modules={article.content} />
         </div>

@@ -1,5 +1,5 @@
 // apps/web/src/components/home/Hero.tsx
-import { Cover, ItemList, SiteMasthead, ThemeToggle, Wrap } from '@hmidmismi/ui';
+import { Cover, ItemList, Picture, SiteMasthead, ThemeToggle, Wrap } from '@hmidmismi/ui';
 import NextLink from 'next/link';
 import { LanguageSwitcher, nextLink } from '@/components/navigation';
 import { Weather } from '@/components/weather';
@@ -27,7 +27,7 @@ function UtilityLinks() {
 export function Hero() {
   const tabs = HOME_NAV.map((item) => ({ key: item.key, label: t(item.key), link: nextLink(item.href) }));
   return (
-    <Cover as="section" min="screen" scrim="top" label={ORG_NAME} media={<img src="/images/home/pink.jpg" alt="" />}>
+    <Cover as="section" min="screen" scrim="top" label={ORG_NAME} media={<Picture shape="fill" src="/images/home/pink.jpg" alt="" width={1600} height={900} priority />}>
       <SiteMasthead
         start={<UtilityLinks />}
         end={

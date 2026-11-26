@@ -1,11 +1,10 @@
 // apps/web/src/components/event/EventPage.tsx
-import { ItemList, Link, PageColumn, Stack, Text, Title } from '@hmidmismi/ui';
-import { CenteredHeader } from '@/components/layout';
+import { ItemList, Link, PageColumn, Text } from '@hmidmismi/ui';
 import { stegaClean } from '@sanity/client/stega';
 import { ContentModules, Term } from '@/components/content';
 import { KeelaEmbed } from '@/components/keela';
 import { Dates } from '@/components/date';
-import { Site } from '@/components/layout';
+import { DetailHeader, Site } from '@/components/layout';
 import { Breadcrumbs } from '@/components/navigation';
 import { SanityImage } from '@/components/media';
 import { localize, t } from '@/i18n';
@@ -33,16 +32,14 @@ export function EventPage({ section, entry, draftMode }: { section: Section; ent
     <Site title={title}>
       <PageColumn as="article">
         <Breadcrumbs section={section} id={entry._id} title={title} />
-        <CenteredHeader>
-          <Title level="h1">{title}</Title>
-          <Stack gap="1" align="center">
-            {status && <p data-sanity={attr('status')}>{status}</p>}
-            <p>
-              <Dates entry={entry} attr={attr('dateTime')} />
-            </p>
-            {entry.location && <p data-sanity={attr('location')}>{entry.location}</p>}
-          </Stack>
-        </CenteredHeader>
+        <DetailHeader
+          title={title}
+          lines={[
+            status && <span data-sanity={attr('status')}>{status}</span>,
+            <Dates key="dates" entry={entry} attr={attr('dateTime')} />,
+            entry.location && <span data-sanity={attr('location')}>{entry.location}</span>,
+          ]}
+        />
         <div data-sanity={attr('image')}>
           <SanityImage image={entry.image} label={title} />
         </div>

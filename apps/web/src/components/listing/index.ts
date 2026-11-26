@@ -1,1 +1,1 @@
-export { Listing, type ListingGroup, type ListingItem } from './Listing';
+export { Listing, type ListingGroup, type ListingItem, ListingEntries } from './Listing';
