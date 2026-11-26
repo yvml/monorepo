@@ -1,13 +1,12 @@
 // apps/web/src/components/layout/Site.tsx
-import { SiteHeader, ThemeToggle, Wrap } from '@hmidmismi/ui';
 import { stegaClean } from '@sanity/client/stega';
 import Head from 'next/head';
 import type { ReactNode } from 'react';
-import { LanguageSwitcher, mainMenu, nextLink, SubNav } from '@/components/navigation';
+import { SubNav } from '@/components/navigation';
 import { NoticeBar } from '@/components/notice';
-import { Weather } from '@/components/weather';
 import { SITE_SHORT_NAME } from '@/constants';
 import { PageFooter } from './PageFooter';
+import { PageHeader } from './PageHeader';
 
 /**
  * The page frame: the notice band, the sticky header with the section tabs, the page, and the footer. The header's
@@ -17,27 +16,13 @@ import { PageFooter } from './PageFooter';
  * @returns the frame.
  */
 export function Site({ title, children }: { title?: string; children: ReactNode }) {
-  const tabs = mainMenu();
   return (
     <>
       <Head>
         <title>{title ? `${stegaClean(title)} · ${SITE_SHORT_NAME}` : SITE_SHORT_NAME}</title>
       </Head>
       <NoticeBar />
-      <SiteHeader
-        utility={
-          <>
-            <Weather />
-            {/* A select fills its parent; in a wrapper that is only as wide as its content, it is as wide as a language code. */}
-            <Wrap>
-              <LanguageSwitcher />
-            </Wrap>
-            <ThemeToggle inUtility />
-          </>
-        }
-        wordmark={{ text: SITE_SHORT_NAME, link: nextLink('/') }}
-        tabs={tabs}
-      />
+      <PageHeader />
       <SubNav />
       {/* The page's one main landmark, so screen-reader users can jump to the content. */}
       <main>{children}</main>

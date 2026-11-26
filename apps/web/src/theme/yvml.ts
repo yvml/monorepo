@@ -71,6 +71,11 @@ export const yvml = {
     categorical: MATERIALS,
     wash: {
       ...Object.fromEntries(Object.entries(MATERIALS).map(([name, color]) => [name, tint(color)])),
+      'lazy-eye': {
+        bg: { light: '#0a24d6', dark: '#0a24d6' },
+        fg: { light: '#ffe45c', dark: '#ffe45c' },
+        label: { light: '#ffe45c', dark: '#ffe45c' },
+      },
       teal: {
         bg: { light: '#00585f', dark: '#00585f' },
         fg: { light: '#ffd1c4', dark: '#ffd1c4' },

@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rm -rf .next .turbo node_modules styled-system",
     "typegen": "pnpm --filter @yvml/studio typegen:generate",
-    "panda:build": "panda codegen && panda cssgen --outfile styled-system/styles.css",
+    "panda:build": "panda codegen --clean && panda cssgen --outfile styled-system/styles.css",
     "panda:watch": "panda cssgen --outfile styled-system/styles.css --watch",
     "predev": "pnpm typegen && pnpm panda:build",
     "dev": "concurrently -k -n css,next -c magenta,green \"pnpm panda:watch\" \"next dev\"",

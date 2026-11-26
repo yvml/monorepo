@@ -1,9 +1,9 @@
-// apps/web/src/components/home-c/PinnedLazyEye.tsx
+// apps/web/src/components/home/LazyEyeSection.tsx
+import { Pinned } from '@hmidmismi/ui';
 import { motion, useMotionValue, useMotionValueEvent, useScroll, useSpring, useTransform } from 'motion/react';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { LazyEyeStage } from '@/components/home-e1/LazyEye';
-import { LAZY_EYE_STORY, PALETTES } from '@/components/home-e1/timeline';
-import styles from './HomeC.module.css';
+import { useEffect, useRef, useState } from 'react';
+import { LAZY_EYE_STORY } from '@/components/home-e1/timeline';
+import { LazyEyeStage } from './LazyEyeStage';
 
 /** Whether the story has played since the page was loaded; a reload plays it again. */
 let playedThisVisit = false;
@@ -19,7 +19,7 @@ const RISE = 0.5;
  *
  * @returns the section.
  */
-export function PinnedLazyEye() {
+export function LazyEyeSection() {
   const track = useRef<HTMLElement>(null);
   // Known only in the browser, so the first render matches the server's (an unplayed story).
   const [collapsed, setCollapsed] = useState(false);
@@ -40,7 +40,7 @@ export function PinnedLazyEye() {
     watcher.observe(node);
     return () => watcher.disconnect();
   }, [collapsed]);
-  useLayoutEffect(() => {
+  useEffect(() => {
     const anchor = below.current;
     below.current = null;
     if (!anchor || !collapsed) return;
@@ -62,31 +62,21 @@ export function PinnedLazyEye() {
   const spring = useSpring(furthest, { stiffness: 140, damping: 26, mass: 0.6 });
   const finished = useMotionValue(1);
   const covered = useMotionValue(0);
-  const palette = PALETTES.p1;
 
   return (
-    <section
-      ref={track}
-      className={styles.lazyEye}
-      aria-label="Lazy Eye Gallery"
-      data-collapsed={collapsed || undefined}
-      style={{ ['--len' as string]: RISE + LAZY_EYE_STORY, ['--sh' as string]: palette.shadow, ['--hi' as string]: palette.highlight }}
-    >
-      <div className={styles.lazyEyeStage}>
-        <motion.div className={styles.lazyEyeRise} style={{ y: collapsed ? 0 : rise }}>
-          {/* Keyed so the halftone is measured again when the section changes size. */}
-          <LazyEyeStage
-            key={collapsed ? 'short' : 'tall'}
-            progress={collapsed ? finished : spring}
-            covered={covered}
-            palette="p1"
-            name="Lazy Eye Gallery"
-            exhibition="Kento Saisho"
-            dates="October 1 – November 15, 2026"
-            image="/images/lazy-eye/kento-saisho.webp"
-          />
-        </motion.div>
-      </div>
-    </section>
+    <Pinned ref={track} length={RISE + LAZY_EYE_STORY} rise short={collapsed} label="Lazy Eye Gallery">
+      <motion.div style={{ y: collapsed ? 0 : rise }}>
+        <LazyEyeStage
+          key={collapsed ? 'short' : 'tall'}
+          progress={collapsed ? finished : spring}
+          covered={covered}
+          min={collapsed ? 'third' : 'screen'}
+          name="Lazy Eye Gallery"
+          exhibition="Kento Saisho"
+          dates="October 1 – November 15, 2026"
+          image="/images/lazy-eye/kento-saisho.webp"
+        />
+      </motion.div>
+    </Pinned>
   );
 }

@@ -20,7 +20,7 @@ In the app (`apps/web`):
 | Scenes: the slide-in, the fade of the card underneath, the title then button chain | `home-e1/Scene.tsx` |
 | The fixed label and its colour morph | `home-e1/Eyebrow.tsx` |
 | The headroom bar | `home-e1/Bar.tsx` (the older, non-Framer version is `src/hooks/useHeadroom.ts`, still used by home C) |
-| The Lazy Eye halftone scene | `home-e1/LazyEye.tsx` |
+| The Lazy Eye halftone scene | `home-e1/LazyEye.tsx`; the stage itself is `home/LazyEyeStage.tsx`, shared with the home page |
 | A photograph made a duotone in a canvas | `home-e1/DuotoneImage.tsx` |
 | Styles | `home-e1/HomeE1.module.css`, shared pieces in `src/components/home/` |
 | The exhibition image | `public/images/lazy-eye/kento-saisho.webp` |

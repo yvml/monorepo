@@ -1,16 +1,207 @@
 // apps/web/src/pages/index.tsx
-import { PageColumn, Title } from '@hmidmismi/ui';
-import { Site } from '@/components/layout';
-import { withDraft } from '@/lib/loaders';
+import {
+  Button,
+  Card,
+  Cell,
+  Grid,
+  Input,
+  ItemList,
+  Link,
+  Measure,
+  Picture,
+  Row,
+  Section,
+  SplitGrid,
+  Stack,
+  Surface,
+  Text,
+  Title,
+  VisuallyHidden,
+  Wrap,
+} from '@hmidmismi/ui';
+import Head from 'next/head';
+import NextLink from 'next/link';
+import { Hero } from '@/components/home/Hero';
+import { ImpactStats } from '@/components/home/ImpactStats';
+import { LazyEyeSection } from '@/components/home/LazyEyeSection';
+import { materialHue } from '@/components/home/materials';
+import { workshopView } from '@/components/home/workshopView';
+import { PageFooter, PageHeader } from '@/components/layout';
+import { NoticeBar } from '@/components/notice';
+import { ORG_NAME, SITE_SHORT_NAME } from '@/constants';
+import { type HomeProps, homeLoader } from '@/lib/loaders';
 
-export const getStaticProps = withDraft();
+export const getStaticProps = homeLoader;
 
-export default function Home() {
+const IMAGES = '/images/home';
+
+/**
+ * The home page, in the order of SITEMAP.md: the notice, the hero with its masthead, the statement, the workshops, the
+ * figures, the residencies, the donate band, Yucca Alta, the testimonial, the current Lazy Eye exhibition and the
+ * newsletter. The workshops are the real upcoming ones; the residencies, the testimonial and the promos are placeholders
+ * until there is content for them.
+ *
+ * @param props - the open workshops still to come, soonest first.
+ * @returns the page.
+ */
+export default function HomePage({ workshops }: HomeProps) {
+  const [feature, ...rest] = workshops.map(workshopView);
   return (
-    <Site>
-      <PageColumn>
-        <Title level="h1">YVML</Title>
-      </PageColumn>
-    </Site>
+    <>
+      <Head>
+        <title>{SITE_SHORT_NAME}</title>
+      </Head>
+      <NoticeBar />
+      <Hero />
+      <PageHeader />
+      <main id="main">
+        <Surface tone="teal" pad="loose">
+          <Measure>
+            <Text face="display" size="3xl" tone="inherit">
+              {ORG_NAME} champions a decentralized, inclusive, and affordable model for art education grounded in{' '}
+              <em>direct material exploration</em>.
+            </Text>
+          </Measure>
+        </Surface>
+
+        {feature && (
+          <Surface as="section" pad="none" label="Workshops">
+            <Section
+              id="workshops"
+              label="Workshops"
+              pinned
+              action={(className) => (
+                <NextLink className={className} href="/workshops">
+                  More Workshops →
+                </NextLink>
+              )}
+            >
+              <SplitGrid ratio="wide" sticky gap="lg">
+                <Card hue={materialHue(feature.material)} tint="soft">
+                  {feature.imageUrl && <Picture shape="photo" src={feature.imageUrl} alt="" width={1200} height={800} />}
+                  <Text face="display" size="4xl" figures>
+                    {feature.dates}
+                  </Text>
+                  <Title level="h3">
+                    <NextLink href={feature.href}>{feature.title}</NextLink>
+                  </Title>
+                  <Text variant="small">{[feature.material, feature.instructor, feature.price].filter(Boolean).join(' · ')}</Text>
+                  <Wrap>
+                    <Button asChild>
+                      <NextLink href={feature.href}>
+                        Register<VisuallyHidden> for {feature.title}</VisuallyHidden>
+                      </NextLink>
+                    </Button>
+                  </Wrap>
+                </Card>
+                <ItemList gap="0" closed>
+                  {rest.map((workshop) => (
+                    <li key={workshop.id}>
+                      <Row
+                        layout="thumb"
+                        lead={
+                          workshop.imageUrl ? (
+                            <Picture shape="thumb" src={workshop.imageUrl} alt="" width={400} height={400} />
+                          ) : undefined
+                        }
+                        title={workshop.title}
+                        meta={[workshop.dates, workshop.material, workshop.instructor, workshop.price].filter(Boolean).join(' · ')}
+                        link={(className, content) => (
+                          <NextLink className={className} href={workshop.href}>
+                            {content}
+                          </NextLink>
+                        )}
+                      />
+                    </li>
+                  ))}
+                </ItemList>
+              </SplitGrid>
+            </Section>
+          </Surface>
+        )}
+
+        <ImpactStats />
+
+        <Surface as="section" pad="none" label="Residencies">
+          <Section
+            id="residencies"
+            label="Residencies"
+            action={(className) => (
+              <a className={className} href="#">
+                View Residencies →
+              </a>
+            )}
+          >
+            <Grid>
+              {['yard', 'youth-3', 'quonset'].map((image) => (
+                <Cell key={image} span="4">
+                  <Link href="#">
+                    <Stack gap="1">
+                      <Picture shape="photo" src={`${IMAGES}/${image}.jpg`} alt="" width={1200} height={800} />
+                      <Text face="display" size="2xl">
+                        Residency
+                      </Text>
+                      <Text variant="caption">Dates</Text>
+                    </Stack>
+                  </Link>
+                </Cell>
+              ))}
+            </Grid>
+          </Section>
+        </Surface>
+
+        <Surface as="section" tone="fiber-arts" pad="loose" label="Donate">
+          <Stack gap="6">
+            <Text face="display" size="6xl" tone="inherit">
+              Giving isn’t passive
+            </Text>
+            <Wrap>
+              <Button asChild>
+                <a href="#">Donate</a>
+              </Button>
+            </Wrap>
+          </Stack>
+        </Surface>
+
+        <SplitGrid gap="none">
+          <Surface as="aside" tone="earth-building" pad="loose" min="third">
+            <Stack gap="8">
+              <Title level="h3" tone="inherit">
+                <a href="#">Yucca Alta</a>
+              </Title>
+              <Wrap>
+                <Button asChild>
+                  <a href="#">Visit</a>
+                </Button>
+              </Wrap>
+            </Stack>
+          </Surface>
+          <Picture shape="fill" src={`${IMAGES}/quonset.jpg`} alt="" width={1200} height={800} />
+        </SplitGrid>
+
+        <Surface as="section" tone="teal" min="third" place="center" label="Testimonial">
+          <Text face="display" size="3xl" tone="inherit">
+            Testimonial
+          </Text>
+        </Surface>
+
+        <LazyEyeSection />
+
+        <Surface as="section" tone="earth-building" min="third" place="center" label="Newsletter">
+          <Stack gap="4">
+            <Title level="h2" tone="inherit">
+              Newsletter
+            </Title>
+            <form onSubmit={(event) => event.preventDefault()}>
+              <Wrap gap="3">
+                <Input type="email" autoComplete="email" placeholder="Email address" aria-label="Email address" />
+                <Button type="submit">Subscribe</Button>
+              </Wrap>
+            </form>
+          </Stack>
+        </Surface>
+      </main>
+      <PageFooter />
+    </>
   );
 }
