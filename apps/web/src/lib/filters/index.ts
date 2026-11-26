@@ -11,3 +11,4 @@ export * from './event';
 export * from './person';
 export * from './reference';
 export * from './workshop';
+export * from './article';

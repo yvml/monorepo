@@ -1,35 +1,33 @@
 // apps/web/src/components/article/ArticleList.tsx
-import { ItemList, PageColumn, Row, Text } from '@hmidmismi/ui';
-import NextLink from 'next/link';
 import { Day } from '@/components/date';
-import { Site, TitleRow } from '@/components/layout';
+import { Listing } from '@/components/listing';
 import { localize, t } from '@/i18n';
+import { articleListing } from '@/lib/filters';
 import { type ArticleSummary } from '@/lib/sanity';
 
 /**
- * The News & Articles listing, newest first.
+ * The News & Articles listing: `articleListing` over the articles.
  *
  * @param props - the articles.
  * @returns the page.
  */
 export function ArticleList({ articles }: { articles: ArticleSummary[] }) {
   return (
-    <Site title={t('navNews')}>
-      <PageColumn>
-        <TitleRow title={t('navNews')} />
-        {!articles.length && <Text>{t('emptyArticles')}</Text>}
-        <ItemList gap="0" closed>
-          {articles.map((article) => (
-            <li key={article._id}>
-              <Row
-                layout="plain"
-                title={<NextLink href={`/about/news/${article.slug}`}>{localize(article.title)}</NextLink>}
-                meta={<Day iso={article.createdAt.slice(0, 10)} />}
-              />
-            </li>
-          ))}
-        </ItemList>
-      </PageColumn>
-    </Site>
+    <Listing
+      title={t('navNews')}
+      spec={articleListing}
+      basePath="/about/news"
+      items={articles}
+      context={undefined}
+      item={(article) => ({
+        id: article._id,
+        href: `/about/news/${article.slug}`,
+        title: localize(article.title),
+        lines: [<Day key="day" iso={article.createdAt.slice(0, 10)} />],
+      })}
+      empty={t('emptyArticles')}
+      results="resultsOfArticles"
+      noMatch="noArticlesMatch"
+    />
   );
 }
