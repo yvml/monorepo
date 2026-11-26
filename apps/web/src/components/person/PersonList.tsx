@@ -3,8 +3,8 @@ import { Cell, Grid, PageColumn, Stack, Text } from '@hmidmismi/ui';
 import NextLink from 'next/link';
 import { Site, TitleRow } from '@/components/layout';
 import { SanityImage } from '@/components/media';
-import type { PersonSummary } from '@/lib/sanity';
 import { t } from '@/i18n';
+import type { PersonSummary } from '@/lib/sanity';
 
 /**
  * Everyone who has a page, as cards with their portrait, name and location.

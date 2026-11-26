@@ -1,5 +1,5 @@
 // apps/web/src/components/workshop/WorkshopList.tsx
-import { Cell, Grid, PageTable, PageTd, PageTh, Stack, Text } from '@hmidmismi/ui';
+import { Cell, Grid, NumberCell, ScrollX, Table, WrapCell, Stack, Text } from '@hmidmismi/ui';
 import NextLink from 'next/link';
 import { useMemo } from 'react';
 import { SanityImage } from '@/components/media';
@@ -56,29 +56,32 @@ export function WorkshopList({ workshops, today }: { workshops: WorkshopSummary[
       />
 
       {state.view === 'list' ? (
-        <PageTable
-          head={
-            <>
-              <PageTh>{t('colWorkshop')}</PageTh>
-              <PageTh>{t('colDates')}</PageTh>
-              <PageTh>{t('colInstructor')}</PageTh>
-              <PageTh num>{t('colPrice')}</PageTh>
-              <PageTh>{t('colStatus')}</PageTh>
-            </>
-          }
-        >
-          {rows.map((row) => (
-            <tr key={row.workshop._id}>
-              <PageTd>
-                <NextLink href={row.href}>{row.title}</NextLink>
-              </PageTd>
-              <PageTd>{row.dates}</PageTd>
-              <PageTd>{row.instructors}</PageTd>
-              <PageTd num>{row.price}</PageTd>
-              <PageTd>{row.status}</PageTd>
-            </tr>
-          ))}
-        </PageTable>
+        <ScrollX>
+          <Table.Root>
+            <Table.Head>
+              <Table.Row>
+                <Table.Header>{t('colWorkshop')}</Table.Header>
+                <Table.Header>{t('colDates')}</Table.Header>
+                <Table.Header>{t('colInstructor')}</Table.Header>
+                <Table.Header>{t('colPrice')}</Table.Header>
+                <Table.Header>{t('colStatus')}</Table.Header>
+              </Table.Row>
+            </Table.Head>
+            <Table.Body>
+              {rows.map((row) => (
+                <Table.Row key={row.workshop._id}>
+                  <WrapCell>
+                    <NextLink href={row.href}>{row.title}</NextLink>
+                  </WrapCell>
+                  <WrapCell>{row.dates}</WrapCell>
+                  <WrapCell>{row.instructors}</WrapCell>
+                  <NumberCell>{row.price}</NumberCell>
+                  <WrapCell>{row.status}</WrapCell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table.Root>
+        </ScrollX>
       ) : (
         <Grid>
           {rows.map((row) => (
