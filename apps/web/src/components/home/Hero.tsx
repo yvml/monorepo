@@ -4,17 +4,16 @@ import NextLink from 'next/link';
 import { LanguageSwitcher, nextLink } from '@/components/navigation';
 import { Weather } from '@/components/weather';
 import { ORG_NAME, SITE_SHORT_NAME } from '@/constants';
+import { t } from '@/i18n';
 import { HOME_NAV } from './nav';
-
-const tabs = HOME_NAV.map((item) => ({ key: item.label, label: item.label, link: nextLink(item.href) }));
 
 /** The utility links at the start of the masthead's utility row. */
 function UtilityLinks() {
   return (
     <>
       <Weather />
-      <NextLink href="#">Shop</NextLink>
-      <NextLink href="/about/contact">Contact</NextLink>
+      <NextLink href="#">{t('navShop')}</NextLink>
+      <NextLink href="/about/contact">{t('navContact')}</NextLink>
     </>
   );
 }
@@ -26,6 +25,7 @@ function UtilityLinks() {
  * @returns the hero.
  */
 export function Hero() {
+  const tabs = HOME_NAV.map((item) => ({ key: item.key, label: t(item.key), link: nextLink(item.href) }));
   return (
     <Cover as="section" min="screen" scrim="top" label={ORG_NAME} media={<img src="/images/home/pink.jpg" alt="" />}>
       <SiteMasthead
@@ -41,14 +41,14 @@ export function Hero() {
         wordmark={{ text: ORG_NAME, short: SITE_SHORT_NAME, link: nextLink('/') }}
         tabs={tabs}
         menu={{
-          label: 'Menu',
+          label: t('navMenu'),
           control: <LanguageSwitcher />,
           panel: (
             <>
               <ItemList gap="2">
                 {HOME_NAV.map((item) => (
-                  <li key={item.label}>
-                    <NextLink href={item.href}>{item.label}</NextLink>
+                  <li key={item.key}>
+                    <NextLink href={item.href}>{t(item.key)}</NextLink>
                   </li>
                 ))}
               </ItemList>

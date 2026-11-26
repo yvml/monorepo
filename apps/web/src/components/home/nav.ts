@@ -1,11 +1,12 @@
 // apps/web/src/components/home/nav.ts
+import type { TextKey } from '@/i18n';
 
-/** The header navigation from SITEMAP.md. A destination without a page yet links to '#'. */
-export const HOME_NAV = [
-  { label: 'About', href: '/about' },
-  { label: 'Workshops', href: '/workshops' },
-  { label: 'Residencies', href: '#' },
-  { label: 'People', href: '/people' },
-  { label: 'Events', href: '/events' },
-  { label: 'Support', href: '#' },
-] as const;
+/** The header navigation from SITEMAP.md, as the key of each label (read with `t` at render time) and where it goes. A destination without a page yet links to '#'. */
+export const HOME_NAV: readonly { key: TextKey; href: string }[] = [
+  { key: 'navAbout', href: '/about' },
+  { key: 'navWorkshops', href: '/workshops' },
+  { key: 'navResidencies', href: '#' },
+  { key: 'navPeople', href: '/people' },
+  { key: 'navEvents', href: '/events' },
+  { key: 'navSupport', href: '#' },
+];

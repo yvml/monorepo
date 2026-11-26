@@ -3,6 +3,7 @@ import { Pinned } from '@hmidmismi/ui';
 import { motion, useMotionValue, useMotionValueEvent, useScroll, useSpring, useTransform } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { LAZY_EYE_STORY } from '@/components/home-e1/timeline';
+import { t } from '@/i18n';
 import { LazyEyeStage } from './LazyEyeStage';
 
 /** Whether the story has played since the page was loaded; a reload plays it again. */
@@ -64,16 +65,16 @@ export function LazyEyeSection() {
   const covered = useMotionValue(0);
 
   return (
-    <Pinned ref={track} length={RISE + LAZY_EYE_STORY} rise short={collapsed} label="Lazy Eye Gallery">
+    <Pinned ref={track} length={RISE + LAZY_EYE_STORY} rise short={collapsed} label={t('lazyEyeTitle')}>
       <motion.div style={{ y: collapsed ? 0 : rise }}>
         <LazyEyeStage
           key={collapsed ? 'short' : 'tall'}
           progress={collapsed ? finished : spring}
           covered={covered}
           min={collapsed ? 'third' : 'screen'}
-          name="Lazy Eye Gallery"
+          name={t('lazyEyeTitle')}
           exhibition="Kento Saisho"
-          dates="October 1 – November 15, 2026"
+          dates={t('homeLazyEyeDates')}
           image="/images/lazy-eye/kento-saisho.webp"
         />
       </motion.div>

@@ -1,7 +1,8 @@
-// apps/web/src/components/home-c/ImpactStats.tsx
+// apps/web/src/components/home/ImpactStats.tsx
 import { Cell, Grid, Label, Stack, Surface, Text, VisuallyHidden } from '@hmidmismi/ui';
 import { useMemo, useRef } from 'react';
 import { useCountSteps } from '@/hooks';
+import { activeLocale, t } from '@/i18n';
 
 /** `start`, then every `by` after it while below `to`, ending exactly on `to`. */
 const counting = (start: number, by: number, to: number) => {
@@ -24,8 +25,8 @@ function Figure({ eyebrow, steps, label, delay }: { eyebrow?: string; steps: num
           {eyebrow ?? ' '}
         </Label>
         <Text as="div" face="display" size="7xl" tone="inherit" figures>
-          <span aria-hidden>{value.toLocaleString('en-US')}</span>
-          <VisuallyHidden>{final.toLocaleString('en-US')}</VisuallyHidden>
+          <span aria-hidden>{value.toLocaleString(activeLocale())}</span>
+          <VisuallyHidden>{final.toLocaleString(activeLocale())}</VisuallyHidden>
         </Text>
         <Text as="div" size="lg" tone="inherit">
           {label}
@@ -45,16 +46,16 @@ export function ImpactStats() {
   const people = useMemo(() => [1, ...counting(1000, 1000, 7500)], []);
   const scholarships = useMemo(() => counting(1, 1, 55), []);
   return (
-    <Surface as="section" tone="teal" pad="loose" label="Impact">
+    <Surface as="section" tone="teal" pad="loose" label={t('statsLabel')}>
       <Grid>
         <Cell span="4">
-          <Figure steps={workshops} label="workshops" delay={0} />
+          <Figure steps={workshops} label={t('statWorkshops')} delay={0} />
         </Cell>
         <Cell span="4">
-          <Figure eyebrow="Over" steps={people} label="people reached" delay={700} />
+          <Figure eyebrow={t('statOver')} steps={people} label={t('statPeople')} delay={700} />
         </Cell>
         <Cell span="4">
-          <Figure steps={scholarships} label="scholarships awarded" delay={1400} />
+          <Figure steps={scholarships} label={t('statScholarships')} delay={1400} />
         </Cell>
       </Grid>
     </Surface>

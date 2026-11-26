@@ -29,6 +29,7 @@ import { workshopView } from '@/components/home/workshopView';
 import { PageFooter, PageHeader } from '@/components/layout';
 import { NoticeBar } from '@/components/notice';
 import { ORG_NAME, SITE_SHORT_NAME } from '@/constants';
+import { t } from '@/i18n';
 import { type HomeProps, homeLoader } from '@/lib/loaders';
 
 export const getStaticProps = homeLoader;
@@ -58,21 +59,20 @@ export default function HomePage({ workshops }: HomeProps) {
         <Surface tone="teal" pad="loose">
           <Measure>
             <Text face="display" size="3xl" tone="inherit">
-              {ORG_NAME} champions a decentralized, inclusive, and affordable model for art education grounded in{' '}
-              <em>direct material exploration</em>.
+              {t('homeStatement', { name: ORG_NAME })} <em>{t('homeStatementEmphasis')}</em>.
             </Text>
           </Measure>
         </Surface>
 
         {feature && (
-          <Surface as="section" pad="none" label="Workshops">
+          <Surface as="section" pad="none" label={t('navWorkshops')}>
             <Section
               id="workshops"
-              label="Workshops"
+              label={t('navWorkshops')}
               pinned
               action={(className) => (
                 <NextLink className={className} href="/workshops">
-                  More Workshops →
+                  {t('homeMoreWorkshops')}
                 </NextLink>
               )}
             >
@@ -89,7 +89,8 @@ export default function HomePage({ workshops }: HomeProps) {
                   <Wrap>
                     <Button asChild>
                       <NextLink href={feature.href}>
-                        Register<VisuallyHidden> for {feature.title}</VisuallyHidden>
+                        <span aria-hidden>{t('register')}</span>
+                        <VisuallyHidden>{t('registerFor', { title: feature.title })}</VisuallyHidden>
                       </NextLink>
                     </Button>
                   </Wrap>
@@ -122,13 +123,13 @@ export default function HomePage({ workshops }: HomeProps) {
 
         <ImpactStats />
 
-        <Surface as="section" pad="none" label="Residencies">
+        <Surface as="section" pad="none" label={t('navResidencies')}>
           <Section
             id="residencies"
-            label="Residencies"
+            label={t('navResidencies')}
             action={(className) => (
               <a className={className} href="#">
-                View Residencies →
+                {t('homeViewResidencies')}
               </a>
             )}
           >
@@ -139,9 +140,9 @@ export default function HomePage({ workshops }: HomeProps) {
                     <Stack gap="1">
                       <Picture shape="photo" src={`${IMAGES}/${image}.jpg`} alt="" width={1200} height={800} />
                       <Text face="display" size="2xl">
-                        Residency
+                        {t('homeResidency')}
                       </Text>
-                      <Text variant="caption">Dates</Text>
+                      <Text variant="caption">{t('colDates')}</Text>
                     </Stack>
                   </Link>
                 </Cell>
@@ -150,14 +151,14 @@ export default function HomePage({ workshops }: HomeProps) {
           </Section>
         </Surface>
 
-        <Surface as="section" tone="fiber-arts" pad="loose" label="Donate">
+        <Surface as="section" tone="fiber-arts" pad="loose" label={t('navDonate')}>
           <Stack gap="6">
             <Text face="display" size="6xl" tone="inherit">
-              Giving isn’t passive
+              {t('homeDonateHeading')}
             </Text>
             <Wrap>
               <Button asChild>
-                <a href="#">Donate</a>
+                <a href="#">{t('navDonate')}</a>
               </Button>
             </Wrap>
           </Stack>
@@ -167,11 +168,11 @@ export default function HomePage({ workshops }: HomeProps) {
           <Surface as="aside" tone="earth-building" pad="loose" min="third">
             <Stack gap="8">
               <Title level="h3" tone="inherit">
-                <a href="#">Yucca Alta</a>
+                <a href="#">{t('homeYuccaAlta')}</a>
               </Title>
               <Wrap>
                 <Button asChild>
-                  <a href="#">Visit</a>
+                  <a href="#">{t('homeVisit')}</a>
                 </Button>
               </Wrap>
             </Stack>
@@ -179,23 +180,23 @@ export default function HomePage({ workshops }: HomeProps) {
           <Picture shape="fill" src={`${IMAGES}/quonset.jpg`} alt="" width={1200} height={800} />
         </SplitGrid>
 
-        <Surface as="section" tone="teal" min="third" place="center" label="Testimonial">
+        <Surface as="section" tone="teal" min="third" place="center" label={t('homeTestimonial')}>
           <Text face="display" size="3xl" tone="inherit">
-            Testimonial
+            {t('homeTestimonial')}
           </Text>
         </Surface>
 
         <LazyEyeSection />
 
-        <Surface as="section" tone="earth-building" min="third" place="center" label="Newsletter">
+        <Surface as="section" tone="earth-building" min="third" place="center" label={t('homeNewsletter')}>
           <Stack gap="4">
             <Title level="h2" tone="inherit">
-              Newsletter
+              {t('homeNewsletter')}
             </Title>
             <form onSubmit={(event) => event.preventDefault()}>
               <Wrap gap="3">
-                <Input type="email" autoComplete="email" placeholder="Email address" aria-label="Email address" />
-                <Button type="submit">Subscribe</Button>
+                <Input type="email" autoComplete="email" placeholder={t('homeEmail')} aria-label={t('homeEmail')} />
+                <Button type="submit">{t('homeSubscribe')}</Button>
               </Wrap>
             </form>
           </Stack>
