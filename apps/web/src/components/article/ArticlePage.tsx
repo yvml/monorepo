@@ -1,5 +1,6 @@
 // apps/web/src/components/article/ArticlePage.tsx
-import { PageColumn, PageHeader, Text, Title } from '@hmidmismi/ui';
+import { PageColumn, Text, Title } from '@hmidmismi/ui';
+import { CenteredHeader } from '@/components/layout';
 import { ContentModules } from '@/components/content';
 import { Site } from '@/components/layout';
 import { Day } from '@/components/date';
@@ -18,12 +19,12 @@ export function ArticlePage({ article, draftMode }: { article: ArticleDetail; dr
   return (
     <Site title={title}>
       <PageColumn as="article">
-        <PageHeader>
+        <CenteredHeader>
           <Title level="h1">{title}</Title>
           <p>
             <Day iso={article.createdAt.slice(0, 10)} />
           </p>
-        </PageHeader>
+        </CenteredHeader>
         <div data-sanity={sanityAttr(Boolean(draftMode), article._id, 'article', 'content')}>
           <ContentModules modules={article.content} />
         </div>

@@ -1,5 +1,5 @@
 // apps/web/src/components/home-e1/HomeE1.tsx
-import { useMotionValue, useScroll, useTransform } from 'framer-motion';
+import { useMotionValue, useScroll, useTransform } from 'motion/react';
 import Link from 'next/link';
 import { type ReactNode, useCallback, useMemo, useRef } from 'react';
 import { HomeFooter, HomeNotice, shared, workshopView } from '@/components/home';

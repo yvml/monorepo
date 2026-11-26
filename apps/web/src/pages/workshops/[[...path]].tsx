@@ -1,6 +1,6 @@
 // apps/web/src/pages/workshops/[[...path]].tsx
-import { ListHeader, PageColumn } from '@hmidmismi/ui';
-import { Site } from '@/components/layout';
+import { PageColumn } from '@hmidmismi/ui';
+import { Site, TitleRow } from '@/components/layout';
 import { WorkshopList, WorkshopPage } from '@/components/workshop';
 import { WORKSHOPS } from '@/constants';
 import { t } from '@/i18n';
@@ -16,7 +16,7 @@ export default function WorkshopRoute(props: WorkshopRouteProps) {
   return (
     <Site title={t(WORKSHOPS.title)}>
       <PageColumn>
-        <ListHeader title={t(WORKSHOPS.title)} />
+        <TitleRow title={t(WORKSHOPS.title)} />
         <WorkshopList workshops={props.workshops} today={props.today} />
       </PageColumn>
     </Site>

@@ -11,9 +11,9 @@ const nextConfig: NextConfig = {
   /** The shared packages ship TypeScript source, so Next compiles them. */
   transpilePackages: ['@hmidmismi/ui', '@hmidmismi/sanity-types'],
   /**
-   * `src/middleware.preview.ts` (the Clerk login) is only picked up as middleware when `preview.ts` is a page extension,
+   * `src/proxy.preview.ts` (the Clerk login) is only picked up as the proxy when `preview.ts` is a page extension,
    * which it is for the gated preview site alone. Every other build, the live site and the pull request previews, has no
-   * middleware at all.
+   * proxy at all.
    */
   pageExtensions: requireLogin ? [...PAGE_EXTENSIONS, 'preview.ts'] : PAGE_EXTENSIONS,
   /** English at `/`, Spanish at `/es`. Keep in step with `LOCALES` in `src/i18n/locale.ts`. */

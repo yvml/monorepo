@@ -1,12 +1,36 @@
 // apps/web/src/components/home-c/HomeC.tsx
-import Link from 'next/link';
+import {
+  Button,
+  Card,
+  Cell,
+  Grid,
+  Input,
+  ItemList,
+  Link,
+  Measure,
+  Picture,
+  Row,
+  Section,
+  SplitGrid,
+  Stack,
+  Surface,
+  Text,
+  Title,
+  VisuallyHidden,
+  Wrap,
+} from '@hmidmismi/ui';
+import NextLink from 'next/link';
 import { useRef } from 'react';
-import { useHeadroom } from '@/hooks';
-import { HOME_NAV, HomeFooter, HomeNotice, LocaleLink, materialStyle, shared, ThemeButton, workshopView } from '@/components/home';
+import { HOME_NAV, HomeNotice, LocaleLink, materialHue, shared, ThemeButton, workshopView } from '@/components/home';
+import { PageFooter } from '@/components/layout';
+import { RememberedLink } from '@/components/navigation';
 import { Weather } from '@/components/weather';
 import { ORG_NAME, SITE_SHORT_NAME } from '@/constants';
+import { useHeadroom } from '@/hooks';
 import type { WorkshopSummary } from '@/lib/sanity';
 import styles from './HomeC.module.css';
+import { ImpactStats } from './ImpactStats';
+import { PinnedLazyEye } from './PinnedLazyEye';
 
 const IMAGES = '/images/home';
 
@@ -16,7 +40,7 @@ function UtilityLinks() {
     <>
       <Weather />
       <a href="#">Shop</a>
-      <Link href="/about/contact">Contact</Link>
+      <NextLink href="/about/contact">Contact</NextLink>
     </>
   );
 }
@@ -37,18 +61,18 @@ export function HomeC({ workshops }: { workshops: WorkshopSummary[] }) {
   return (
     <div className={shared.root}>
       <header ref={bar} className={styles.bar} data-state="hidden">
-        <Link className={styles.barWm} href="/">
+        <NextLink className={styles.barWm} href="/">
           <span className={styles.full}>{ORG_NAME}</span>
           <span className={styles.short} aria-hidden>
             {SITE_SHORT_NAME}
           </span>
           <span className={shared.sr}>{SITE_SHORT_NAME}</span>
-        </Link>
+        </NextLink>
         <nav className={styles.barNav} aria-label="Main">
           <ul>
             {HOME_NAV.map((item) => (
               <li key={item.label}>
-                <Link href={item.href}>{item.label}</Link>
+                <RememberedLink href={item.href}>{item.label}</RememberedLink>
               </li>
             ))}
           </ul>
@@ -72,7 +96,7 @@ export function HomeC({ workshops }: { workshops: WorkshopSummary[] }) {
                   <ul>
                     {HOME_NAV.map((item) => (
                       <li key={item.label}>
-                        <Link href={item.href}>{item.label}</Link>
+                        <RememberedLink href={item.href}>{item.label}</RememberedLink>
                       </li>
                     ))}
                   </ul>
@@ -83,13 +107,13 @@ export function HomeC({ workshops }: { workshops: WorkshopSummary[] }) {
                 </div>
               </div>
             </details>
-            <Link className={styles.wm} href="/">
+            <NextLink className={styles.wm} href="/">
               <span className={styles.full}>{ORG_NAME}</span>
               <span className={styles.short} aria-hidden>
                 {SITE_SHORT_NAME}
               </span>
               <span className={shared.sr}>{SITE_SHORT_NAME}</span>
-            </Link>
+            </NextLink>
             <LocaleLink className={styles.mlang} />
             <div className={styles.ur}>
               <LocaleLink />
@@ -99,7 +123,7 @@ export function HomeC({ workshops }: { workshops: WorkshopSummary[] }) {
               <ul>
                 {HOME_NAV.map((item) => (
                   <li key={item.label}>
-                    <Link href={item.href}>{item.label}</Link>
+                    <RememberedLink href={item.href}>{item.label}</RememberedLink>
                   </li>
                 ))}
               </ul>
@@ -111,138 +135,154 @@ export function HomeC({ workshops }: { workshops: WorkshopSummary[] }) {
       </div>
 
       <main id="main">
+        <Surface tone="teal" pad="loose">
+          <Measure>
+            <Text face="display" size="3xl" tone="inherit">
+              {ORG_NAME} champions a decentralized, inclusive, and affordable model for art education grounded in{' '}
+              <em>direct material exploration</em>.
+            </Text>
+          </Measure>
+        </Surface>
+
         {feature && (
-          <section aria-labelledby="workshops">
-            <h2 className={styles.h} id="workshops">
-              Workshops
-              <Link href="/workshops">
-                All<span aria-hidden> →</span>
-              </Link>
-            </h2>
-            <div className={styles.ho}>
-              <div className={styles.ho2}>
-                <article className={styles.fc} data-m style={materialStyle(feature.material)}>
-                  <div className={styles.fp}>{feature.imageUrl && <img src={feature.imageUrl} alt="" />}</div>
-                  <div className={styles.fk}>
-                    <p className={styles.fd}>{feature.dates}</p>
-                    <h3>
-                      <Link href={feature.href}>{feature.title}</Link>
-                    </h3>
-                    <p className={styles.fm}>
-                      <span>{feature.material}</span>
-                      <span>{feature.instructor}</span>
-                      <span>{feature.price}</span>
-                    </p>
-                    <Link className={styles.btn} href={feature.href}>
-                      Register<span className={shared.sr}> for {feature.title}</span>
-                    </Link>
-                  </div>
-                </article>
-                <div className={styles.oc}>
-                  <div className={styles.os} role="region" aria-label="Open workshops" tabIndex={0}>
-                    <ul>
-                      {rest.map((workshop) => (
-                        <li key={workshop.id} data-m style={materialStyle(workshop.material)}>
-                          <Link href={workshop.href}>
-                            {workshop.imageUrl ? <img src={workshop.imageUrl} alt="" loading="lazy" /> : <span />}
-                            <span className={styles.ot}>
-                              <span className={styles.od}>{workshop.dates}</span>
-                              <b>{workshop.title}</b>
-                              <span className={styles.om}>
-                                <span className={styles.mat}>{workshop.material}</span>
-                                <span>{workshop.price}</span>
-                              </span>
-                            </span>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+          <Surface as="section" pad="none" label="Workshops">
+            <Section
+              id="workshops"
+              label="Workshops"
+              pinned
+              action={(className) => (
+                <NextLink className={className} href="/workshops">
+                  More Workshops →
+                </NextLink>
+              )}
+            >
+              <SplitGrid ratio="wide" sticky gap="lg">
+                <Card hue={materialHue(feature.material)} tint="soft">
+                  {feature.imageUrl && <Picture shape="photo" src={feature.imageUrl} alt="" width={1200} height={800} />}
+                  <Text face="display" size="4xl" figures>
+                    {feature.dates}
+                  </Text>
+                  <Title level="h3">
+                    <NextLink href={feature.href}>{feature.title}</NextLink>
+                  </Title>
+                  <Text variant="small">{[feature.material, feature.instructor, feature.price].filter(Boolean).join(' · ')}</Text>
+                  <Wrap>
+                    <Button asChild>
+                      <NextLink href={feature.href}>
+                        Register<VisuallyHidden> for {feature.title}</VisuallyHidden>
+                      </NextLink>
+                    </Button>
+                  </Wrap>
+                </Card>
+                <ItemList gap="0" closed>
+                  {rest.map((workshop) => (
+                    <li key={workshop.id}>
+                      <Row
+                        layout="thumb"
+                        lead={
+                          workshop.imageUrl ? (
+                            <Picture shape="thumb" src={workshop.imageUrl} alt="" width={400} height={400} />
+                          ) : undefined
+                        }
+                        title={workshop.title}
+                        meta={[workshop.dates, workshop.material, workshop.instructor, workshop.price].filter(Boolean).join(' · ')}
+                        link={(className, content) => (
+                          <NextLink className={className} href={workshop.href}>
+                            {content}
+                          </NextLink>
+                        )}
+                      />
+                    </li>
+                  ))}
+                </ItemList>
+              </SplitGrid>
+            </Section>
+          </Surface>
         )}
 
-        <section className={styles.statement}>
-          <p>
-            {ORG_NAME} champions a decentralized, inclusive, and affordable model for art education grounded in{' '}
-            <em>direct material exploration</em>.
-          </p>
-        </section>
+        <ImpactStats />
 
-        <article className={styles.pn} data-m style={materialStyle('Earth building')}>
-          <div className={styles.pt}>
-            <h3>
-              <a href="#">Yucca Alta</a>
-            </h3>
-            <a className={styles.act} href="#">
-              Visit<span aria-hidden> →</span>
-            </a>
-          </div>
-          <img src={`${IMAGES}/quonset.jpg`} alt="" loading="lazy" />
-        </article>
+        <Surface as="section" pad="none" label="Residencies">
+          <Section
+            id="residencies"
+            label="Residencies"
+            action={(className) => (
+              <a className={className} href="#">
+                View Residencies →
+              </a>
+            )}
+          >
+            <Grid>
+              {['yard', 'youth-3', 'quonset'].map((image) => (
+                <Cell key={image} span="4">
+                  <Link href="#">
+                    <Stack gap="1">
+                      <Picture shape="photo" src={`${IMAGES}/${image}.jpg`} alt="" width={1200} height={800} />
+                      <Text face="display" size="2xl">
+                        Residency
+                      </Text>
+                      <Text variant="caption">Dates</Text>
+                    </Stack>
+                  </Link>
+                </Cell>
+              ))}
+            </Grid>
+          </Section>
+        </Surface>
 
-        <section className={styles.band} data-m style={materialStyle('Fiber arts')} aria-label="Donate">
-          <p className={styles.big}>Giving isn’t passive</p>
-          <a className={styles.btn} href="#">
-            Donate
-          </a>
-        </section>
+        <Surface as="section" tone="fiber-arts" pad="loose" label="Donate">
+          <Stack gap="6">
+            <Text face="display" size="6xl" tone="inherit">
+              Giving isn’t passive
+            </Text>
+            <Wrap>
+              <Button asChild>
+                <a href="#">Donate</a>
+              </Button>
+            </Wrap>
+          </Stack>
+        </Surface>
 
-        <section aria-labelledby="residencies">
-          <h2 className={styles.h} id="residencies">
-            Residencies
-            <a href="#">
-              All<span aria-hidden> →</span>
-            </a>
-          </h2>
-          <ul className={styles.cards}>
-            {['yard', 'youth-3', 'quonset'].map((image) => (
-              <li key={image}>
-                <a href="#">
-                  <img src={`${IMAGES}/${image}.jpg`} alt="" loading="lazy" />
-                  <b>Residency</b>
-                  <span>Dates</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
+        <SplitGrid gap="none">
+          <Surface as="aside" tone="earth-building" pad="loose" min="third">
+            <Stack gap="8">
+              <Title level="h3" tone="inherit">
+                <a href="#">Yucca Alta</a>
+              </Title>
+              <Wrap>
+                <Button asChild>
+                  <a href="#">Visit</a>
+                </Button>
+              </Wrap>
+            </Stack>
+          </Surface>
+          <Picture shape="fill" src={`${IMAGES}/quonset.jpg`} alt="" width={1200} height={800} />
+        </SplitGrid>
 
-        <section className={`${styles.band} ${styles.quote}`} aria-label="Testimonial">
-          <blockquote>Testimonial</blockquote>
-        </section>
+        <Surface as="section" tone="teal" min="third" place="center" label="Testimonial">
+          <Text face="display" size="3xl" tone="inherit">
+            Testimonial
+          </Text>
+        </Surface>
 
-        <article className={`${styles.pn} ${styles.flip}`} data-m style={materialStyle('Glass')}>
-          <div className={styles.pt}>
-            <h3>
-              <Link href="/lazy-eye">Lazy Eye Gallery</Link>
-            </h3>
-            <Link className={styles.act} href="/lazy-eye">
-              Visit<span aria-hidden> →</span>
-            </Link>
-          </div>
-          <img src="/images/lazy-eye/kento-saisho.webp" alt="" loading="lazy" />
-        </article>
+        <PinnedLazyEye />
 
-        <section className={styles.band} data-m style={materialStyle('Earth building')} aria-labelledby="newsletter">
-          <h2 className={styles.big} id="newsletter">
-            Newsletter
-          </h2>
-          <form className={styles.form} onSubmit={(event) => event.preventDefault()}>
-            <label className={shared.sr} htmlFor="newsletter-email">
-              Email address
-            </label>
-            <input id="newsletter-email" type="email" autoComplete="email" placeholder="Email address" />
-            <button className={styles.btn} type="submit">
-              Subscribe
-            </button>
-          </form>
-        </section>
+        <Surface as="section" tone="earth-building" min="third" place="center" label="Newsletter">
+          <Stack gap="4">
+            <Title level="h2" tone="inherit">
+              Newsletter
+            </Title>
+            <form onSubmit={(event) => event.preventDefault()}>
+              <Wrap gap="3">
+                <Input type="email" autoComplete="email" placeholder="Email address" aria-label="Email address" />
+                <Button type="submit">Subscribe</Button>
+              </Wrap>
+            </form>
+          </Stack>
+        </Surface>
       </main>
 
-      <HomeFooter />
+      <PageFooter />
     </div>
   );
 }

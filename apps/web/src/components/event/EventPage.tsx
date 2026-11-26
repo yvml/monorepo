@@ -1,5 +1,6 @@
 // apps/web/src/components/event/EventPage.tsx
-import { CenteredLines, Link, PageColumn, PageHeader, TermList, TermRow, Text, Title } from '@hmidmismi/ui';
+import { ItemList, Link, PageColumn, Pair, Stack, Text, Title } from '@hmidmismi/ui';
+import { CenteredHeader } from '@/components/layout';
 import { stegaClean } from '@sanity/client/stega';
 import { ContentModules } from '@/components/content';
 import { KeelaEmbed } from '@/components/keela';
@@ -32,25 +33,25 @@ export function EventPage({ section, entry, draftMode }: { section: Section; ent
     <Site title={title}>
       <PageColumn as="article">
         <Breadcrumbs section={section} id={entry._id} title={title} />
-        <PageHeader>
+        <CenteredHeader>
           <Title level="h1">{title}</Title>
-          <CenteredLines>
+          <Stack gap="1" align="center">
             {status && <p data-sanity={attr('status')}>{status}</p>}
             <p>
               <Dates entry={entry} attr={attr('dateTime')} />
             </p>
             {entry.location && <p data-sanity={attr('location')}>{entry.location}</p>}
-          </CenteredLines>
-        </PageHeader>
+          </Stack>
+        </CenteredHeader>
         <div data-sanity={attr('image')}>
           <SanityImage image={entry.image} label={title} />
         </div>
         {!keela && entry.registrationUrl && open && (
-          <TermList ruled>
-            <TermRow term={t('termRegistration')}>
+          <ItemList as="dl" layout="pairs" ruled>
+            <Pair label={t('termRegistration')}>
               <Link href={entry.registrationUrl}>{t('register')}</Link>
-            </TermRow>
-          </TermList>
+            </Pair>
+          </ItemList>
         )}
         <ContentModules modules={entry.content} />
         {keela && open && <KeelaEmbed url={keela} title={t('registerFor', { title: stegaClean(title) })} />}

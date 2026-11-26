@@ -1,6 +1,6 @@
 // apps/web/src/components/navigation/menuLinks.tsx
 import type { LinkRender, NavLink } from '@hmidmismi/ui';
-import NextLink from 'next/link';
+import { RememberedLink } from './RememberedLink';
 import { type MenuItem } from '@/constants';
 import { t } from '@/i18n';
 
@@ -32,9 +32,9 @@ function renderItem(item: MenuItem): LinkRender {
   }
   if (item.href.startsWith('/')) {
     return (className, content) => (
-      <NextLink href={item.href} className={className} aria-label={item.ariaLabel}>
+      <RememberedLink href={item.href} className={className} aria-label={item.ariaLabel}>
         {content}
-      </NextLink>
+      </RememberedLink>
     );
   }
   return (className, content) => (

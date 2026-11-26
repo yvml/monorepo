@@ -16,7 +16,7 @@
 :where(.root) *,:where(.root) *::before,:where(.root) *::after{box-sizing:border-box}
 :where(.root) ul{list-style:none}
 :where(.root) img{display:block;max-width:100%}
-:where(.root) a{color:inherit;text-underline-offset:.22em}
+:where(.root) a:not([class]){color:inherit;text-underline-offset:.22em}
 :where(.root) :focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:2px}
 
 /* material colour: --m / --m-dk text and --t / --t-dk panel tint, set on an element by materialStyle() */

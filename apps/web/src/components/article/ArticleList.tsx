@@ -1,7 +1,7 @@
 // apps/web/src/components/article/ArticleList.tsx
-import { ItemList, ListHeader, PageColumn, Text } from '@hmidmismi/ui';
+import { ItemList, PageColumn, Text } from '@hmidmismi/ui';
 import NextLink from 'next/link';
-import { Site } from '@/components/layout';
+import { Site, TitleRow } from '@/components/layout';
 import { Day } from '@/components/date';
 import { localize, t } from '@/i18n';
 import { type ArticleSummary } from '@/lib/sanity';
@@ -16,7 +16,7 @@ export function ArticleList({ articles }: { articles: ArticleSummary[] }) {
   return (
     <Site title={t('navNews')}>
       <PageColumn>
-        <ListHeader title={t('navNews')} />
+        <TitleRow title={t('navNews')} />
         {!articles.length && <Text>{t('emptyArticles')}</Text>}
         <ItemList>
           {articles.map((article) => (

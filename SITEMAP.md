@@ -29,8 +29,9 @@ C. Header navigation
 
 D. Home page cards
 - Hero
-- Current and upcoming workshop cards
   [ Hero statement ]
+- Current and upcoming workshop cards
+  [ Stats ]
 - Yucca Alta promo block
   [ Donate block ]
 - Current and upcoming reok sidency cards

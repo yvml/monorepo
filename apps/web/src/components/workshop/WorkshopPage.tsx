@@ -1,5 +1,6 @@
 // apps/web/src/components/workshop/WorkshopPage.tsx
-import { CenteredLines, Link, PageColumn, PageHeader, TermList, TermRow, Text, Title } from '@hmidmismi/ui';
+import { ItemList, Link, PageColumn, Pair, Stack, Text, Title } from '@hmidmismi/ui';
+import { CenteredHeader } from '@/components/layout';
 import { stegaClean } from '@sanity/client/stega';
 import NextLink from 'next/link';
 import { ContentModules } from '@/components/content';
@@ -37,19 +38,19 @@ export function WorkshopPage({ entry, draftMode }: { entry: WorkshopDetail; draf
     <Site title={title}>
       <PageColumn as="article">
         <Breadcrumbs section={WORKSHOPS} id={entry._id} title={title} />
-        <PageHeader>
+        <CenteredHeader>
           <Title level="h1">{title}</Title>
-          <CenteredLines>
+          <Stack gap="1" align="center">
             {soldOut && <p data-sanity={attr('status')}>{t('soldOut')}</p>}
             <p>
               <Dates entry={entry} attr={attr('dateTime')} />
             </p>
-          </CenteredLines>
-        </PageHeader>
+          </Stack>
+        </CenteredHeader>
         <div data-sanity={attr('image')}>
           <SanityImage image={entry.image} label={title} />
         </div>
-        <TermList ruled>
+        <ItemList as="dl" layout="pairs" ruled>
           {entry.instructors?.length ? (
             <WorkshopTerm term="termInstructors" field="instructors" attr={attr}>
               {entry.instructors.map((person, index) => (
@@ -86,11 +87,11 @@ export function WorkshopPage({ entry, draftMode }: { entry: WorkshopDetail; draf
             </WorkshopTerm>
           )}
           {!keela && entry.registrationUrl && !soldOut && (
-            <TermRow term={t('termRegistration')}>
+            <Pair label={t('termRegistration')}>
               <Link href={entry.registrationUrl}>{t('register')}</Link>
-            </TermRow>
+            </Pair>
           )}
-        </TermList>
+        </ItemList>
         <ContentModules modules={entry.content} />
         {keela && !soldOut && <KeelaEmbed url={keela} title={t('registerFor', { title: stegaClean(title) })} />}
         {!entry.content?.length && !entry.instructors?.length && <Text>{t('detailsToFollow')}</Text>}

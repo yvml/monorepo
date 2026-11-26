@@ -1,5 +1,5 @@
 // apps/web/src/components/workshop/WorkshopList.tsx
-import { CardItem, Cell, Grid, PageTable, PageTd, PageTh, Stack, Text } from '@hmidmismi/ui';
+import { Cell, Grid, PageTable, PageTd, PageTh, Stack, Text } from '@hmidmismi/ui';
 import NextLink from 'next/link';
 import { useMemo } from 'react';
 import { SanityImage } from '@/components/media';
@@ -83,7 +83,7 @@ export function WorkshopList({ workshops, today }: { workshops: WorkshopSummary[
         <Grid>
           {rows.map((row) => (
             <Cell key={row.workshop._id} span="3">
-              <CardItem>
+              <Stack gap="1">
                 <NextLink href={row.href}>
                   <SanityImage image={row.workshop.image} label={row.title} decorative />
                   {row.title}
@@ -95,7 +95,7 @@ export function WorkshopList({ workshops, today }: { workshops: WorkshopSummary[
                   {row.priceAndStatus ? ' · ' : ''}
                   {row.status}
                 </Text>
-              </CardItem>
+              </Stack>
             </Cell>
           ))}
         </Grid>

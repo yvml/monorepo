@@ -1,5 +1,5 @@
 // apps/web/src/components/home-e1/Scene.tsx
-import { cubicBezier, motion, useTransform } from 'framer-motion';
+import { cubicBezier, motion, useTransform } from 'motion/react';
 import type { ReactNode } from 'react';
 import { shared } from '@/components/home';
 import { DuotoneImage } from './DuotoneImage';

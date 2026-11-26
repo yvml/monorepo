@@ -1,5 +1,5 @@
 // apps/web/src/components/home-e1/TimelineContext.ts
-import type { MotionValue } from 'framer-motion';
+import type { MotionValue } from 'motion/react';
 import { createContext, useContext } from 'react';
 
 /** What every part of Home E.1 reads: where the scroll is on the timeline, and a way to say a scene's photographs are in. */

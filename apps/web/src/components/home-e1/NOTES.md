@@ -25,7 +25,7 @@ In the app (`apps/web`):
 | Styles | `home-e1/HomeE1.module.css`, shared pieces in `src/components/home/` |
 | The exhibition image | `public/images/lazy-eye/kento-saisho.webp` |
 | Fonts (Allo, Instrument Serif) | `public/fonts/` |
-| Config | `next.config.ts` (`images.remotePatterns` for `cdn.sanity.io`), `package.json` (`framer-motion` 14.14.0) |
+| Config | `next.config.ts` (`images.remotePatterns` for `cdn.sanity.io`), `package.json` (`motion` 14.14.0) |
 
 In the mocks branch (`mocks/`), the static prototypes this grew out of, with no framework:
 

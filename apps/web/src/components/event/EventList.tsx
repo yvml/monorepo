@@ -1,10 +1,10 @@
 // apps/web/src/components/event/EventList.tsx
-import { DatedList, DatedRow, ListHeader, PageColumn, Stack, Text } from '@hmidmismi/ui';
+import { ItemList, Label, PageColumn, Row, Stack, Text } from '@hmidmismi/ui';
 import NextLink from 'next/link';
 import { useMemo } from 'react';
 import { Dates } from '@/components/date';
 import { FilterBar, FilterSummary } from '@/components/filters';
-import { Site } from '@/components/layout';
+import { Site, TitleRow } from '@/components/layout';
 import { type Section } from '@/constants';
 import { useFilterState } from '@/hooks';
 import { localize, t } from '@/i18n';
@@ -15,24 +15,31 @@ import { type EventSummary } from '@/lib/sanity';
 
 function Rows({ entries, section }: { entries: EventSummary[]; section: Section }) {
   return (
-    <DatedList>
+    <ItemList gap="0" closed>
       {entries.map((entry) => {
         const { month, day } = dateBlock(firstDate(entry));
         return (
-          <DatedRow
-            key={entry._id}
-            month={month}
-            day={day}
-            dateTime={firstDate(entry)}
-            title={<NextLink href={`/${section.path}/${entry.slug}`}>{localize(entry.title)}</NextLink>}
-            subtitle={
-              entry.status === 'cancelled' ? t('cancelled') : entry.status === 'tbc' ? t('toBeConfirmed') : <Dates entry={entry} />
-            }
-            aside={entry.location}
-          />
+          <li key={entry._id}>
+            <Row
+              layout="dated"
+              lead={
+                <Stack gap="1">
+                  <Label as="div" tone="accent">
+                    {month}
+                  </Label>
+                  <Text as="div" face="display" size="2xl" figures>
+                    {day}
+                  </Text>
+                </Stack>
+              }
+              title={<NextLink href={`/${section.path}/${entry.slug}`}>{localize(entry.title)}</NextLink>}
+              meta={entry.status === 'cancelled' ? t('cancelled') : entry.status === 'tbc' ? t('toBeConfirmed') : <Dates entry={entry} />}
+              aside={entry.location}
+            />
+          </li>
         );
       })}
-    </DatedList>
+    </ItemList>
   );
 }
 
@@ -53,7 +60,7 @@ export function EventList({ section, events, today }: EventListProps) {
   return (
     <Site title={t(section.title)}>
       <PageColumn>
-        <ListHeader title={t(section.title)} count={upcoming.length ? t('upcomingCount', { count: upcoming.length }) : undefined} />
+        <TitleRow title={t(section.title)} count={upcoming.length ? t('upcomingCount', { count: upcoming.length }) : undefined} />
         {events.length === 0 ? (
           <Text>{t(section.empty)}</Text>
         ) : (
@@ -74,7 +81,7 @@ export function EventList({ section, events, today }: EventListProps) {
         {undated.length > 0 && <Rows entries={undated} section={section} />}
         {past.length > 0 && (
           <>
-            <ListHeader title={t('past')} />
+            <TitleRow title={t('past')} />
             <Rows entries={past} section={section} />
           </>
         )}

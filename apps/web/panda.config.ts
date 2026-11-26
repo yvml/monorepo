@@ -2,7 +2,7 @@
 import { defineConfig } from '@pandacss/dev';
 import { design } from '@hmidmismi/ui/design';
 import { createPreset } from '@hmidmismi/ui/preset';
-import { themeVariables } from '@hmidmismi/ui/theme';
+import { fontFaces, themeVariables } from '@hmidmismi/ui/theme';
 import { yvml } from './src/theme/yvml';
 
 /**
@@ -19,5 +19,6 @@ export default defineConfig({
   exclude: [],
   staticCss: { recipes: '*' },
   globalCss: { ':root': themeVariables(yvml) },
+  globalFontface: fontFaces(yvml, (file) => `/fonts/${file}`),
   outdir: 'styled-system',
 });

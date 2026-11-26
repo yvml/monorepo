@@ -26,7 +26,7 @@ Workshops are weekend, hands-on classes by material (glass casting, ceramics, me
 
 - Next 15 (pages router) in `apps/web`, Sanity Studio in `apps/studio`, shared UI, auth and Sanity helpers from the `@hmidmismi/*` packages. See `CLAUDE.md` and `HANDOFF.md`.
 - Every page is incremental static. Listings are filterable, and the filter choices live in the address.
-- The site is behind a private preview login until launch. Who may see it is decided in `src/middleware.ts`.
+- The site is behind a private preview login until launch. Who may see it is decided in `src/proxy.preview.ts`.
 - Every visible string exists in English and Spanish.
 - No monospace type. No instructional or hint copy in the UI or schema unless asked.
 - The visual direction is undecided. Eight static mock directions are in `mocks/` (plaster, steel, adobe, glass, table, boxes, inventory, and the Lazy Eye concepts). None is chosen.

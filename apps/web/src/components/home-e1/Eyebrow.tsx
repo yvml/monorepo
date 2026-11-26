@@ -1,5 +1,5 @@
 // apps/web/src/components/home-e1/Eyebrow.tsx
-import { motion, useMotionValueEvent, useTransform, type MotionValue } from 'framer-motion';
+import { motion, useMotionValueEvent, useTransform, type MotionValue } from 'motion/react';
 import { useState } from 'react';
 import styles from './HomeE1.module.css';
 import { CHAIN, ENTER, PALETTES, ramp, ease, type Placed, type SceneSpec } from './timeline';

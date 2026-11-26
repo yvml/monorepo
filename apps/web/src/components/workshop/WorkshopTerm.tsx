@@ -1,5 +1,5 @@
 // apps/web/src/components/workshop/WorkshopTerm.tsx
-import { TermRow } from '@hmidmismi/ui';
+import { Pair } from '@hmidmismi/ui';
 import type { ReactNode } from 'react';
 import { type TextKey, t } from '@/i18n';
 
@@ -11,8 +11,8 @@ import { type TextKey, t } from '@/i18n';
  */
 export function WorkshopTerm({ term, field, attr, children }: { term: TextKey; field: string; attr: (path: string) => string | undefined; children: ReactNode }) {
   return (
-    <TermRow term={t(term)}>
+    <Pair label={t(term)}>
       <span data-sanity={attr(field)}>{children}</span>
-    </TermRow>
+    </Pair>
   );
 }

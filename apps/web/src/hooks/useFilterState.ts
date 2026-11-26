@@ -1,14 +1,15 @@
 // apps/web/src/hooks/useFilterState.ts
 import { useRouter } from 'next/router';
-import { useCallback, useMemo } from 'react';
-import { defaultState, type FilterState, type ListSpec, parseUrl, toHref } from '@/lib/filters';
+import { useCallback, useEffect, useMemo } from 'react';
+import { defaultState, type FilterState, type ListSpec, parseUrl, rememberListing, toHref } from '@/lib/filters';
 
 /**
  * The listing's filter state, kept in the address (`/workshops/material/adobe/open?sort=price-low`) so a filtered view can
  * be linked, bookmarked and reloaded, and the back button works. The state is read from the router, which has the
  * address while rendering on the server too, so the first paint already shows the filtered list. A change moves to the new
  * address without running the page's data fetching again, and each deliberate choice is its own history entry; typing in a
- * field replaces the entry instead.
+ * field replaces the entry instead. The address is also remembered for the visit (see `rememberListing`), so a link to the
+ * listing can come back to it filtered.
  *
  * The listing must be served by one optional catch-all page, `[[...path]]`, so every address with these segments reaches it.
  *
@@ -25,6 +26,9 @@ export function useFilterState<T, C>(spec: ListSpec<T, C>, basePath: string) {
     const { path, ...rest } = query;
     return parseUrl(spec, Array.isArray(path) ? path : path ? [path] : [], rest) ?? defaultState(spec);
   }, [spec, query]);
+
+  // Remember where the listing was left, so a link back to it (the menu, the breadcrumbs) returns to the same filters.
+  useEffect(() => rememberListing(basePath, toHref(spec, basePath, state)), [spec, basePath, state]);
 
   const write = useCallback(
     (next: FilterState, replace: boolean) => {

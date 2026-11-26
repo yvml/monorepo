@@ -1,5 +1,6 @@
 // apps/web/src/components/person/PersonPage.tsx
-import { CenteredLines, ItemList, Link, PageColumn, PageHeader, TermList, TermRow, Text, Title } from '@hmidmismi/ui';
+import { ItemList, Link, PageColumn, Pair, Stack, Text, Title } from '@hmidmismi/ui';
+import { CenteredHeader } from '@/components/layout';
 import NextLink from 'next/link';
 import { Blocks } from '@/components/content';
 import { Dates } from '@/components/date';
@@ -21,26 +22,26 @@ export function PersonPage({ person }: { person: PersonDetail }) {
   return (
     <Site title={name}>
       <PageColumn as="article">
-        <PageHeader>
+        <CenteredHeader>
           <Title level="h1">{name}</Title>
           {person.location && (
-            <CenteredLines>
+            <Stack gap="1" align="center">
               <p>{person.location}</p>
-            </CenteredLines>
+            </Stack>
           )}
-        </PageHeader>
+        </CenteredHeader>
         <SanityImage image={person.portrait} label={t('portraitOf', { name })} />
         <Blocks value={person.biography} />
         {person.links?.length ? (
-          <TermList ruled>
+          <ItemList as="dl" layout="pairs" ruled>
             {person.links.map((link) =>
               link.url ? (
-                <TermRow key={link._key} term={link.label ?? link.url}>
+                <Pair key={link._key} label={link.label ?? link.url}>
                   <Link href={link.url}>{link.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</Link>
-                </TermRow>
+                </Pair>
               ) : null
             )}
-          </TermList>
+          </ItemList>
         ) : null}
         {workshops.length > 0 && (
           <>

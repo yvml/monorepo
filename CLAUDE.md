@@ -34,8 +34,22 @@ pages/           routes only: a loader, and one component. A route owns what is 
 tests/           every test file
 ```
 
-A page-specific addition goes in the route, never behind a path check inside a shared component. Name a component for the
-thing it is in the site's own words, never a generic word (`Entry`, `Item`, `Helper`).
+The canonical styling rules are `packages/ui/STYLES.md`; read it before touching any styling.
+In short: ui primitives are named by function and content picks the primitive and variant at the call site. The route
+file owns the content by default: it fetches, maps the data onto primitives and picks the variants. Extract a component only
+for state, reuse in two or more routes, or length. An app
+component may be named for its content only when it just maps a document's data onto ui primitives and variants (DRAM's
+`ReleaseCredits` and `ReleaseRows` are the model): it has no styling, no `className`, `style` or `css()`, and no look of its
+own. A look it needs twice is a variant in the ui. A name that describes a look (`PersonName`, `eyebrow`, `CreditsList`) is
+never allowed, in the app or the ui; use the `ROLE` mapping. Pure mapping with no state is a function in `lib/` that
+returns props.
+
+A page-specific addition goes in the route, never behind a path check inside a shared component. Name a component for what it
+is structurally (`List`, `Card`, `Link`, `Stack`, `Measure`), never for the content it shows (`WorkshopList`, `PersonCard`,
+`eyebrow`): a list is a list, a card is a card, a link is a link, and what a list holds is data the consumer passes in. A
+second look is a variant, not a second component. New styling goes in this order: a Panda pattern, a variant on an existing
+recipe, a new recipe. Semantic names exist only as a call-site mapping (`lib/roles.ts`), never as a component or a recipe.
+Vague catch-alls (`Entry`, `Item`, `Helper`) are still out.
 
 ## `apps/web/src/lib`, `i18n`, `constants`, `theme`
 
@@ -66,5 +80,5 @@ lib/              code that does something. The folder is the concern, the file 
 - A listing is a `ListSpec` (filters, sorts, views) in its own file; `FilterBar` and `useFilterState` render and persist any spec, and the choices live in the address: facets in the path (`/workshops/material/adobe/open`, one canonical order, several values joined with `+`), the rest in the query (`?min-price=200&sort=price-low&view=list`). Values are slugs, never Sanity ids. The listing is served by one optional catch-all page (`[[...path]].tsx`) that also serves the entries' own pages, so a path facet word is reserved. A new listing is a new spec, not new filter code. Filter kinds: search, select, multi, toggle, range.
 - Do not use monospace type anywhere.
 - No instructional or hint copy in the UI or the schema unless asked for.
-- Every page is incremental static (`getStaticProps` through `withDraft`, revalidated every `REVALIDATE` seconds; dynamic routes use `onDemandPaths`). A cached page has no query string, so choices in the query are read in the browser. Who may see the preview site is decided in `src/middleware.ts`, never in a page loader.
+- Every page is incremental static (`getStaticProps` through `withDraft`, revalidated every `REVALIDATE` seconds; dynamic routes use `onDemandPaths`). A cached page has no query string, so choices in the query are read in the browser. Who may see the preview site is decided in `src/proxy.preview.ts`, never in a page loader.
 - English has no URL prefix and Spanish is `/es/...`; `/en/...` redirects to the plain address (`netlify.toml`). Dates and text follow the page's language (`en`, `es`), never a fixed `en-US`.

@@ -5,7 +5,7 @@ import {
   useMotionValueEvent,
   useScroll,
   useTransform,
-} from 'framer-motion';
+} from 'motion/react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { HOME_NAV, LocaleLink, shared, ThemeButton } from '@/components/home';

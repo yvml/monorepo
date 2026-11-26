@@ -1,44 +1,41 @@
 // apps/web/src/components/home-e1/LazyEye.tsx
-import { motion, useSpring, useTransform } from 'framer-motion';
+import { type MotionValue, motion, useSpring, useTransform } from 'motion/react';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import styles from './HomeE1.module.css';
 import { SceneShell, useSceneMotion } from './Scene';
-import { ease, LAZY_EYE_STORY, PALETTES, type Placed, type SceneSpec } from './timeline';
+import { ease, LAZY_EYE_STORY, PALETTES, type Palette, type Placed, type SceneSpec } from './timeline';
 import { useTimeline } from './TimelineContext';
 
 const clamp = (x: number) => Math.min(1, Math.max(0, x));
 
 /**
- * The Lazy Eye scene: a full-screen halftone that tells its story on the timeline. In order: the halftone alone, the
- * gallery's name, the artist's name as the dots become the exhibition's object, the dates, then the object fades out.
- * Each step is a window of the scene's own progress, and the dots, the names and the dates all read the same spring of
- * that progress, so they cannot drift apart. The cleared band of dots sits only behind the artist's name and dates.
+ * The Lazy Eye stage: a full-screen halftone that tells its story from one progress value (0 to 1). In order: the halftone
+ * alone, the gallery's name, the artist's name as the dots become the exhibition's object, the dates, then the object
+ * fades out. The dots, the names and the dates all read the same progress, so they cannot drift apart. The cleared band of
+ * dots sits only behind the artist's name and dates. It fills whatever positioned box it is put in.
  *
- * @param props - the scene, when the next one starts, the gallery's name, the exhibition's artist and dates, and the image the halftone is made from.
- * @returns the scene.
+ * @param props - the story's progress, how far a following card has covered it, its palette, the gallery's name, the exhibition's artist and dates, and the image the halftone is made from.
+ * @returns the stage.
  */
-export function LazyEye({
-  scene,
-  nextStart,
+export function LazyEyeStage({
+  progress,
+  covered,
+  palette,
   name,
   exhibition,
   dates,
   image,
 }: {
-  scene: Placed<SceneSpec>;
-  nextStart?: number;
+  progress: MotionValue<number>;
+  covered: MotionValue<number>;
+  palette: Palette;
   name: string;
   exhibition: string;
   dates: string;
   image: string;
 }) {
-  const { t } = useTimeline();
-  const m = useSceneMotion(scene, nextStart);
-  const story = useTransform(t, [scene.settled, scene.settled + LAZY_EYE_STORY], [0, 1]);
-  const progress = useSpring(story, { stiffness: 140, damping: 26, mass: 0.6 });
-
-  const textFade = useTransform(m.covered, [0, 0.29], [1, 0]);
+  const textFade = useTransform(covered, [0, 0.29], [1, 0]);
   const nameOpacity = useTransform([progress, textFade], ([p, f]) => ease(0.08, 0.2, p as number) * (1 - ease(0.28, 0.36, p as number)) * (f as number));
   const nameY = useTransform(progress, (p) => `${(1 - ease(0.08, 0.2, p)) * 24 - ease(0.28, 0.36, p) * 24}px`);
   const artistOpacity = useTransform([progress, textFade], ([p, f]) => ease(0.38, 0.5, p as number) * (f as number));
@@ -58,7 +55,7 @@ export function LazyEye({
     if (!frame || !cv || !img || !ctx) return;
 
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const highlight = PALETTES[scene.palette].highlight;
+    const highlight = PALETTES[palette].highlight;
     let width = 0;
     let height = 0;
     let cell = 12;
@@ -116,7 +113,7 @@ export function LazyEye({
       const artistIn = ease(0.38, 0.5, p);
       const objectIn = ease(0.3, 0.6, p);
       const objectOut = ease(0.8, 0.94, p);
-      const covered = m.covered.get();
+      const coveredNow = covered.get();
       ctx.clearRect(0, 0, width, height);
       ctx.fillStyle = highlight;
       ctx.beginPath();
@@ -142,7 +139,7 @@ export function LazyEye({
         }
       }
       ctx.fill();
-      cv.style.opacity = String(clamp(1 - covered * 1.6) * 0.85); // the dots are gone by 62% covered
+      cv.style.opacity = String(clamp(1 - coveredNow * 1.6) * 0.85); // the dots are gone by 62% covered
     };
 
     const loop = (now: number) => {
@@ -169,10 +166,10 @@ export function LazyEye({
       img.removeEventListener('load', sample);
       removeEventListener('resize', onResize);
     };
-  }, [progress, m.covered, scene.palette]);
+  }, [progress, covered, palette]);
 
   return (
-    <SceneShell scene={scene} motion={m} label={name}>
+    <>
       <div ref={stick} className={styles.leStick}>
         <img ref={source} className={styles.leImg} src={image} alt="" decoding="async" />
         <canvas ref={canvas} className={styles.leCv} aria-hidden />
@@ -188,7 +185,41 @@ export function LazyEye({
           </Link>
         </motion.div>
       </div>
-    </SceneShell>
+    </>
   );
 }
 
+/**
+ * The Lazy Eye scene: a full-screen halftone that tells its story on the timeline. In order: the halftone alone, the
+ * gallery's name, the artist's name as the dots become the exhibition's object, the dates, then the object fades out.
+ * Each step is a window of the scene's own progress, and the dots, the names and the dates all read the same spring of
+ * that progress, so they cannot drift apart. The cleared band of dots sits only behind the artist's name and dates.
+ *
+ * @param props - the scene, when the next one starts, the gallery's name, the exhibition's artist and dates, and the image the halftone is made from.
+ * @returns the scene.
+ */
+export function LazyEye({
+  scene,
+  nextStart,
+  name,
+  exhibition,
+  dates,
+  image,
+}: {
+  scene: Placed<SceneSpec>;
+  nextStart?: number;
+  name: string;
+  exhibition: string;
+  dates: string;
+  image: string;
+}) {
+  const { t } = useTimeline();
+  const m = useSceneMotion(scene, nextStart);
+  const story = useTransform(t, [scene.settled, scene.settled + LAZY_EYE_STORY], [0, 1]);
+  const progress = useSpring(story, { stiffness: 140, damping: 26, mass: 0.6 });
+  return (
+    <SceneShell scene={scene} motion={m} label={name}>
+      <LazyEyeStage progress={progress} covered={m.covered} palette={scene.palette} name={name} exhibition={exhibition} dates={dates} image={image} />
+    </SceneShell>
+  );
+}
