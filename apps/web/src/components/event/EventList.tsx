@@ -1,10 +1,11 @@
 // apps/web/src/components/event/EventList.tsx
-import { ItemList, Label, PageColumn, Row, Stack, Text } from '@hmidmismi/ui';
+import { Cell, Grid, ItemList, Label, PageColumn, Row, Stack, Text } from '@hmidmismi/ui';
 import NextLink from 'next/link';
 import { useMemo } from 'react';
 import { Dates } from '@/components/date';
 import { FilterBar, FilterSummary } from '@/components/filters';
 import { Site, TitleRow } from '@/components/layout';
+import { SanityImage } from '@/components/media';
 import { type Section } from '@/constants';
 import { useFilterState } from '@/hooks';
 import { localize, t } from '@/i18n';
@@ -13,7 +14,27 @@ import { activeFilters, applyFilters, eventListing } from '@/lib/filters';
 import { type EventListProps } from '@/lib/loaders';
 import { type EventSummary } from '@/lib/sanity';
 
-function Rows({ entries, section }: { entries: EventSummary[]; section: Section }) {
+function Entries({ entries, section, view }: { entries: EventSummary[]; section: Section; view: string }) {
+  if (view === 'grid') {
+    return (
+      <Grid>
+        {entries.map((entry) => (
+          <Cell key={entry._id} span="3">
+            <Stack gap="1">
+              <NextLink href={`/${section.path}/${entry.slug}`}>
+                <SanityImage image={entry.image} label={localize(entry.title)} decorative />
+                {localize(entry.title)}
+              </NextLink>
+              <Text variant="small">
+                {entry.status === 'cancelled' ? t('cancelled') : entry.status === 'tbc' ? t('toBeConfirmed') : <Dates entry={entry} />}
+              </Text>
+              {entry.location && <Text variant="small">{entry.location}</Text>}
+            </Stack>
+          </Cell>
+        ))}
+      </Grid>
+    );
+  }
   return (
     <ItemList gap="0" closed>
       {entries.map((entry) => {
@@ -77,12 +98,12 @@ export function EventList({ section, events, today }: EventListProps) {
             />
           </Stack>
         )}
-        {upcoming.length > 0 && <Rows entries={upcoming} section={section} />}
-        {undated.length > 0 && <Rows entries={undated} section={section} />}
+        {upcoming.length > 0 && <Entries entries={upcoming} section={section} view={state.view} />}
+        {undated.length > 0 && <Entries entries={undated} section={section} view={state.view} />}
         {past.length > 0 && (
           <>
             <TitleRow title={t('past')} />
-            <Rows entries={past} section={section} />
+            <Entries entries={past} section={section} view={state.view} />
           </>
         )}
       </PageColumn>
