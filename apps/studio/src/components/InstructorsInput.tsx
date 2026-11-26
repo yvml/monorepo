@@ -1,6 +1,7 @@
 // apps/studio/src/components/InstructorsInput.tsx
-import { CloseIcon } from '@sanity/icons';
-import { Autocomplete, Button, Flex, Stack } from '@sanity/ui';
+import { CloseIcon } from '@sanity/icons/Close';
+import { Button, Flex, Stack } from '@sanity/ui';
+import { Autocomplete } from '@sanity/ui/autocomplete';
 import { useEffect, useMemo, useState } from 'react';
 import { type ArrayOfObjectsInputProps, set, useClient } from 'sanity';
 
@@ -44,7 +45,7 @@ export function InstructorsInput({ value, onChange, readOnly, elementProps }: Ar
   const write = (next: Reference[]) => onChange(set(next));
 
   return (
-    <Stack space={2}>
+    <Stack gap={2}>
       {items.map((item) => (
         <Flex key={item._key} gap={2} align="center">
           {editing === item._key ? (

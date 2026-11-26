@@ -1,5 +1,5 @@
 import { localizedText } from '@hmidmismi/sanity-core';
-import { TagIcon } from '@sanity/icons';
+import { TagIcon } from '@sanity/icons/Tag';
 import { defineField, defineType } from 'sanity';
 
 /** A short line that sits above a heading or a list: "Board of Directors". */

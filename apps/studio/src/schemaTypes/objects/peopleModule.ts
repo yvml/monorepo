@@ -1,4 +1,4 @@
-import { UsersIcon } from '@sanity/icons';
+import { UsersIcon } from '@sanity/icons/Users';
 import { defineArrayMember, defineField, defineType } from 'sanity';
 
 /** A list of people. A kicker and a description above it are their own modules. */

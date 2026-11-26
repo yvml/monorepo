@@ -12,11 +12,11 @@
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
-    "@sanity/client": "^7.20.0"
+    "@sanity/client": "^7.20.0 || ^8.0.0"
   },
   "devDependencies": {
     "@hmidmismi/tsconfig": "workspace:*",
-    "@sanity/client": "^7.28.0"
+    "@sanity/client": "^8.17.0"
   },
   "author": "jasloe",
   "license": "UNLICENSED"
