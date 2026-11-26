@@ -3,7 +3,7 @@ import { ItemList, PageColumn, Row, Stack, Text } from '@hmidmismi/ui';
 import NextLink from 'next/link';
 import { type ReactNode, useMemo } from 'react';
 import { FilterBar, FilterSummary } from '@/components/filters';
-import { Site, TitleRow } from '@/components/layout';
+import { Header, Site } from '@/components/layout';
 import { ImageGrid, SanityImage } from '@/components/media';
 import { useFilterState } from '@/hooks';
 import { type TextKey } from '@/i18n';
@@ -97,7 +97,7 @@ export function Listing<T, C>({ title, count, spec, basePath, items, context, it
   return (
     <Site title={title}>
       <PageColumn>
-        <TitleRow title={title} count={count} />
+        <Header title={title} count={count} />
         {items.length === 0 ? (
           <Text>{empty}</Text>
         ) : (
@@ -118,7 +118,7 @@ export function Listing<T, C>({ title, count, spec, basePath, items, context, it
           .filter((part) => part.items.length > 0)
           .map((part, index) => (
             <Stack key={part.title ?? index} gap="4">
-              {part.title && <TitleRow title={part.title} />}
+              {part.title && <Header title={part.title} level="h2" />}
               <ListingEntries items={part.items.map(item)} view={state.view} />
             </Stack>
           ))}

@@ -1,7 +1,7 @@
 // apps/web/src/components/person/PersonPage.tsx
 import { ItemList, Link, PageColumn, Pair, Text, Title } from '@hmidmismi/ui';
 import { Blocks } from '@/components/content';
-import { DetailHeader, Site } from '@/components/layout';
+import { Header, Site } from '@/components/layout';
 import { ListingEntries } from '@/components/listing';
 import { formatDates } from '@/lib/dates';
 import { SanityImage } from '@/components/media';
@@ -21,7 +21,7 @@ export function PersonPage({ person }: { person: PersonDetail }) {
   return (
     <Site title={name}>
       <PageColumn as="article">
-        <DetailHeader title={name} lines={[person.location]} />
+        <Header align="center" title={name} lines={[person.location]} />
         <SanityImage image={person.portrait} label={t('portraitOf', { name })} />
         <Blocks value={person.biography} />
         {person.links?.length ? (

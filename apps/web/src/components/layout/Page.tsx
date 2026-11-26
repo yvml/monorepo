@@ -1,6 +1,6 @@
 // apps/web/src/components/layout/Page.tsx
-import { PageColumn, Text, Title } from '@hmidmismi/ui';
-import { CenteredHeader } from './CenteredHeader';
+import { PageColumn, Text } from '@hmidmismi/ui';
+import { Header } from './Header';
 import type { ReactNode } from 'react';
 import { Site } from './Site';
 import { ContentModules } from '@/components/content';
@@ -21,9 +21,7 @@ export function Page({ page, draftMode, children }: { page: PageDoc; draftMode?:
   return (
     <Site title={title}>
       <PageColumn as="article">
-        <CenteredHeader>
-          <Title level="h1">{title}</Title>
-        </CenteredHeader>
+        <Header title={title} align="center" />
         <div data-sanity={sanityAttr(Boolean(draftMode), page._id, 'page', 'content')}>
           <ContentModules modules={page.content} />
         </div>

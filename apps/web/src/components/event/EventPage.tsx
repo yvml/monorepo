@@ -4,7 +4,7 @@ import { stegaClean } from '@sanity/client/stega';
 import { ContentModules, Term } from '@/components/content';
 import { KeelaEmbed } from '@/components/keela';
 import { Dates } from '@/components/date';
-import { DetailHeader, Site } from '@/components/layout';
+import { Header, Site } from '@/components/layout';
 import { Breadcrumbs } from '@/components/navigation';
 import { SanityImage } from '@/components/media';
 import { localize, t } from '@/i18n';
@@ -32,7 +32,8 @@ export function EventPage({ section, entry, draftMode }: { section: Section; ent
     <Site title={title}>
       <PageColumn as="article">
         <Breadcrumbs section={section} id={entry._id} title={title} />
-        <DetailHeader
+        <Header
+          align="center"
           title={title}
           lines={[
             status && <span data-sanity={attr('status')}>{status}</span>,

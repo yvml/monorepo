@@ -5,7 +5,7 @@ import NextLink from 'next/link';
 import { ContentModules, Term } from '@/components/content';
 import { KeelaEmbed } from '@/components/keela';
 import { Dates } from '@/components/date';
-import { DetailHeader, Site } from '@/components/layout';
+import { Header, Site } from '@/components/layout';
 import { Breadcrumbs } from '@/components/navigation';
 import { SanityImage } from '@/components/media';
 import { localize, t } from '@/i18n';
@@ -36,7 +36,8 @@ export function WorkshopPage({ entry, draftMode }: { entry: WorkshopDetail; draf
     <Site title={title}>
       <PageColumn as="article">
         <Breadcrumbs section={WORKSHOPS} id={entry._id} title={title} />
-        <DetailHeader
+        <Header
+          align="center"
           title={title}
           lines={[soldOut && <span data-sanity={attr('status')}>{t('soldOut')}</span>, <Dates key="dates" entry={entry} attr={attr('dateTime')} />]}
         />
