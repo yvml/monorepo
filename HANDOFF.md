@@ -4,7 +4,7 @@ Snapshot for starting a new session, 2026-11-23. Read `CLAUDE.md` first: it has 
 
 ## What this is
 
-`hmidmismi/yvml`: pnpm + Turborepo monorepo. `@yvml/web` (Next 15, pages router) and `@yvml/studio` (Sanity Studio 6) consume shared `@hmidmismi/*` packages. `chorusworks/monorepo` (DRAM) consumes the same shared repos. The site is bilingual (`/` English, `/es` Spanish).
+`hmidmismi/yvml`: pnpm + Turborepo monorepo. `@yvml/web` (Next 16, pages router) and `@yvml/studio` (Sanity Studio 6) consume shared `@hmidmismi/*` packages. `chorusworks/monorepo` (DRAM) consumes the same shared repos. The site is bilingual (`/` English, `/es` Spanish).
 
 Commands from the root: `pnpm typecheck`, `pnpm typegen` (rerun after any schema or query change), `pnpm --filter @yvml/web dev` (builds the stylesheet, then runs Panda in watch mode beside Next), `pnpm --filter @yvml/web test` (vitest), `pnpm --filter @yvml/web lint`. `styled-system/` and `packages/sanity-types` are generated and gitignored, so a fresh clone needs `pnpm install` (the UI package generates its own on install), `pnpm typegen`, and `pnpm --filter @yvml/web panda:build` (`dev` and `build` run it).
 
