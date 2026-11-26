@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-pnpm + Turborepo monorepo for YVML. `apps/web` is Next 15 (pages router), `apps/studio` is Sanity Studio. UI, auth, Sanity helpers and tsconfig come from the `@hmidmismi/*` submodules in `packages/`. See `HANDOFF.md` for deployment and the preview site.
+pnpm + Turborepo monorepo for YVML. `apps/web` is Next 16 (pages router, Turbopack), `apps/studio` is Sanity Studio. UI, auth, Sanity helpers and tsconfig come from the `@hmidmismi/*` submodules in `packages/`. See `HANDOFF.md` for deployment and the preview site. Check the registry and the installed package's own docs (`node_modules/next/dist/docs/`) before choosing or keeping a dependency version: Next is 16 (middleware is `proxy`), the animation library is `motion` (`motion/react`), Panda is 2 (`createSlotRecipeContext`; `pnpm codegen` and `pnpm panda:build` clean the output first).
 
 ## Before writing code
 
