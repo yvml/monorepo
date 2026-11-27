@@ -1,6 +1,7 @@
 // apps/web/src/components/home/Hero.tsx
 import { Cover, ItemList, Picture, SiteMasthead, ThemeToggle, Wrap } from '@hmidmismi/ui';
 import NextLink from 'next/link';
+import { MASTHEAD_ID } from '@/components/layout';
 import { LanguageSwitcher, nextLink } from '@/components/navigation';
 import { Weather } from '@/components/weather';
 import { MAIN_NAV, ORG_NAME, SITE_SHORT_NAME } from '@/constants';
@@ -28,6 +29,7 @@ export function Hero() {
   return (
     <Cover as="section" min="screen" scrim="top" label={ORG_NAME} media={<Picture shape="fill" src="/images/home/pink.jpg" alt="" width={1600} height={900} priority />}>
       <SiteMasthead
+        id={MASTHEAD_ID}
         start={<UtilityLinks />}
         end={
           <>

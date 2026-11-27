@@ -2,6 +2,6 @@
 export { Page } from './Page';
 export { PageFooter } from './PageFooter';
 export { PageHeader } from './PageHeader';
-export { Site } from './Site';
+export { MASTHEAD_ID, Site } from './Site';
 export { Header } from './Header';
 export { DocumentPage } from './DocumentPage';

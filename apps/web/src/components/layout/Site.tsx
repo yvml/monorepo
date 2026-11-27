@@ -8,8 +8,8 @@ import { SITE_SHORT_NAME } from '@/constants';
 import { PageFooter } from './PageFooter';
 import { PageHeader } from './PageHeader';
 
-/** The id of the block a page opens with: the header stays out of sight until it has scrolled away. */
-const HERO_ID = 'hero';
+/** The id of the masthead a page's hero carries: the header stays out of sight until that has scrolled away, then follows the scroll direction. */
+export const MASTHEAD_ID = 'masthead';
 
 /**
  * The page frame: the notice band, the sticky header with the section tabs, the page, and the footer. The header's
@@ -35,8 +35,8 @@ export function Site({
         <title>{title ? `${stegaClean(title)} · ${SITE_SHORT_NAME}` : SITE_SHORT_NAME}</title>
       </Head>
       <NoticeBar />
-      {hero && <div id={HERO_ID}>{hero}</div>}
-      <PageHeader after={hero ? HERO_ID : undefined} />
+      {hero}
+      <PageHeader after={hero ? MASTHEAD_ID : undefined} />
       {subNav && <SubNav />}
       {/* The page's one main landmark, so screen-reader users can jump to the content. */}
       <main id="main">{children}</main>
