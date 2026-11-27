@@ -1,8 +1,8 @@
 // apps/web/src/components/navigation/SubNav.tsx
 import { LinkNav, linkNavClass, PageColumn } from '@hmidmismi/ui';
-import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { groupForPath, routePath } from './path';
+import { RememberedLink } from './RememberedLink';
 import { t } from '@/i18n';
 
 /**
@@ -24,14 +24,14 @@ export function SubNav() {
     <PageColumn>
       <LinkNav label={t(group.title)}>
         {items.map((item) => (
-          <NextLink
+          <RememberedLink
             key={item.path}
             href={`/${item.path}`}
             className={linkNavClass(item.path === current)}
             aria-current={item.path === current ? 'page' : undefined}
           >
             {t(item.title)}
-          </NextLink>
+          </RememberedLink>
         ))}
       </LinkNav>
     </PageColumn>
