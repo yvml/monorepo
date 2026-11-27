@@ -1,7 +1,6 @@
 // apps/web/src/pages/index.tsx
 import {
   Button,
-  Card,
   Cell,
   Grid,
   Input,
@@ -23,16 +22,45 @@ import NextLink from 'next/link';
 import { Hero } from '@/components/home/Hero';
 import { ImpactStats } from '@/components/home/ImpactStats';
 import { LazyEyeSection } from '@/components/home/LazyEyeSection';
-import { materialHue } from '@/components/home/materials';
 import { Site } from '@/components/layout';
 import { ORG_NAME } from '@/constants';
 import { t } from '@/i18n';
 import { type HomeProps, homeLoader } from '@/lib/loaders';
-import { workshopView } from '@/lib/workshop';
+import { type WorkshopView, workshopView } from '@/lib/workshop';
 
 export const getStaticProps = homeLoader;
 
 const IMAGES = '/images/home';
+
+/**
+ * A workshop as a row of pictures to look at: the one to feature is `stacked` (the picture over the text), the others `card`
+ * (the picture beside it). Both are the same row, so they take the pointer, the type and the lines alike.
+ */
+function workshopRow(workshop: WorkshopView, layout: 'stacked' | 'card') {
+  return (
+    <Row
+      layout={layout}
+      lead={
+        workshop.imageUrl ? (
+          <Picture
+            shape={layout === 'stacked' ? 'photo' : 'thumb'}
+            src={workshop.imageUrl}
+            alt=""
+            width={layout === 'stacked' ? 1200 : 600}
+            height={layout === 'stacked' ? 800 : 600}
+          />
+        ) : undefined
+      }
+      title={workshop.title}
+      meta={workshop.lines}
+      link={(className, content) => (
+        <NextLink className={className} href={workshop.href}>
+          {content}
+        </NextLink>
+      )}
+    />
+  );
+}
 
 /**
  * The home page, in the order of SITEMAP.md: the notice, the hero with its masthead, the statement, the workshops, the
@@ -70,47 +98,12 @@ export default function HomePage({ workshops }: HomeProps) {
               )}
             >
               <SplitGrid ratio="wide" sticky gap="lg">
-                <Card hue={materialHue(feature.material)} tint="soft">
-                  {feature.imageUrl && <Picture shape="photo" src={feature.imageUrl} alt="" width={1200} height={800} />}
-                  <Text face="display" size="4xl" figures>
-                    {feature.dates}
-                  </Text>
-                  <Title level="h3">
-                    <NextLink href={feature.href}>{feature.title}</NextLink>
-                  </Title>
-                  {feature.lines.slice(1).filter(Boolean).map((line) => (
-                    <Text key={line} variant="small">
-                      {line}
-                    </Text>
-                  ))}
-                  <Wrap>
-                    <Button asChild>
-                      <NextLink href={feature.href}>
-                        <span aria-hidden>{t('register')}</span>
-                        <VisuallyHidden>{t('registerFor', { title: feature.title })}</VisuallyHidden>
-                      </NextLink>
-                    </Button>
-                  </Wrap>
-                </Card>
+                <ItemList gap="0" closed>
+                  <li>{workshopRow(feature, 'stacked')}</li>
+                </ItemList>
                 <ItemList gap="0" closed>
                   {rest.map((workshop) => (
-                    <li key={workshop.id}>
-                      <Row
-                        layout="card"
-                        lead={
-                          workshop.imageUrl ? (
-                            <Picture shape="thumb" src={workshop.imageUrl} alt="" width={600} height={600} />
-                          ) : undefined
-                        }
-                        title={workshop.title}
-                        meta={workshop.lines}
-                        link={(className, content) => (
-                          <NextLink className={className} href={workshop.href}>
-                            {content}
-                          </NextLink>
-                        )}
-                      />
-                    </li>
+                    <li key={workshop.id}>{workshopRow(workshop, 'card')}</li>
                   ))}
                 </ItemList>
               </SplitGrid>
