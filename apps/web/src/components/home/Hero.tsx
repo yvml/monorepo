@@ -31,7 +31,6 @@ export function Hero() {
         tabs={tabs}
         menu={{
           label: t('navMenu'),
-          control: <LanguageSwitcher />,
           panel: (
             <>
               <ItemList gap="2">
@@ -43,7 +42,6 @@ export function Hero() {
               </ItemList>
               <Wrap gap="4" align="center">
                 <UtilityLinks />
-                <ThemeToggle />
               </Wrap>
             </>
           ),
