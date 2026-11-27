@@ -194,7 +194,7 @@ export default function HomePage({ workshops }: HomeProps) {
               {t('homeNewsletter')}
             </Title>
             <form onSubmit={(event) => event.preventDefault()}>
-              <Wrap gap="3">
+              <Wrap gap="3" nowrap>
                 <Input type="email" autoComplete="email" placeholder={t('homeEmail')} aria-label={t('homeEmail')} />
                 <Button type="submit">{t('homeSubscribe')}</Button>
               </Wrap>
