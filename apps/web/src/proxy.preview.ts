@@ -1,6 +1,7 @@
-// apps/web/src/middleware.preview.ts
-// The login for the private preview site. Next only picks this file up as middleware when `pageExtensions` includes
-// `preview.ts`, which next.config.ts sets for the gated preview site alone, so every other build has no middleware at all.
+// apps/web/src/proxy.preview.ts
+// The login for the private preview site. Next (16 renamed middleware to proxy) only picks this file up as the proxy when
+// `pageExtensions` includes `preview.ts`, which next.config.ts sets for the gated preview site alone, so every other build has
+// no proxy at all.
 // The sign-in itself is Clerk's hosted page with its Google connector; nothing here touches a database.
 import { clerkClient, clerkMiddleware } from '@clerk/nextjs/server';
 import { type NextFetchEvent, type NextRequest, NextResponse } from 'next/server';
@@ -34,7 +35,7 @@ const clerk = clerkMiddleware(async (auth, request) => {
  * @param event - Next's fetch event, which Clerk needs.
  * @returns the page, a redirect to sign in, or a 403.
  */
-export default async function middleware(request: NextRequest, event: NextFetchEvent) {
+export default async function proxy(request: NextRequest, event: NextFetchEvent) {
   if (isPublicPath(request.nextUrl.pathname)) return NextResponse.next();
   if (await verifyPreviewCredential(request.cookies.get(PREVIEW_COOKIE)?.value, previewSecret())) return NextResponse.next();
   return clerk(request, event);

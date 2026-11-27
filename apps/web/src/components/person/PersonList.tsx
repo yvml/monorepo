@@ -1,37 +1,33 @@
 // apps/web/src/components/person/PersonList.tsx
-import { CardItem, Cell, Grid, ListHeader, PageColumn, Text } from '@hmidmismi/ui';
-import NextLink from 'next/link';
-import { Site } from '@/components/layout';
-import { SanityImage } from '@/components/media';
-import type { PersonSummary } from '@/lib/sanity';
+import { Listing } from '@/components/listing';
 import { t } from '@/i18n';
+import { personListing } from '@/lib/filters';
+import type { PersonSummary } from '@/lib/sanity';
 
 /**
- * Everyone who has a page, as cards with their portrait, name and location.
+ * Everyone who has a page: `personListing` over the people.
  *
  * @param props - the people.
  * @returns the page.
  */
 export function PersonList({ people }: { people: PersonSummary[] }) {
   return (
-    <Site title={t('navPeople')}>
-      <PageColumn>
-        <ListHeader title={t('navPeople')} />
-        {!people.length && <Text>{t('emptyPeople')}</Text>}
-        <Grid>
-          {people.map((person) => (
-            <Cell key={person._id} span="3">
-              <CardItem>
-                <NextLink href={`/people/${person.slug}`}>
-                  <SanityImage image={person.portrait} label={person.title ?? ''} decorative />
-                  {person.title}
-                </NextLink>
-                {person.location && <Text variant="small">{person.location}</Text>}
-              </CardItem>
-            </Cell>
-          ))}
-        </Grid>
-      </PageColumn>
-    </Site>
+    <Listing
+      title={t('navPeople')}
+      spec={personListing}
+      basePath="/people"
+      items={people}
+      context={undefined}
+      item={(person) => ({
+        id: person._id,
+        href: `/people/${person.slug}`,
+        title: person.title ?? '',
+        image: person.portrait,
+        lines: [person.location],
+      })}
+      empty={t('emptyPeople')}
+      results="resultsOfPeople"
+      noMatch="noPeopleMatch"
+    />
   );
 }

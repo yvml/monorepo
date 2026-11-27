@@ -1,14 +1,12 @@
 // apps/web/src/components/workshop/WorkshopPage.tsx
-import { CenteredLines, Link, PageColumn, PageHeader, TermList, TermRow, Text, Title } from '@hmidmismi/ui';
+import { ItemList, Link } from '@hmidmismi/ui';
 import { stegaClean } from '@sanity/client/stega';
 import NextLink from 'next/link';
-import { ContentModules } from '@/components/content';
+import { DocumentContent, Term } from '@/components/content';
 import { KeelaEmbed } from '@/components/keela';
 import { Dates } from '@/components/date';
-import { Site } from '@/components/layout';
+import { DocumentPage } from '@/components/layout';
 import { Breadcrumbs } from '@/components/navigation';
-import { SanityImage } from '@/components/media';
-import { WorkshopTerm } from './WorkshopTerm';
 import { localize, t } from '@/i18n';
 import { WORKSHOPS } from '@/constants';
 import { type WorkshopDetail } from '@/lib/sanity';
@@ -34,67 +32,57 @@ export function WorkshopPage({ entry, draftMode }: { entry: WorkshopDetail; draf
   const materials = entry.materials?.map((term) => stegaClean(localize(term))).join(', ');
 
   return (
-    <Site title={title}>
-      <PageColumn as="article">
-        <Breadcrumbs section={WORKSHOPS} id={entry._id} title={title} />
-        <PageHeader>
-          <Title level="h1">{title}</Title>
-          <CenteredLines>
-            {soldOut && <p data-sanity={attr('status')}>{t('soldOut')}</p>}
-            <p>
-              <Dates entry={entry} attr={attr('dateTime')} />
-            </p>
-          </CenteredLines>
-        </PageHeader>
-        <div data-sanity={attr('image')}>
-          <SanityImage image={entry.image} label={title} />
-        </div>
-        <TermList ruled>
-          {entry.instructors?.length ? (
-            <WorkshopTerm term="termInstructors" field="instructors" attr={attr}>
-              {entry.instructors.map((person, index) => (
-                <span key={person._id}>
-                  {index > 0 && ', '}
-                  {person.slug ? <NextLink href={`/people/${person.slug}`}>{stegaClean(person.title)}</NextLink> : stegaClean(person.title)}
-                </span>
-              ))}
-            </WorkshopTerm>
-          ) : null}
-          {entry.format && (
-            <WorkshopTerm term="termFormat" field="format" attr={attr}>
-              {t(FORMAT[entry.format])}
-            </WorkshopTerm>
-          )}
-          {entry.price != null && (
-            <WorkshopTerm term="termPrice" field="price" attr={attr}>
-              {`$${entry.price}`}
-            </WorkshopTerm>
-          )}
-          {entry.scholarshipAvailable && (
-            <WorkshopTerm term="termScholarship" field="scholarshipAvailable" attr={attr}>
-              {t('scholarshipFull')}
-            </WorkshopTerm>
-          )}
-          {types && (
-            <WorkshopTerm term="termType" field="workshopTypes" attr={attr}>
-              {types}
-            </WorkshopTerm>
-          )}
-          {materials && (
-            <WorkshopTerm term="termMaterials" field="materials" attr={attr}>
-              {materials}
-            </WorkshopTerm>
-          )}
-          {!keela && entry.registrationUrl && !soldOut && (
-            <TermRow term={t('termRegistration')}>
-              <Link href={entry.registrationUrl}>{t('register')}</Link>
-            </TermRow>
-          )}
-        </TermList>
-        <ContentModules modules={entry.content} />
-        {keela && !soldOut && <KeelaEmbed url={keela} title={t('registerFor', { title: stegaClean(title) })} />}
-        {!entry.content?.length && !entry.instructors?.length && <Text>{t('detailsToFollow')}</Text>}
-      </PageColumn>
-    </Site>
+    <DocumentPage
+      title={title}
+      breadcrumbs={<Breadcrumbs section={WORKSHOPS} id={entry._id} title={title} />}
+      lines={[soldOut && <span data-sanity={attr('status')}>{t('soldOut')}</span>, <Dates key="dates" entry={entry} attr={attr('dateTime')} />]}
+      image={{ value: entry.image, label: title, attr: attr('image') }}
+      empty={!entry.content?.length && !entry.instructors?.length}
+    >
+      <ItemList as="dl" layout="pairs" ruled>
+        {entry.instructors?.length ? (
+          <Term term="termInstructors" attr={attr('instructors')}>
+            {entry.instructors.map((person, index) => (
+              <span key={person._id}>
+                {index > 0 && ', '}
+                {person.slug ? <NextLink href={`/people/${person.slug}`}>{stegaClean(person.title)}</NextLink> : stegaClean(person.title)}
+              </span>
+            ))}
+          </Term>
+        ) : null}
+        {entry.format && (
+          <Term term="termFormat" attr={attr('format')}>
+            {t(FORMAT[entry.format])}
+          </Term>
+        )}
+        {entry.price != null && (
+          <Term term="termPrice" attr={attr('price')}>
+            {`$${entry.price}`}
+          </Term>
+        )}
+        {entry.scholarshipAvailable && (
+          <Term term="termScholarship" attr={attr('scholarshipAvailable')}>
+            {t('scholarshipFull')}
+          </Term>
+        )}
+        {types && (
+          <Term term="termType" attr={attr('workshopTypes')}>
+            {types}
+          </Term>
+        )}
+        {materials && (
+          <Term term="termMaterials" attr={attr('materials')}>
+            {materials}
+          </Term>
+        )}
+        {!keela && entry.registrationUrl && !soldOut && (
+          <Term term="termRegistration">
+            <Link href={entry.registrationUrl}>{t('register')}</Link>
+          </Term>
+        )}
+      </ItemList>
+      <DocumentContent modules={entry.content} attr={attr('content')} />
+      {keela && !soldOut && <KeelaEmbed url={keela} title={t('registerFor', { title: stegaClean(title) })} />}
+    </DocumentPage>
   );
 }

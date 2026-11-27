@@ -1,10 +1,9 @@
 // apps/web/src/components/person/PersonPage.tsx
-import { CenteredLines, ItemList, Link, PageColumn, PageHeader, TermList, TermRow, Text, Title } from '@hmidmismi/ui';
-import NextLink from 'next/link';
+import { ItemList, Link, Pair, Title } from '@hmidmismi/ui';
 import { Blocks } from '@/components/content';
-import { Dates } from '@/components/date';
-import { Site } from '@/components/layout';
-import { SanityImage } from '@/components/media';
+import { DocumentPage } from '@/components/layout';
+import { ListingEntries } from '@/components/listing';
+import { formatDates } from '@/lib/dates';
 import { localize, t } from '@/i18n';
 import type { PersonDetail } from '@/lib/sanity';
 
@@ -19,46 +18,38 @@ export function PersonPage({ person }: { person: PersonDetail }) {
   const workshops = person.workshops ?? [];
 
   return (
-    <Site title={name}>
-      <PageColumn as="article">
-        <PageHeader>
-          <Title level="h1">{name}</Title>
-          {person.location && (
-            <CenteredLines>
-              <p>{person.location}</p>
-            </CenteredLines>
+    <DocumentPage
+      title={name}
+      lines={[person.location]}
+      image={{ value: person.portrait, label: t('portraitOf', { name }) }}
+      empty={!person.biography?.length && !workshops.length && !person.links?.length}
+    >
+      <Blocks value={person.biography} />
+      {person.links?.length ? (
+        <ItemList as="dl" layout="pairs" ruled>
+          {person.links.map((link) =>
+            link.url ? (
+              <Pair key={link._key} label={link.label ?? link.url}>
+                <Link href={link.url}>{link.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</Link>
+              </Pair>
+            ) : null
           )}
-        </PageHeader>
-        <SanityImage image={person.portrait} label={t('portraitOf', { name })} />
-        <Blocks value={person.biography} />
-        {person.links?.length ? (
-          <TermList ruled>
-            {person.links.map((link) =>
-              link.url ? (
-                <TermRow key={link._key} term={link.label ?? link.url}>
-                  <Link href={link.url}>{link.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</Link>
-                </TermRow>
-              ) : null
-            )}
-          </TermList>
-        ) : null}
-        {workshops.length > 0 && (
-          <>
-            <Title level="h2">{t('navWorkshops')}</Title>
-            <ItemList>
-              {workshops.map((workshop) => (
-                <li key={workshop._id}>
-                  <NextLink href={`/workshops/${workshop.slug}`}>{localize(workshop.title)}</NextLink>
-                  {' · '}
-                  <Dates entry={workshop} />
-                  {workshop.status === 'soldOut' && ` · ${t('soldOut')}`}
-                </li>
-              ))}
-            </ItemList>
-          </>
-        )}
-        {!person.biography?.length && !workshops.length && !person.links?.length && <Text>{t('detailsToFollow')}</Text>}
-      </PageColumn>
-    </Site>
+        </ItemList>
+      ) : null}
+      {workshops.length > 0 && (
+        <>
+          <Title level="h2">{t('navWorkshops')}</Title>
+          <ListingEntries
+            view="list"
+            items={workshops.map((workshop) => ({
+              id: workshop._id,
+              href: `/workshops/${workshop.slug}`,
+              title: localize(workshop.title),
+              lines: [formatDates(workshop), workshop.status === 'soldOut' && t('soldOut')],
+            }))}
+          />
+        </>
+      )}
+    </DocumentPage>
   );
 }

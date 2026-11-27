@@ -1,5 +1,5 @@
 // apps/web/src/components/content/ContentModules.tsx
-import { Figure, NameList } from '@hmidmismi/ui';
+import { Figure, ItemList } from '@hmidmismi/ui';
 import { PortableText, type PortableTextBlock } from '@portabletext/react';
 import { stegaClean } from '@sanity/client/stega';
 import NextLink from 'next/link';
@@ -26,7 +26,7 @@ export function ContentModules({ modules }: { modules?: ContentModule[] | null }
         }
         if (module._type === 'peopleModule') {
           return (
-            <NameList key={module._key}>
+            <ItemList key={module._key} gap="pair" size="lg">
               {module.people?.map(({ _key, role, person }) =>
                 person ? (
                   <li key={_key}>
@@ -39,7 +39,7 @@ export function ContentModules({ modules }: { modules?: ContentModule[] | null }
                   </li>
                 ) : null
               )}
-            </NameList>
+            </ItemList>
           );
         }
         // An image module with no file yet shows nothing, not the placeholder.

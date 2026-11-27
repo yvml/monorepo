@@ -29,4 +29,9 @@ export const eventListing: ListSpec<EventSummary, EventContext> = {
   ],
   sorts: [{ value: 'soonest', label: 'sortDateAsc', compare: byDate }],
   defaultSort: 'soonest',
+  defaultView: 'list',
+  views: [
+    { value: 'list', label: 'viewList' },
+    { value: 'grid', label: 'viewGrid' },
+  ],
 };

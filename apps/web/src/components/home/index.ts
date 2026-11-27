@@ -1,0 +1,7 @@
+// apps/web/src/components/home/index.ts
+export { HomeFooter } from './HomeFooter';
+export { HomeNotice } from './HomeNotice';
+export { LocaleLink } from './LocaleLink';
+export { materialHue } from './materials';
+export { ThemeButton } from './ThemeButton';
+export { default as shared } from './home.module.css';

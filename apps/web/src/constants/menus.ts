@@ -51,3 +51,16 @@ export const SOCIAL: MenuItem[] = [
   { key: 'facebook', label: 'Facebook', ariaLabel: 'YVML on Facebook', href: 'https://www.facebook.com/yuccavalleymaterial/' },
   { key: 'youtube', label: 'YouTube', ariaLabel: 'YVML on YouTube', href: 'https://www.youtube.com/@YuccaValleyMaterial' },
 ];
+
+/**
+ * The header navigation, in the order of SITEMAP.md, as the key of each label (read with `t` at render time) and where
+ * it goes. A destination without a page yet links to '#'. Every header, the home page's included, is built from this.
+ */
+export const MAIN_NAV: readonly { key: TextKey; href: string }[] = [
+  { key: 'navAbout', href: '/about' },
+  { key: 'navWorkshops', href: '/workshops' },
+  { key: 'navResidencies', href: '#' },
+  { key: 'navPeople', href: '/people' },
+  { key: 'navEvents', href: '/events' },
+  { key: 'navSupport', href: '/support' },
+];

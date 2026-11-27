@@ -1,5 +1,6 @@
 import { localizedText } from '@hmidmismi/sanity-core';
-import { AddIcon, RemoveCircleIcon } from '@sanity/icons';
+import { AddIcon } from '@sanity/icons/Add';
+import { RemoveCircleIcon } from '@sanity/icons/RemoveCircle';
 import { Box, Button, Flex, Label, Stack, TextInput } from '@sanity/ui';
 import { useCallback } from 'react';
 import type { ArrayOfObjectsInputProps } from 'sanity';
@@ -53,9 +54,9 @@ function LocalizedSlugInput(props: ArrayOfObjectsInputProps) {
   };
 
   return (
-    <Stack space={3}>
+    <Stack gap={3}>
       {SLUG_LANGS.filter(({ id }) => shown(id)).map(({ id }) => (
-        <Stack key={id} space={2}>
+        <Stack key={id} gap={2}>
           <Label size={1}>{id.toUpperCase()}</Label>
           <Flex align="center" gap={2}>
             <Box flex={1}>

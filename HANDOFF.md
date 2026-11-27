@@ -4,7 +4,7 @@ Snapshot for starting a new session, 2026-11-23. Read `CLAUDE.md` first: it has 
 
 ## What this is
 
-`hmidmismi/yvml`: pnpm + Turborepo monorepo. `@yvml/web` (Next 15, pages router) and `@yvml/studio` (Sanity Studio 6) consume shared `@hmidmismi/*` packages. `chorusworks/monorepo` (DRAM) consumes the same shared repos. The site is bilingual (`/` English, `/es` Spanish).
+`hmidmismi/yvml`: pnpm + Turborepo monorepo. `@yvml/web` (Next 16, pages router) and `@yvml/studio` (Sanity Studio 6) consume shared `@hmidmismi/*` packages. `chorusworks/monorepo` (DRAM) consumes the same shared repos. The site is bilingual (`/` English, `/es` Spanish).
 
 Commands from the root: `pnpm typecheck`, `pnpm typegen` (rerun after any schema or query change), `pnpm --filter @yvml/web dev` (builds the stylesheet, then runs Panda in watch mode beside Next), `pnpm --filter @yvml/web test` (vitest), `pnpm --filter @yvml/web lint`. `styled-system/` and `packages/sanity-types` are generated and gitignored, so a fresh clone needs `pnpm install` (the UI package generates its own on install), `pnpm typegen`, and `pnpm --filter @yvml/web panda:build` (`dev` and `build` run it).
 
@@ -13,7 +13,7 @@ Commands from the root: `pnpm typecheck`, `pnpm typegen` (rerun after any schema
 `feat/web-data-layer` is merged to `main`. The rest of the web work is on stacked branches, all pushed; each has a pull request into the one below it, in this order:
 
 1. `feat/web-data-layer` (off `main`): dark mode init, newsletter signup, menus and social links, the Sanity data layer, the English/Spanish text map, the filter engine and path-based workshop URLs, `CLAUDE.md`.
-2. `refactor/filters-and-listing`: first review pass, ISR for every page, the preview login moved to `src/middleware.ts`, dates by language, tests in `apps/web/tests/`.
+2. `refactor/filters-and-listing`: first review pass, ISR for every page, the preview login moved to `src/proxy.preview.ts`, dates by language, tests in `apps/web/tests/`.
 3. `refactor/components-structure`: components in domain folders with barrels, navigation apart from layout, `hooks/`, the people list and page, the Contact route, listings without click-to-edit markers, the instructors input takes focus in Presentation (studio).
 4. `feat/web-panda`: the app owns `panda.config.ts`, `styled-system/` and its theme (`src/theme/`).
 5. `refactor/constants-and-i18n`: `i18n/` and `constants/` out of `lib/`, the workshop listing split into `lib/workshops/`.
@@ -41,7 +41,7 @@ Rules: a change to a shared repo goes on a `feat/*` or `fix/*` branch with a con
 ## What the web app does now
 
 - **Pages** are incremental static (`withDraft` in `lib/loaders/static.ts`, revalidated every 60 s; dynamic routes generate on first visit). Draft mode (Presentation) bypasses the cache. Listings carry no click-to-edit markers: entries are edited on their own pages. A cached page has no query string, so `?sort=`, `?q=` and the like are read in the browser after hydration, and a non-canonical order of path facets redirects without the query.
-- **Preview login** is Clerk with its Google connector: `src/middleware.preview.ts` is middleware only in builds with `PREVIEW_SITE=true` and login on (`next.config.ts` adds `preview.ts` to `pageExtensions`), so the live site and the pull request previews have no middleware. Signed-in people must be on `PREVIEW_ALLOWED_EMAILS`; the studio's Presentation iframe carries a signed credential set by `/api/draft-mode/enable` (`PREVIEW_COOKIE_SECRET`). No database. Local development uses `PREVIEW_SITE=true` and `PREVIEW_REQUIRE_LOGIN=false`.
+- **Preview login** is Clerk with its Google connector: `src/proxy.preview.ts` is the proxy (Next 16 renamed middleware) only in builds with `PREVIEW_SITE=true` and login on (`next.config.ts` adds `preview.ts` to `pageExtensions`), so the live site and the pull request previews have no middleware. Signed-in people must be on `PREVIEW_ALLOWED_EMAILS`; the studio's Presentation iframe carries a signed credential set by `/api/draft-mode/enable` (`PREVIEW_COOKIE_SECRET`). No database. Local development uses `PREVIEW_SITE=true` and `PREVIEW_REQUIRE_LOGIN=false`.
 - **Language in the address**: English has no prefix, Spanish is `/es/...`. `/en/...` redirects to the plain address in `netlify.toml` (Next's own redirects loop under `i18n`).
 - **Filtering** (`lib/filters/`, `components/filters/`): a listing is a `ListSpec` (kinds: search, select, multi, toggle, range; sorts; views). Listings: workshops (`lib/filters/workshop.ts`) and events and exhibitions (`lib/filters/event.ts`), each with its sorts from `lib/sorts/`; `personFilter` is shared by anything that has people. State lives in the address: facets in the path (`/workshops/material/adobe/open`), the rest in the query. One catch-all page serves the workshop listing and a workshop's own page, so `open`, `closed`, `material`, `type`, `instructor` are reserved.
 - **Styling**: the app builds its own stylesheet from the design system's preset and `src/theme/` (neutral palette, no monospace face).
@@ -58,7 +58,8 @@ Not verified: events and exhibitions with real data (the dataset has none; fixtu
 
 - **Mocks**: https://yvml-mocks.netlify.app (Netlify site `9926452c-9063-4cf9-90ba-7e97de575fce`). Deploy: `cd mocks && python3 make.py && netlify deploy --prod --dir dist --site 9926452c-9063-4cf9-90ba-7e97de575fce`. Behind Netlify Visitor access until turned off. Every deploy URL is listed in `mocks/DEPLOYS.md` (on the `mocks` branch).
 - **Staging** https://yvml.netlify.app and **preview** https://preview--yvml.netlify.app (the studio's Presentation target): built from earlier `main`/`preview`; none of this session's web work is deployed. `staging.yvml.org` waits on a certificate for the Hover DNS; `preview.yvml.org` is not mapped to the `preview` branch.
-- Live: none of the preview variables set, and `/sign-in`, `/api/auth/*` and `/api/draft-mode/*` answer 404. Preview: `PREVIEW_SITE=true`, `PREVIEW_REQUIRE_LOGIN=false` (the Google login gate is not set up: no OAuth client or `auth_*` tables yet).
+- Live: none of the preview variables set, and `/api/draft-mode/*` answers 404. Preview: `PREVIEW_SITE=true`, `PREVIEW_REQUIRE_LOGIN=false` (the Clerk login is built but switched off until the cutover below, so the preview site is open to anyone with the URL).
+- **At the cutover to the production domain, turn the preview login on:** (1) create the Clerk application and enable its Google connector; its domain is the host the gated preview site is served on; (2) on the `preview` branch's Netlify environment remove `PREVIEW_REQUIRE_LOGIN`, and set `CLERK_SECRET_KEY`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `PREVIEW_ALLOWED_EMAILS` and `PREVIEW_COOKIE_SECRET` (32+ random characters); (3) optionally add `"email": "{{user.primary_email_address}}"` to Clerk's session token; (4) redeploy and check sign-in, the allow-list's 403 and Presentation.
 
 ## The mocks (`mocks/`, branch `mocks`)
 
@@ -77,7 +78,7 @@ Saved in `~/.claude/projects/-Users-jasloe-projects-yvml/memory/`: a question ge
 1. Merge the pull requests in order, merge the UI branches, bump the pins here and in `chorusworks/monorepo`.
 2. Redeploy staging and preview and check the workshop listing and Presentation there.
 3. Decide the Lazy Eye and main-site design direction from the mocks, then build it for real (the theme in `src/theme/` and the home page are placeholders).
-4. Open items: AI alt text (`@sanity/assist` is installed, not configured); the Clerk application (enable the Google connector, copy the two keys, set the preview branch's environment: the keys, `PREVIEW_ALLOWED_EMAILS`, `PREVIEW_COOKIE_SECRET`) and checking the login on the `preview` deploy; map `preview.yvml.org` and finish the `staging.yvml.org` certificate; chips as real links for crawlers (needs a link version of `Chip` in the UI package); a Sanity webhook for on-demand revalidation; component tests; the instructor and material comboboxes show no counts because the UI package's combobox ignores option updates.
+4. Open items: AI alt text (`@sanity/assist` is installed, not configured); the Clerk login, deferred to the production cutover (see Deployments); map `preview.yvml.org` and finish the `staging.yvml.org` certificate; chips as real links for crawlers (needs a link version of `Chip` in the UI package); a Sanity webhook for on-demand revalidation; component tests; the instructor and material comboboxes show no counts because the UI package's combobox ignores option updates.
 5. Archive `chorusworks/clients`, `chorusworks/sanity-core` and `chorusworks/sanity-types` once nothing points at them.
 
 ## Gotchas

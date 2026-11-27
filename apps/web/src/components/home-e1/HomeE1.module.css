@@ -1,0 +1,91 @@
+/* apps/web/src/components/home-e1/HomeE1.module.css
+   Home E.1: one pinned stage, scenes on it, and one scroll timeline (see timeline.ts) that moves them. Nothing here
+   moves by itself; every transform and fade is set by Framer Motion from the timeline. A photograph is a duotone in one of
+   five saturated palettes, made once in a canvas (DuotoneImage). */
+.p1{--sh:#0a24d6;--hi:#ffe45c}
+.p2{--sh:#a30f2d;--hi:#ffb3c7}
+.p3{--sh:#00563a;--hi:#d9ff66}
+.p4{--sh:#4a0fc2;--hi:#ffc08a}
+.p5{--sh:#00585f;--hi:#ffd1c4}
+
+.root{
+  /* an eased fade from solid to nothing, so the edge never shows */
+  --fadeX:linear-gradient(90deg,transparent 0,rgba(0,0,0,.03) 6%,rgba(0,0,0,.12) 14%,rgba(0,0,0,.28) 24%,rgba(0,0,0,.5) 36%,rgba(0,0,0,.74) 50%,rgba(0,0,0,.9) 64%,rgba(0,0,0,.98) 78%,#000 90%);
+  --fadeY:linear-gradient(180deg,#000 0,#000 30%,rgba(0,0,0,.98) 40%,rgba(0,0,0,.9) 52%,rgba(0,0,0,.74) 64%,rgba(0,0,0,.5) 76%,rgba(0,0,0,.28) 86%,rgba(0,0,0,.1) 94%,transparent);
+}
+
+/* the stage: as tall as the timeline, with one screen-high window that stays put while the scenes move through it */
+.track{position:relative;height:calc(100vh * (var(--len) + 1))}
+@supports (height:100dvh){.track{height:calc(100dvh * (var(--len) + 1))}}
+.stage{position:sticky;top:0;height:100vh;overflow:hidden;isolation:isolate;background:#000}
+@supports (height:100dvh){.stage{height:100dvh}}
+.scene{position:absolute;inset:0;overflow:hidden;background:var(--sh);color:var(--hi);box-shadow:0 -1.25rem 3rem rgba(0,0,0,.28)}
+
+/* a photograph, made a duotone by DuotoneImage, with a fine halftone over it */
+.ph{position:absolute;inset:0 0 auto auto;width:58%;height:118%;isolation:isolate;background:var(--sh);overflow:hidden;-webkit-mask-image:var(--fadeX);mask-image:var(--fadeX)}
+.ph::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background-image:radial-gradient(circle,rgba(0,0,0,.5) 0 1.1px,transparent 1.6px);background-size:4px 4px;mix-blend-mode:multiply;opacity:.16}
+.phFull{inset:0;width:100%;height:100%;-webkit-mask-image:none;mask-image:none}
+.duo,.plain{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.duo{opacity:0;transition:opacity .6s}
+.duo[data-ready]{opacity:1}
+.plain{filter:grayscale(1) contrast(1.5)}
+
+.b{position:absolute;z-index:3;left:var(--pad);top:50%;transform:translateY(-50%);width:calc(42% - var(--pad) - 1rem);display:grid;gap:1.25rem;justify-items:start}
+.t{font:800 clamp(2.25rem,4.6vw,4.5rem)/.96 var(--sans);font-variation-settings:"ROND" 0;letter-spacing:-.04em;text-wrap:balance;color:var(--hi)}
+.lede{font:800 clamp(1.5rem,2.6vw,2.5rem)/1 var(--sans);font-variation-settings:"ROND" 0;letter-spacing:-.04em;text-wrap:balance}
+.a{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.5rem}
+.btn{display:inline-flex;align-items:center;min-height:52px;padding:0 1.75rem;background:var(--hi);color:var(--sh);font:700 1rem/1 var(--sans);text-decoration:none}
+.btn:hover{background:var(--sh);color:var(--hi);box-shadow:inset 0 0 0 2px var(--hi)}
+
+/* a card of colour and type only: the solid colour is the highlight, the type the shadow */
+.band{position:absolute;inset:0;display:grid;align-content:center;gap:2rem;padding:clamp(4rem,12vw,9rem) var(--pad);background:var(--hi);color:var(--sh)}
+.band .t{color:var(--sh);max-width:20ch}
+.form{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-end;width:min(100%,36rem)}
+.form input{flex:1 1 14rem;min-height:44px;border:0;border-bottom:1.5px solid var(--sh);background:transparent;color:var(--sh);font:400 1.125rem var(--sans);border-radius:0}
+.form input::placeholder{color:var(--sh);opacity:.7}
+.form button{min-height:44px;padding:0 1.25rem;border:0;background:var(--sh);color:var(--hi);font:700 1rem var(--sans);cursor:pointer}
+
+/* the eyebrow: one fixed label */
+.eb{position:fixed;left:var(--pad);top:calc(var(--pad) + 3.5rem);z-index:20;margin:0;pointer-events:none;font:700 .9375rem/1 var(--sans);letter-spacing:.06em;text-transform:uppercase}
+
+/* the headroom bar */
+.hd{position:fixed;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.25rem var(--pad)}
+.hdSolid,.hdSoft{position:absolute;pointer-events:none;z-index:-1}
+.hdSolid{inset:0;background:var(--bar-sh)}
+.hdSoft{inset:0 0 -2.25rem 0;background:linear-gradient(var(--bar-sh),color-mix(in srgb,var(--bar-sh) 90%,transparent) 14%,color-mix(in srgb,var(--bar-sh) 72%,transparent) 30%,color-mix(in srgb,var(--bar-sh) 46%,transparent) 50%,color-mix(in srgb,var(--bar-sh) 22%,transparent) 70%,color-mix(in srgb,var(--bar-sh) 6%,transparent) 88%,transparent)}
+.wm{display:inline-flex;align-items:center;min-height:44px;color:inherit;text-decoration:none;font:800 1.125rem/1 var(--sans);font-variation-settings:"ROND" 0;letter-spacing:-.02em}
+.wm .short{display:none}
+.menu{position:static}
+.menu summary{display:inline-flex;align-items:center;min-height:44px;cursor:pointer;list-style:none;color:inherit;font:800 1rem/1 var(--sans)}
+.menu summary::-webkit-details-marker{display:none}
+.panel{position:absolute;left:0;right:0;top:100%;display:grid;gap:1.5rem;padding:1.5rem var(--pad) 2rem;background:#0e0c0a;color:#fff}
+.panel ul{display:grid;gap:.25rem}
+.panel nav a{display:inline-flex;align-items:center;min-height:44px;color:#fff;text-decoration:none;font:700 clamp(2rem,5vw,3.5rem)/1 var(--sans);font-variation-settings:"ROND" 0;letter-spacing:-.03em}
+.panel nav a:hover{text-decoration:underline}
+.pu{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.25);font-size:.9375rem;color:#fff}
+.pu a{display:inline-flex;align-items:center;min-height:44px;color:#fff;text-decoration:none}
+.pu a:hover{text-decoration:underline}
+
+.after{position:relative;z-index:1}
+
+/* Lazy Eye: the scene is the stick; its canvas is the halftone */
+.leStick{position:absolute;inset:0;overflow:hidden;background:var(--sh);color:#fff}
+.leImg{display:none}
+.leCv{position:absolute;inset:0;width:100%;height:100%}
+.leT{position:absolute;inset:0;display:grid;place-items:center;padding:var(--pad);text-align:center;mix-blend-mode:difference;color:#fff;pointer-events:none}
+.leT a{pointer-events:auto;color:inherit;text-decoration:none}
+.leA h2{font:800 clamp(2.75rem,9vw,9rem)/.92 var(--sans);font-variation-settings:"ROND" 0;letter-spacing:-.045em}
+.leB a{display:grid;gap:1rem;justify-items:center}
+.leB strong{font:800 clamp(2.5rem,7.5vw,7rem)/.95 var(--sans);font-variation-settings:"ROND" 0;letter-spacing:-.045em}
+.leB span{font:600 clamp(1rem,1.8vw,1.5rem)/1.2 var(--sans)}
+
+@media (max-width:760px){
+  .wm .full{display:none}
+  .wm .short{display:inline}
+  .ph{inset:0 0 auto 0;width:100%;height:56%;-webkit-mask-image:var(--fadeY);mask-image:var(--fadeY)}
+  .phFull{height:100%;-webkit-mask-image:none;mask-image:none}
+  .b{left:var(--pad);right:var(--pad);top:auto;bottom:var(--pad);transform:none;width:auto}
+  .eb{top:auto;bottom:calc(var(--pad) + 11rem)}
+  .t{font-size:clamp(2.25rem,11vw,3.5rem)}
+  .lede{font-size:clamp(1.5rem,6.5vw,2.25rem)}
+}

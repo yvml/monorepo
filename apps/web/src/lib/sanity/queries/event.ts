@@ -10,7 +10,7 @@ const SECTION_FILTER = `$section == "" || coalesce(type, "event") == $section`;
 
 const DETAIL = `${SUMMARY}, ${CONTENT}, "image": ${image('image')}, registrationUrl, keelaUrl`;
 
-export const EVENTS_QUERY = defineQuery(`*[_type == "event" && defined(${SLUG}) && (${SECTION_FILTER})]{ ${SUMMARY} }`);
+export const EVENTS_QUERY = defineQuery(`*[_type == "event" && defined(${SLUG}) && (${SECTION_FILTER})]{ ${SUMMARY}, "image": ${image('image')} }`);
 
 export const EVENT_QUERY = defineQuery(`*[_type == "event" && ${SLUG} == $slug && (${SECTION_FILTER})][0]{ ${DETAIL} }`);
 

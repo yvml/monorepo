@@ -2,7 +2,7 @@
 import { defineConfig } from '@pandacss/dev';
 import { design } from '@hmidmismi/ui/design';
 import { createPreset } from '@hmidmismi/ui/preset';
-import { themeVariables } from '@hmidmismi/ui/theme';
+import { fontFaces } from '@hmidmismi/ui/theme';
 import { yvml } from './src/theme/yvml';
 
 /**
@@ -14,10 +14,10 @@ import { yvml } from './src/theme/yvml';
 export default defineConfig({
   preflight: true,
   jsxFramework: 'react',
-  presets: ['@pandacss/preset-base', '@pandacss/preset-panda', createPreset(design, yvml)],
+  presets: ['@pandacss/preset-base', '@pandacss/preset-panda', createPreset(design, yvml, { modules: ['forms'] })],
   include: ['./src/**/*.{ts,tsx}', '../../packages/ui/src/**/*.{ts,tsx}'],
   exclude: [],
   staticCss: { recipes: '*' },
-  globalCss: { ':root': themeVariables(yvml) },
+  globalFontface: fontFaces(yvml, (file) => `/fonts/${file}`),
   outdir: 'styled-system',
 });
