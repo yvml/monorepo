@@ -1,5 +1,5 @@
 // apps/web/src/components/navigation/SubNav.tsx
-import { BrowseNav, browseLinkClass, PageColumn } from '@hmidmismi/ui';
+import { LinkNav, linkNavClass, PageColumn } from '@hmidmismi/ui';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { groupForPath, routePath } from './path';
@@ -22,18 +22,18 @@ export function SubNav() {
     .sort((a, b) => b.path.length - a.path.length)[0]?.path;
   return (
     <PageColumn>
-      <BrowseNav label={t(group.title)}>
+      <LinkNav label={t(group.title)}>
         {items.map((item) => (
           <NextLink
             key={item.path}
             href={`/${item.path}`}
-            className={browseLinkClass(item.path === current)}
+            className={linkNavClass(item.path === current)}
             aria-current={item.path === current ? 'page' : undefined}
           >
             {t(item.title)}
           </NextLink>
         ))}
-      </BrowseNav>
+      </LinkNav>
     </PageColumn>
   );
 }
