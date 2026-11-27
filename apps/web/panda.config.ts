@@ -14,7 +14,7 @@ import { yvml } from './src/theme/yvml';
 export default defineConfig({
   preflight: true,
   jsxFramework: 'react',
-  presets: ['@pandacss/preset-base', '@pandacss/preset-panda', createPreset(design, yvml)],
+  presets: ['@pandacss/preset-base', '@pandacss/preset-panda', createPreset(design, yvml, { modules: ['forms'] })],
   include: ['./src/**/*.{ts,tsx}', '../../packages/ui/src/**/*.{ts,tsx}'],
   exclude: [],
   staticCss: { recipes: '*' },
