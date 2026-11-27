@@ -18,3 +18,6 @@ export const requireLogin = isPreviewSite && process.env.PREVIEW_REQUIRE_LOGIN !
 export function safeNext(value: unknown) {
   return typeof value === 'string' && /^\/(?![/\\])/.test(value) ? value : '/';
 }
+
+/** Whether this deployment serves the style book (`/style`): the private preview site and local development, never the live site. */
+export const showStyleBook = isPreviewSite || process.env.NODE_ENV !== 'production';
