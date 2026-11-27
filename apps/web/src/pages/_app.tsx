@@ -5,6 +5,7 @@ import { VisualEditing } from '@sanity/visual-editing/next-pages-router';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { BannerProvider } from '@/components/notice';
 import { UI_TEXT, setActiveLocale } from '@/i18n';
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -15,7 +16,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Component {...pageProps} />
+      <BannerProvider banner={pageProps.banner}>
+        <Component {...pageProps} />
+      </BannerProvider>
       {pageProps.draftMode ? <VisualEditing /> : null}
     </UiProvider>
   );

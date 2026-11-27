@@ -1,19 +1,17 @@
 // apps/web/src/components/notice/NoticeBar.tsx
 import { inheritLinkClass, Surface, Text } from '@hmidmismi/ui';
 import { menuLinks } from '@/components/navigation';
-import { useApi } from '@/hooks';
 import { localize, t } from '@/i18n';
-import type { Banner } from '@/lib/loaders';
+import { useBanner } from './BannerProvider';
 
 /**
- * The notice above the header: an editor's notice, or what is happening now, as a plain band across the page, in the page's own colors. It is read
- * in the browser because the pages are cached and what is happening is not; until the answer comes, and when there is
- * none, nothing is drawn.
+ * The notice above the header: an editor's notice, or what is happening now, as a plain band across the page, in the
+ * page's own colors. It comes with the page's data, so it is in the first paint; when there is none, nothing is drawn.
  *
  * @returns the band, or nothing.
  */
 export function NoticeBar() {
-  const banner = useApi<Banner>('/api/notice');
+  const banner = useBanner();
   if (!banner) return null;
   const text = localize(banner.text);
   if (!text) return null;

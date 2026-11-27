@@ -1,7 +1,6 @@
 // apps/web/src/components/home/HomeNotice.tsx
-import { useApi } from '@/hooks';
+import { useBanner } from '@/components/notice';
 import { localize } from '@/i18n';
-import type { Banner } from '@/lib/loaders';
 import styles from './home.module.css';
 
 /**
@@ -11,7 +10,7 @@ import styles from './home.module.css';
  * @returns the bar, or nothing.
  */
 export function HomeNotice() {
-  const banner = useApi<Banner>('/api/notice');
+  const banner = useBanner();
   const text = banner ? localize(banner.text) : '';
   if (!banner || !text) return null;
   const content = (
