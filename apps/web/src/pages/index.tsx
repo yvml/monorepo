@@ -19,15 +19,13 @@ import {
   VisuallyHidden,
   Wrap,
 } from '@hmidmismi/ui';
-import Head from 'next/head';
 import NextLink from 'next/link';
 import { Hero } from '@/components/home/Hero';
 import { ImpactStats } from '@/components/home/ImpactStats';
 import { LazyEyeSection } from '@/components/home/LazyEyeSection';
 import { materialHue } from '@/components/home/materials';
-import { PageFooter, PageHeader } from '@/components/layout';
-import { NoticeBar } from '@/components/notice';
-import { ORG_NAME, SITE_SHORT_NAME } from '@/constants';
+import { Site } from '@/components/layout';
+import { ORG_NAME } from '@/constants';
 import { t } from '@/i18n';
 import { type HomeProps, homeLoader } from '@/lib/loaders';
 import { workshopView } from '@/lib/workshop';
@@ -48,14 +46,8 @@ const IMAGES = '/images/home';
 export default function HomePage({ workshops }: HomeProps) {
   const [feature, ...rest] = workshops.map(workshopView);
   return (
-    <>
-      <Head>
-        <title>{SITE_SHORT_NAME}</title>
-      </Head>
-      <NoticeBar />
-      <Hero />
-      <PageHeader />
-      <main id="main">
+    <Site hero={<Hero />} subNav={false}>
+        <VisuallyHidden as="h1">{ORG_NAME}</VisuallyHidden>
         <Surface tone="teal" pad="loose">
           <Measure>
             <Text face="display" size="3xl" tone="inherit">
@@ -201,8 +193,6 @@ export default function HomePage({ workshops }: HomeProps) {
             </form>
           </Stack>
         </Surface>
-      </main>
-      <PageFooter />
-    </>
+    </Site>
   );
 }

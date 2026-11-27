@@ -1,9 +1,8 @@
 // apps/web/src/components/article/ArticlePage.tsx
-import { PageColumn, Text } from '@hmidmismi/ui';
-import { ContentModules } from '@/components/content';
-import { Header, Site } from '@/components/layout';
+import { DocumentContent } from '@/components/content';
 import { Day } from '@/components/date';
-import { localize, t } from '@/i18n';
+import { DocumentPage } from '@/components/layout';
+import { localize } from '@/i18n';
 import { type ArticleDetail } from '@/lib/sanity';
 import { sanityAttr } from '@/lib/sanity/dataAttribute';
 
@@ -14,16 +13,13 @@ import { sanityAttr } from '@/lib/sanity/dataAttribute';
  * @returns the page.
  */
 export function ArticlePage({ article, draftMode }: { article: ArticleDetail; draftMode?: boolean }) {
-  const title = localize(article.title);
   return (
-    <Site title={title}>
-      <PageColumn as="article">
-        <Header align="center" title={title} lines={[<Day key="day" iso={article.createdAt.slice(0, 10)} />]} />
-        <div data-sanity={sanityAttr(Boolean(draftMode), article._id, 'article', 'content')}>
-          <ContentModules modules={article.content} />
-        </div>
-        {!article.content?.length && <Text>{t('detailsToFollow')}</Text>}
-      </PageColumn>
-    </Site>
+    <DocumentPage
+      title={localize(article.title)}
+      lines={[<Day key="day" iso={article.createdAt.slice(0, 10)} />]}
+      empty={!article.content?.length}
+    >
+      <DocumentContent modules={article.content} attr={sanityAttr(Boolean(draftMode), article._id, 'article', 'content')} />
+    </DocumentPage>
   );
 }

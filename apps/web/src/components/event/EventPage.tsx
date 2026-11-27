@@ -1,12 +1,11 @@
 // apps/web/src/components/event/EventPage.tsx
-import { ItemList, Link, PageColumn, Text } from '@hmidmismi/ui';
+import { ItemList, Link } from '@hmidmismi/ui';
 import { stegaClean } from '@sanity/client/stega';
-import { ContentModules, Term } from '@/components/content';
+import { DocumentContent, Term } from '@/components/content';
 import { KeelaEmbed } from '@/components/keela';
 import { Dates } from '@/components/date';
-import { Header, Site } from '@/components/layout';
+import { DocumentPage } from '@/components/layout';
 import { Breadcrumbs } from '@/components/navigation';
-import { SanityImage } from '@/components/media';
 import { localize, t } from '@/i18n';
 import { type Section } from '@/constants';
 import { type EventDetail } from '@/lib/sanity';
@@ -29,32 +28,26 @@ export function EventPage({ section, entry, draftMode }: { section: Section; ent
   const open = entry.status !== 'cancelled';
 
   return (
-    <Site title={title}>
-      <PageColumn as="article">
-        <Breadcrumbs section={section} id={entry._id} title={title} />
-        <Header
-          align="center"
-          title={title}
-          lines={[
-            status && <span data-sanity={attr('status')}>{status}</span>,
-            <Dates key="dates" entry={entry} attr={attr('dateTime')} />,
-            entry.location && <span data-sanity={attr('location')}>{entry.location}</span>,
-          ]}
-        />
-        <div data-sanity={attr('image')}>
-          <SanityImage image={entry.image} label={title} />
-        </div>
-        {!keela && entry.registrationUrl && open && (
-          <ItemList as="dl" layout="pairs" ruled>
-            <Term term="termRegistration">
-              <Link href={entry.registrationUrl}>{t('register')}</Link>
-            </Term>
-          </ItemList>
-        )}
-        <ContentModules modules={entry.content} />
-        {keela && open && <KeelaEmbed url={keela} title={t('registerFor', { title: stegaClean(title) })} />}
-        {!entry.content?.length && <Text>{t('detailsToFollow')}</Text>}
-      </PageColumn>
-    </Site>
+    <DocumentPage
+      title={title}
+      breadcrumbs={<Breadcrumbs section={section} id={entry._id} title={title} />}
+      lines={[
+        status && <span data-sanity={attr('status')}>{status}</span>,
+        <Dates key="dates" entry={entry} attr={attr('dateTime')} />,
+        entry.location && <span data-sanity={attr('location')}>{entry.location}</span>,
+      ]}
+      image={{ value: entry.image, label: title, attr: attr('image') }}
+      empty={!entry.content?.length}
+    >
+      {!keela && entry.registrationUrl && open && (
+        <ItemList as="dl" layout="pairs" ruled>
+          <Term term="termRegistration">
+            <Link href={entry.registrationUrl}>{t('register')}</Link>
+          </Term>
+        </ItemList>
+      )}
+      <DocumentContent modules={entry.content} attr={attr('content')} />
+      {keela && open && <KeelaEmbed url={keela} title={t('registerFor', { title: stegaClean(title) })} />}
+    </DocumentPage>
   );
 }

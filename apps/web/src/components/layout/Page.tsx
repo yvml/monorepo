@@ -1,10 +1,8 @@
 // apps/web/src/components/layout/Page.tsx
-import { PageColumn, Text } from '@hmidmismi/ui';
-import { Header } from './Header';
 import type { ReactNode } from 'react';
-import { Site } from './Site';
-import { ContentModules } from '@/components/content';
-import { localize, t } from '@/i18n';
+import { DocumentContent } from '@/components/content';
+import { localize } from '@/i18n';
+import { DocumentPage } from './DocumentPage';
 import type { PageDoc } from '@/lib/sanity';
 import { sanityAttr } from '@/lib/sanity/dataAttribute';
 
@@ -17,17 +15,10 @@ import { sanityAttr } from '@/lib/sanity/dataAttribute';
  * @returns the page.
  */
 export function Page({ page, draftMode, children }: { page: PageDoc; draftMode?: boolean; children?: ReactNode }) {
-  const title = localize(page.title);
   return (
-    <Site title={title}>
-      <PageColumn as="article">
-        <Header title={title} align="center" />
-        <div data-sanity={sanityAttr(Boolean(draftMode), page._id, 'page', 'content')}>
-          <ContentModules modules={page.content} />
-        </div>
-        {!page.content?.length && <Text>{t('detailsToFollow')}</Text>}
-        {children}
-      </PageColumn>
-    </Site>
+    <DocumentPage title={localize(page.title)} empty={!page.content?.length}>
+      <DocumentContent modules={page.content} attr={sanityAttr(Boolean(draftMode), page._id, 'page', 'content')} />
+      {children}
+    </DocumentPage>
   );
 }
