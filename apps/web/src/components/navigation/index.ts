@@ -6,3 +6,4 @@ export { mainMenu, socialMenu } from './siteMenus';
 export { nextLink } from './nextLink';
 export { RememberedLink } from './RememberedLink';
 export { SubNav } from './SubNav';
+export { UtilityLinks } from './UtilityLinks';

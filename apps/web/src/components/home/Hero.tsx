@@ -2,21 +2,9 @@
 import { Cover, ItemList, Picture, SiteMasthead, ThemeToggle, Wrap } from '@hmidmismi/ui';
 import NextLink from 'next/link';
 import { MASTHEAD_ID } from '@/components/layout';
-import { LanguageSwitcher, nextLink } from '@/components/navigation';
-import { Weather } from '@/components/weather';
+import { LanguageSwitcher, nextLink, UtilityLinks } from '@/components/navigation';
 import { MAIN_NAV, ORG_NAME, SITE_SHORT_NAME } from '@/constants';
 import { t } from '@/i18n';
-
-/** The utility links at the start of the masthead's utility row. */
-function UtilityLinks() {
-  return (
-    <>
-      <Weather />
-      <NextLink href="#">{t('navShop')}</NextLink>
-      <NextLink href="/about/contact">{t('navContact')}</NextLink>
-    </>
-  );
-}
 
 /**
  * The first screen: the masthead (the utility row, the wordmark centered and the tabs under it) over the hero media, which
