@@ -8,9 +8,9 @@ import {
 } from 'motion/react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { HOME_NAV, LocaleLink, shared, ThemeButton } from '@/components/home';
+import { LocaleLink, shared, ThemeButton } from '@/components/home';
 import { Weather } from '@/components/weather';
-import { ORG_NAME, SITE_SHORT_NAME } from '@/constants';
+import { MAIN_NAV, ORG_NAME, SITE_SHORT_NAME } from '@/constants';
 import { t as text } from '@/i18n';
 import styles from './HomeE1.module.css';
 import { ENTER, PALETTES, type Placed, type SceneSpec } from './timeline';
@@ -98,7 +98,7 @@ export function Bar({ scenes }: { scenes: Placed<SceneSpec>[] }) {
         <div className={styles.panel}>
           <nav aria-label="Main">
             <ul>
-              {HOME_NAV.map((item) => (
+              {MAIN_NAV.map((item) => (
                 <li key={item.key}>
                   <Link href={item.href}>{text(item.key)}</Link>
                 </li>

@@ -3,9 +3,8 @@ import { Cover, ItemList, Picture, SiteMasthead, ThemeToggle, Wrap } from '@hmid
 import NextLink from 'next/link';
 import { LanguageSwitcher, nextLink } from '@/components/navigation';
 import { Weather } from '@/components/weather';
-import { ORG_NAME, SITE_SHORT_NAME } from '@/constants';
+import { MAIN_NAV, ORG_NAME, SITE_SHORT_NAME } from '@/constants';
 import { t } from '@/i18n';
-import { HOME_NAV } from './nav';
 
 /** The utility links at the start of the masthead's utility row. */
 function UtilityLinks() {
@@ -25,7 +24,7 @@ function UtilityLinks() {
  * @returns the hero.
  */
 export function Hero() {
-  const tabs = HOME_NAV.map((item) => ({ key: item.key, label: t(item.key), link: nextLink(item.href) }));
+  const tabs = MAIN_NAV.map((item) => ({ key: item.key, label: t(item.key), link: nextLink(item.href) }));
   return (
     <Cover as="section" min="screen" scrim="top" label={ORG_NAME} media={<Picture shape="fill" src="/images/home/pink.jpg" alt="" width={1600} height={900} priority />}>
       <SiteMasthead
@@ -46,7 +45,7 @@ export function Hero() {
           panel: (
             <>
               <ItemList gap="2">
-                {HOME_NAV.map((item) => (
+                {MAIN_NAV.map((item) => (
                   <li key={item.key}>
                     <NextLink href={item.href}>{t(item.key)}</NextLink>
                   </li>

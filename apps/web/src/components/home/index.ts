@@ -1,7 +1,6 @@
 // apps/web/src/components/home/index.ts
 export { HomeFooter } from './HomeFooter';
 export { HomeNotice } from './HomeNotice';
-export { HOME_NAV } from './nav';
 export { LocaleLink } from './LocaleLink';
 export { materialHue } from './materials';
 export { ThemeButton } from './ThemeButton';
