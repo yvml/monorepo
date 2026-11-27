@@ -15,6 +15,7 @@ export function PageHeader({ after }: { after?: string }) {
   return (
       <SiteHeader
         after={after}
+        headroom
         utility={
           <>
             <Weather />
