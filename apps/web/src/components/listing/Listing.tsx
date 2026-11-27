@@ -44,16 +44,6 @@ type ListingProps<T, C> = {
   noMatch: TextKey;
 };
 
-const joined = (lines: ReactNode[]) =>
-  lines
-    .filter(Boolean)
-    .map((line, index) => (
-      <span key={index}>
-        {index > 0 && ' · '}
-        {line}
-      </span>
-    )) as unknown as ReactNode;
-
 /**
  * Entries as a list of rows or a grid of cards. A listing renders its matches with it, and so can any page that lists
  * a few entries, such as a person's workshops.
@@ -68,10 +58,10 @@ export function ListingEntries({ items, view }: { items: ListingItem[]; view: st
       {items.map((entry) => (
         <li key={entry.id}>
           <Row
-            layout={entry.lead ? 'dated' : 'image' in entry ? 'thumb' : 'plain'}
+            layout={entry.lead ? 'dated' : 'image' in entry ? 'card' : 'plain'}
             lead={entry.lead ?? ('image' in entry ? <SanityImage image={entry.image} label={entry.title} decorative /> : undefined)}
             title={<NextLink href={entry.href}>{entry.title}</NextLink>}
-            meta={joined(entry.lines)}
+            meta={entry.lines}
           />
         </li>
       ))}

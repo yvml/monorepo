@@ -78,7 +78,11 @@ export default function HomePage({ workshops }: HomeProps) {
                   <Title level="h3">
                     <NextLink href={feature.href}>{feature.title}</NextLink>
                   </Title>
-                  <Text variant="small">{[feature.material, feature.instructor, feature.price].filter(Boolean).join(' · ')}</Text>
+                  {feature.lines.slice(1).filter(Boolean).map((line) => (
+                    <Text key={line} variant="small">
+                      {line}
+                    </Text>
+                  ))}
                   <Wrap>
                     <Button asChild>
                       <NextLink href={feature.href}>
@@ -92,14 +96,14 @@ export default function HomePage({ workshops }: HomeProps) {
                   {rest.map((workshop) => (
                     <li key={workshop.id}>
                       <Row
-                        layout="thumb"
+                        layout="card"
                         lead={
                           workshop.imageUrl ? (
-                            <Picture shape="thumb" src={workshop.imageUrl} alt="" width={400} height={400} />
+                            <Picture shape="thumb" src={workshop.imageUrl} alt="" width={600} height={600} />
                           ) : undefined
                         }
                         title={workshop.title}
-                        meta={[workshop.dates, workshop.material, workshop.instructor, workshop.price].filter(Boolean).join(' · ')}
+                        meta={workshop.lines}
                         link={(className, content) => (
                           <NextLink className={className} href={workshop.href}>
                             {content}

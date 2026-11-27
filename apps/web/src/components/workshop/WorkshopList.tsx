@@ -29,7 +29,7 @@ export function WorkshopList({ workshops, today }: { workshops: WorkshopSummary[
           href: view.href,
           title: view.title,
           image: view.image,
-          lines: [view.dates, view.instructor, [view.price, view.status].filter(Boolean).join(' · ')],
+          lines: view.lines,
         };
       }}
       empty={t(WORKSHOPS.empty)}
