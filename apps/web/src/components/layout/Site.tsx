@@ -8,6 +8,9 @@ import { SITE_SHORT_NAME } from '@/constants';
 import { PageFooter } from './PageFooter';
 import { PageHeader } from './PageHeader';
 
+/** The id of the block a page opens with: the header stays out of sight until it has scrolled away. */
+const HERO_ID = 'hero';
+
 /**
  * The page frame: the notice band, the sticky header with the section tabs, the page, and the footer. The header's
  * utility row holds the weather, the language and the theme.
@@ -32,8 +35,8 @@ export function Site({
         <title>{title ? `${stegaClean(title)} · ${SITE_SHORT_NAME}` : SITE_SHORT_NAME}</title>
       </Head>
       <NoticeBar />
-      {hero}
-      <PageHeader />
+      {hero && <div id={HERO_ID}>{hero}</div>}
+      <PageHeader after={hero ? HERO_ID : undefined} />
       {subNav && <SubNav />}
       {/* The page's one main landmark, so screen-reader users can jump to the content. */}
       <main id="main">{children}</main>

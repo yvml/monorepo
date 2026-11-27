@@ -8,11 +8,13 @@ import { SITE_SHORT_NAME } from '@/constants';
  * The header of every page: the wordmark and the section tabs in a sticky bar, with the weather, the language and the
  * theme in the utility row above it.
  *
+ * @param props - `after`, the id of the cover the page opens with, when it has one: the header then appears once that has scrolled away.
  * @returns the header.
  */
-export function PageHeader() {
+export function PageHeader({ after }: { after?: string }) {
   return (
       <SiteHeader
+        after={after}
         utility={
           <>
             <Weather />
