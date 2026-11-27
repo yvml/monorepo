@@ -61,6 +61,7 @@ export default function HomePage({ workshops }: HomeProps) {
             <Section
               id="workshops"
               label={t('navWorkshops')}
+              display
               pinned
               action={(className) => (
                 <NextLink className={className} href="/workshops">
@@ -119,6 +120,7 @@ export default function HomePage({ workshops }: HomeProps) {
           <Section
             id="residencies"
             label={t('navResidencies')}
+            display
             action={(className) => (
               <a className={className} href="#">
                 {t('homeViewResidencies')}
