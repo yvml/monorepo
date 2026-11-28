@@ -2,9 +2,11 @@
 import { stegaClean } from '@sanity/client/stega';
 import Head from 'next/head';
 import type { ReactNode } from 'react';
+import { GridOverlay } from '@hmidmismi/ui';
 import { SubNav } from '@/components/navigation';
 import { NoticeBar } from '@/components/notice';
 import { SITE_SHORT_NAME } from '@/constants';
+import { showDesignTools } from '@/lib/preview/flags';
 import { PageFooter } from './PageFooter';
 import { PageHeader } from './PageHeader';
 
@@ -41,6 +43,7 @@ export function Site({
       {/* The page's one main landmark, so screen-reader users can jump to the content. */}
       <main id="main">{children}</main>
       <PageFooter />
+      {showDesignTools && <GridOverlay />}
     </>
   );
 }

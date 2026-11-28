@@ -6,6 +6,8 @@ const PAGE_EXTENSIONS = ['tsx', 'ts', 'jsx', 'js'];
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  /** The preview flag is read in the browser too (the grid overlay is mounted by it), so it is written into the client build. */
+  env: { PREVIEW_SITE: process.env.PREVIEW_SITE ?? 'false' },
   /** Sanity's images are served through Next so the page may read their pixels (the home's duotones are made in a canvas). */
   images: { remotePatterns: [{ protocol: 'https', hostname: 'cdn.sanity.io' }] },
   /** The shared packages ship TypeScript source, so Next compiles them. */

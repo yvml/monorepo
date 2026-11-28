@@ -5,7 +5,7 @@ import { createPreset } from '@hmidmismi/ui/preset';
 import { fontFaces } from '@hmidmismi/ui/theme';
 import { yvml } from './src/theme/yvml';
 
-/** The grid mode: the design system's default (`free`), or `GRID_MODE=baseline|scaled|free` to build the site in another to compare. */
+/** The grid mode: the design system's default (`scaled`), or `GRID_MODE=baseline|scaled|free` to build the site in another to compare. */
 const mode = (process.env.GRID_MODE ?? defaultDesign.grid.mode) as typeof defaultDesign.grid.mode;
 const design = { ...defaultDesign, grid: { ...defaultDesign.grid, mode } };
 

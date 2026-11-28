@@ -19,5 +19,5 @@ export function safeNext(value: unknown) {
   return typeof value === 'string' && /^\/(?![/\\])/.test(value) ? value : '/';
 }
 
-/** Whether this deployment serves the style book (`/style`): the private preview site and local development, never the live site. */
-export const showStyleBook = isPreviewSite || process.env.NODE_ENV !== 'production';
+/** Whether this deployment serves the design tools, the style book (`/style`) and the grid overlay (press `g`, or `?grid`): the private preview site and local development, never the live site. */
+export const showDesignTools = isPreviewSite || process.env.NODE_ENV !== 'production';
